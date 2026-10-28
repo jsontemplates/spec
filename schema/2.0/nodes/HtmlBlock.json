@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://spec.jsontemplates.io/schema/2.0/nodes/HtmlBlock.json",
+  "title": "HtmlBlock",
+  "$ref": "../shared/common.json",
+  "type": "object",
+  "required": [
+    "text"
+  ],
+  "properties": {
+    "type": {
+      "const": "HtmlBlock"
+    },
+    "text": {
+      "type": "string",
+      "description": "HTML. It can contain {{ }} expressions."
+    }
+  },
+  "unevaluatedProperties": false
+}

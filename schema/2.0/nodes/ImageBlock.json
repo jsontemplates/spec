@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://spec.jsontemplates.io/schema/2.0/nodes/ImageBlock.json",
+  "title": "ImageBlock",
+  "$ref": "../shared/common.json",
+  "type": "object",
+  "required": [
+    "src"
+  ],
+  "properties": {
+    "type": {
+      "const": "ImageBlock"
+    },
+    "src": {
+      "type": "string",
+      "description": "URL or data URI. It can contain {{ }} expressions."
+    },
+    "alt": {
+      "type": "string",
+      "description": "Text that describes the image. It can contain {{ }} expressions."
+    }
+  },
+  "unevaluatedProperties": false
+}

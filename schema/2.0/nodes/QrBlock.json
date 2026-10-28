@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://spec.jsontemplates.io/schema/2.0/nodes/QrBlock.json",
+  "title": "QrBlock",
+  "$ref": "../shared/common.json",
+  "type": "object",
+  "required": [
+    "text"
+  ],
+  "properties": {
+    "type": {
+      "const": "QrBlock"
+    },
+    "text": {
+      "type": "string",
+      "description": "Data to encode. It can contain {{ }} expressions."
+    },
+    "errorCorrection": {
+      "enum": [
+        "L",
+        "M",
+        "Q",
+        "H"
+      ],
+      "default": "M"
+    }
+  },
+  "unevaluatedProperties": false
+}

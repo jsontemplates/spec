@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://spec.jsontemplates.io/schema/2.0/nodes/BarcodeBlock.json",
+  "title": "BarcodeBlock",
+  "$ref": "../shared/common.json",
+  "type": "object",
+  "required": [
+    "text"
+  ],
+  "properties": {
+    "type": {
+      "const": "BarcodeBlock"
+    },
+    "text": {
+      "type": "string",
+      "description": "Data to encode. It can contain {{ }} expressions."
+    },
+    "format": {
+      "enum": [
+        "CODE128",
+        "CODE39",
+        "EAN13"
+      ],
+      "default": "CODE128"
+    }
+  },
+  "unevaluatedProperties": false
+}

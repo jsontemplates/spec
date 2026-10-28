@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://spec.jsontemplates.io/schema/2.0/nodes/TableBlock.json",
+  "title": "TableBlock",
+  "$ref": "../shared/common.json",
+  "type": "object",
+  "required": [
+    "tbody",
+    "columns"
+  ],
+  "properties": {
+    "type": {
+      "const": "TableBlock"
+    },
+    "thead": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "style": {
+          "$ref": "../shared/style.json"
+        }
+      }
+    },
+    "tbody": {
+      "type": "object",
+      "description": "The body rows. Its each repeats the rows once for each item of a list.",
+      "required": [
+        "each"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "each": {
+          "$ref": "../shared/each.json"
+        },
+        "style": {
+          "$ref": "../shared/style.json"
+        },
+        "rule": {
+          "$ref": "../shared/rule.json"
+        }
+      }
+    },
+    "columns": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "td"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "style": {
+            "$ref": "../shared/style.json"
+          },
+          "th": {
+            "$ref": "../shared/node.json"
+          },
+          "td": {
+            "$ref": "../shared/node.json"
+          }
+        }
+      }
+    }
+  },
+  "unevaluatedProperties": false
+}

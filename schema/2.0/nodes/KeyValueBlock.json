@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://spec.jsontemplates.io/schema/2.0/nodes/KeyValueBlock.json",
+  "title": "KeyValueBlock",
+  "$ref": "../shared/common.json",
+  "type": "object",
+  "required": [
+    "rows"
+  ],
+  "properties": {
+    "type": {
+      "const": "KeyValueBlock"
+    },
+    "rows": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "label",
+          "value"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "label": {
+            "$ref": "../shared/node.json"
+          },
+          "value": {
+            "$ref": "../shared/node.json"
+          }
+        }
+      }
+    }
+  },
+  "unevaluatedProperties": false
+}

@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://spec.jsontemplates.io/schema/2.0/shared/node.json",
+  "title": "node",
+  "description": "A node of the document. The schema of each type is chosen by its type.",
+  "type": "object",
+  "required": ["type"],
+  "properties": {
+    "type": {
+      "anyOf": [
+        { "enum": ["BarcodeBlock", "DividerBlock", "HorizontalLayout", "HtmlBlock", "ImageBlock", "KeyValueBlock", "MarkdownBlock", "PageBreak", "Pdf417Block", "QrBlock", "SpacerBlock", "TableBlock", "TextBlock", "VerticalLayout"] },
+        { "$ref": "#/$defs/extensionType" }
+      ]
+    }
+  },
+  "allOf": [
+    { "if": { "required": ["type"], "properties": { "type": { "$ref": "#/$defs/extensionType" } } }, "then": { "$ref": "extension.json" } },
+    { "if": { "required": ["type"], "properties": { "type": { "const": "BarcodeBlock" } } }, "then": { "$ref": "../nodes/BarcodeBlock.json" } },
+    { "if": { "required": ["type"], "properties": { "type": { "const": "DividerBlock" } } }, "then": { "$ref": "../nodes/DividerBlock.json" } },
+    { "if": { "required": ["type"], "properties": { "type": { "const": "HorizontalLayout" } } }, "then": { "$ref": "../nodes/HorizontalLayout.json" } },
+    { "if": { "required": ["type"], "properties": { "type": { "const": "HtmlBlock" } } }, "then": { "$ref": "../nodes/HtmlBlock.json" } },
+    { "if": { "required": ["type"], "properties": { "type": { "const": "ImageBlock" } } }, "then": { "$ref": "../nodes/ImageBlock.json" } },
+    { "if": { "required": ["type"], "properties": { "type": { "const": "KeyValueBlock" } } }, "then": { "$ref": "../nodes/KeyValueBlock.json" } },
+    { "if": { "required": ["type"], "properties": { "type": { "const": "MarkdownBlock" } } }, "then": { "$ref": "../nodes/MarkdownBlock.json" } },
+    { "if": { "required": ["type"], "properties": { "type": { "const": "PageBreak" } } }, "then": { "$ref": "../nodes/PageBreak.json" } },
+    { "if": { "required": ["type"], "properties": { "type": { "const": "Pdf417Block" } } }, "then": { "$ref": "../nodes/Pdf417Block.json" } },
+    { "if": { "required": ["type"], "properties": { "type": { "const": "QrBlock" } } }, "then": { "$ref": "../nodes/QrBlock.json" } },
+    { "if": { "required": ["type"], "properties": { "type": { "const": "SpacerBlock" } } }, "then": { "$ref": "../nodes/SpacerBlock.json" } },
+    { "if": { "required": ["type"], "properties": { "type": { "const": "TableBlock" } } }, "then": { "$ref": "../nodes/TableBlock.json" } },
+    { "if": { "required": ["type"], "properties": { "type": { "const": "TextBlock" } } }, "then": { "$ref": "../nodes/TextBlock.json" } },
+    { "if": { "required": ["type"], "properties": { "type": { "const": "VerticalLayout" } } }, "then": { "$ref": "../nodes/VerticalLayout.json" } }
+  ],
+  "$defs": {
+    "extensionType": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]*:[A-Za-z][A-Za-z0-9]*$",
+      "description": "Type of a node defined outside this specification, written vendor:Name."
+    }
+  }
+}

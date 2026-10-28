@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://spec.jsontemplates.io/schema/2.0/shared/each.json",
+  "title": "each",
+  "type": "object",
+  "description": "Repeats the node once for each item of a list.",
+  "required": [
+    "list",
+    "item"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "list": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Data path of the list."
+    },
+    "item": {
+      "type": "string",
+      "pattern": "^[A-Za-z_][A-Za-z0-9_]*$",
+      "description": "Name of each item of the list."
+    }
+  }
+}

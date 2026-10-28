@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://spec.jsontemplates.io/schema/2.0/nodes/HorizontalLayout.json",
+  "title": "HorizontalLayout",
+  "$ref": "../shared/common.json",
+  "type": "object",
+  "required": [
+    "elements"
+  ],
+  "properties": {
+    "type": {
+      "const": "HorizontalLayout"
+    },
+    "elements": {
+      "type": "array",
+      "items": {
+        "$ref": "../shared/node.json"
+      }
+    }
+  },
+  "unevaluatedProperties": false
+}

@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://spec.jsontemplates.io/schema/2.0/shared/style.json",
+  "title": "style",
+  "type": "object",
+  "description": "CSS properties with CSS names and values.",
+  "additionalProperties": {
+    "type": "string"
+  }
+}

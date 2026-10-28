@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://spec.jsontemplates.io/schema/2.0/nodes/TextBlock.json",
+  "title": "TextBlock",
+  "$ref": "../shared/common.json",
+  "type": "object",
+  "required": [
+    "text"
+  ],
+  "properties": {
+    "type": {
+      "const": "TextBlock"
+    },
+    "text": {
+      "type": "string",
+      "description": "Plain text. It can contain {{ }} expressions."
+    }
+  },
+  "unevaluatedProperties": false
+}

@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://spec.jsontemplates.io/schema/2.0/shared/common.json",
+  "title": "common",
+  "type": "object",
+  "required": [
+    "type"
+  ],
+  "properties": {
+    "type": {
+      "type": "string"
+    },
+    "id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Identifier of the node, unique in the document. Tools use it to refer to the node. It is not drawn."
+    },
+    "name": {
+      "type": "string",
+      "description": "Human readable name of the node, for example the name of a layer in an editor. It is not drawn."
+    },
+    "each": {
+      "$ref": "../shared/each.json"
+    },
+    "style": {
+      "$ref": "../shared/style.json"
+    },
+    "rule": {
+      "$ref": "../shared/rule.json"
+    },
+    "fallback": {
+      "$ref": "../shared/node.json",
+      "description": "Node drawn instead of this one by a renderer that does not implement the type."
+    }
+  }
+}

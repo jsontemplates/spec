@@ -1,0 +1,7 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://spec.jsontemplates.io/schema/2.0/shared/extension.json",
+  "title": "extension node",
+  "$ref": "common.json",
+  "type": "object"
+}

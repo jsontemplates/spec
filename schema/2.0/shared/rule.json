@@ -1,0 +1,108 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://spec.jsontemplates.io/schema/2.0/shared/rule.json",
+  "title": "rule",
+  "type": "object",
+  "required": [
+    "effect",
+    "condition"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "effect": {
+      "enum": [
+        "SHOW",
+        "HIDE"
+      ]
+    },
+    "condition": {
+      "$ref": "#/$defs/condition"
+    }
+  },
+  "$defs": {
+    "conditionSchema": {
+      "type": "object",
+      "description": "JSON Schema fragment tested against the value found at the scope of a condition.",
+      "minProperties": 1,
+      "additionalProperties": false,
+      "properties": {
+        "const": true,
+        "enum": {
+          "type": "array"
+        },
+        "contains": {
+          "$ref": "#/$defs/conditionSchema"
+        },
+        "not": {
+          "$ref": "#/$defs/conditionSchema"
+        },
+        "minimum": {
+          "type": "number"
+        },
+        "maximum": {
+          "type": "number"
+        },
+        "exclusiveMinimum": {
+          "type": "number"
+        },
+        "exclusiveMaximum": {
+          "type": "number"
+        },
+        "pattern": {
+          "type": "string"
+        }
+      }
+    },
+    "simpleCondition": {
+      "type": "object",
+      "required": [
+        "value",
+        "schema"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "value": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Expression whose value is tested against schema."
+        },
+        "schema": {
+          "$ref": "#/$defs/conditionSchema"
+        }
+      }
+    },
+    "compositeCondition": {
+      "type": "object",
+      "required": [
+        "type",
+        "conditions"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "enum": [
+            "AND",
+            "OR"
+          ]
+        },
+        "conditions": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/condition"
+          }
+        }
+      }
+    },
+    "condition": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/simpleCondition"
+        },
+        {
+          "$ref": "#/$defs/compositeCondition"
+        }
+      ]
+    }
+  }
+}

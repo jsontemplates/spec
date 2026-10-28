@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://spec.jsontemplates.io/schema/2.0/template.json",
+  "title": "JSON Templates",
+  "description": "Structure of a JSON Templates document.",
+  "type": "object",
+  "required": [
+    "$schema",
+    "body"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": {
+      "enum": [
+        "https://spec.jsontemplates.io/schema/2.0/template.json"
+      ],
+      "description": "URL of the schema of the version of the format. A schema accepts the URLs of all earlier versions of the same major version."
+    },
+    "meta": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Human readable name of the template."
+        },
+        "description": {
+          "type": "string",
+          "description": "What the template is for."
+        },
+        "lang": {
+          "type": "string",
+          "pattern": "^[A-Za-z]{2,3}(-[A-Za-z0-9]{2,8})*$",
+          "description": "Language of the document, as a BCP 47 tag, for example es-CL."
+        }
+      }
+    },
+    "options": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "page": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "style": {
+              "$ref": "shared/style.json",
+              "description": "CSS properties of @page, for example size and margin."
+            }
+          }
+        }
+      }
+    },
+    "variables": {
+      "type": "array",
+      "description": "Aliases for data paths. An alias can refer to aliases declared before it.",
+      "items": {
+        "type": "object",
+        "required": [
+          "name",
+          "value"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "type": "string",
+            "pattern": "^[A-Za-z_][A-Za-z0-9_]*$",
+            "description": "Name of the alias."
+          },
+          "value": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Data path."
+          }
+        }
+      }
+    },
+    "body": {
+      "$ref": "shared/node.json"
+    }
+  }
+}
