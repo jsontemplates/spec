@@ -1,0 +1,107 @@
+<style>.jt,.jt *{box-sizing:border-box;margin:0;padding:0}.jt{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;font-size:13px}.jt table{width:100%;border-collapse:collapse}.jt th,.jt td{text-align:left;vertical-align:top}.jt img{display:block}.jt a{color:inherit}.jt ul,.jt ol{padding-left:1.5em}.jt .jt-inline p{display:inline}@page{size:letter;margin:10mm 12mm}@media screen{.jt{max-width:215.9mm;padding:10mm 12mm 10mm 12mm;margin-left:auto;margin-right:auto}}</style>
+<div class="jt">
+  <div>
+    <div style="padding:6px 0;margin-bottom:10px;border:2px solid #4A7CF5;">
+      <div style="text-align:center;font-weight:bold;font-size:20px;">PACKING SLIP</div>
+      <div style="text-align:center;color:#64748b;">Order # {{ shipment.order_number }}</div>
+    </div>
+    <div style="display:flex;margin-bottom:10px;">
+      <div style="width:50%;padding:6px 8px;background-color:#f8fafc;">{% apply jt_markdown %}
+**Ship From:**
+
+{{ sender.company }}
+
+{{ sender.address }}
+
+{{ sender.city }}, {{ sender.country }}
+
+{{ sender.phone }}
+{% endapply %}</div>
+      <div style="width:50%;padding:6px 8px;border:1px solid #d1d5db;">{% apply jt_markdown %}
+**Ship To:**
+
+{{ recipient.name }}
+
+{{ recipient.company }}
+
+{{ recipient.address }}
+
+{{ recipient.city }}, {{ recipient.country }}
+{% endapply %}</div>
+    </div>
+    <div style="display:flex;margin-bottom:10px;">
+      <div style="width:50%;">
+        {% set __jt1 %}<span class="jt-inline">{{ shipment.date }}</span>{% endset %}{% if __jt1|striptags|trim is not empty %}<div><span class="jt-inline" style="font-weight:bold;">Ship Date:</span> {{ __jt1 }}</div>{% endif %}
+        {% set __jt2 %}<span class="jt-inline">{{ shipment.carrier }}</span>{% endset %}{% if __jt2|striptags|trim is not empty %}<div><span class="jt-inline" style="font-weight:bold;">Carrier:</span> {{ __jt2 }}</div>{% endif %}
+        {% set __jt3 %}<span class="jt-inline">{{ shipment.service }}</span>{% endset %}{% if __jt3|striptags|trim is not empty %}<div><span class="jt-inline" style="font-weight:bold;">Service:</span> {{ __jt3 }}</div>{% endif %}
+      </div>
+      <div style="width:50%;">
+        {% set __jt4 %}<span class="jt-inline">{{ shipment.total_weight }} kg</span>{% endset %}{% if __jt4|striptags|trim is not empty %}<div><span class="jt-inline" style="font-weight:bold;">Weight:</span> {{ __jt4 }}</div>{% endif %}
+        {% set __jt5 %}<span class="jt-inline">{{ shipment.packages }}</span>{% endset %}{% if __jt5|striptags|trim is not empty %}<div><span class="jt-inline" style="font-weight:bold;">Packages:</span> {{ __jt5 }}</div>{% endif %}
+        {% set __jt6 %}<span class="jt-inline">{{ shipment.notes }}</span>{% endset %}{% if __jt6|striptags|trim is not empty %}<div><span class="jt-inline" style="font-weight:bold;">Notes:</span> {{ __jt6 }}</div>{% endif %}
+      </div>
+    </div>
+    <div style="border:1px solid #d1d5db;margin-bottom:10px;min-height:120px;">
+      {% set __jt7 = false %}{% set __jt8 = false %}{% set __jt9 = false %}{% set __jt10 = false %}
+      {% for item in items %}
+          {% set __jt11 %}<span class="jt-inline">{{ item.sku }}</span>{% endset %}{% if __jt11|striptags|trim is not empty %}{% set __jt7 = true %}{% endif %}
+          {% set __jt12 %}<span class="jt-inline">{{ item.description }}</span>{% endset %}{% if __jt12|striptags|trim is not empty %}{% set __jt8 = true %}{% endif %}
+          {% set __jt13 %}<span class="jt-inline" style="text-align:right;">{{ item.qty }}</span>{% endset %}{% if __jt13|striptags|trim is not empty %}{% set __jt9 = true %}{% endif %}
+          {% set __jt14 %}<span class="jt-inline" style="text-align:right;">{{ item.weight }}</span>{% endset %}{% if __jt14|striptags|trim is not empty %}{% set __jt10 = true %}{% endif %}
+      {% endfor %}
+      <table>
+        <colgroup>
+          {% if __jt7 %}<col style="width:22%;">{% endif %}
+          {% if __jt8 %}<col>{% endif %}
+          {% if __jt9 %}<col style="width:12%;">{% endif %}
+          {% if __jt10 %}<col style="width:20%;">{% endif %}
+        </colgroup>
+        <thead style="background-color:#4A7CF5;color:#ffffff;font-size:12px;">
+          <tr>
+            {% if __jt7 %}<th>
+              <div>SKU</div>
+            </th>{% endif %}
+            {% if __jt8 %}<th>
+              <div>Description</div>
+            </th>{% endif %}
+            {% if __jt9 %}<th>
+              <div>Qty</div>
+            </th>{% endif %}
+            {% if __jt10 %}<th>
+              <div>Weight (kg)</div>
+            </th>{% endif %}
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in items %}
+          <tr>
+            {% if __jt7 %}<td>
+              <div>{{ item.sku }}</div>
+            </td>{% endif %}
+            {% if __jt8 %}<td>
+              <div>{{ item.description }}</div>
+            </td>{% endif %}
+            {% if __jt9 %}<td>
+              <div style="text-align:right;">{{ item.qty }}</div>
+            </td>{% endif %}
+            {% if __jt10 %}<td>
+              <div style="text-align:right;">{{ item.weight }}</div>
+            </td>{% endif %}
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <div style="display:flex;">
+      <div style="width:55%;">
+        {% set __jt15 %}{{ (shipment.tracking_number)|raw }}{% endset %}
+        <img src="{{ __jt15|jt_barcode('CODE128') }}" style="display:block;width:40%;height:60px;">
+        <div style="text-align:left;line-height:1;font-size:10px;font-weight:bold;">{{ shipment.tracking_number }}</div>
+      </div>
+      <div style="width:45%;">
+        <div style="color:#64748b;font-size:10px;">Received in good condition by:</div>
+        <div style="border-top:1px solid #000;font-size:10px;margin-top:30px;">Signature / Date</div>
+      </div>
+    </div>
+  </div>
+</div>

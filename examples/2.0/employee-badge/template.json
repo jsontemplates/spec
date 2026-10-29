@@ -1,0 +1,167 @@
+{
+  "$schema": "https://spec.jsontemplates.io/schema/2.0/template.json",
+  "meta": {
+    "name": "Credencial de acceso",
+    "description": "Credencial de tamaño tarjeta para colaboradores y visitas, con fotografía, vCard y código de acceso.",
+    "lang": "es-CL"
+  },
+  "options": {
+    "page": {
+      "style": {
+        "size": "86mm 54mm",
+        "margin": "0"
+      }
+    }
+  },
+  "body": {
+    "type": "VerticalLayout",
+    "elements": [
+      {
+        "type": "TextBlock",
+        "name": "Cabecera colaborador",
+        "rule": {
+          "effect": "SHOW",
+          "condition": {
+            "value": "person.id",
+            "schema": {
+              "not": {
+                "pattern": "^V-"
+              }
+            }
+          }
+        },
+        "text": "{{ company.name }}",
+        "style": {
+          "text-align": "center",
+          "font-weight": "bold",
+          "color": "#ffffff",
+          "background-color": "#0f766e",
+          "padding": "3px",
+          "font-size": "11px"
+        }
+      },
+      {
+        "type": "TextBlock",
+        "name": "Cabecera visita",
+        "rule": {
+          "effect": "SHOW",
+          "condition": {
+            "value": "person.id",
+            "schema": {
+              "pattern": "^V-"
+            }
+          }
+        },
+        "text": "VISITA · {{ company.name }}",
+        "style": {
+          "text-align": "center",
+          "font-weight": "bold",
+          "color": "#ffffff",
+          "background-color": "#c2410c",
+          "padding": "3px",
+          "font-size": "11px"
+        }
+      },
+      {
+        "type": "HorizontalLayout",
+        "style": {
+          "padding": "4px 6px"
+        },
+        "elements": [
+          {
+            "type": "ImageBlock",
+            "name": "Fotografía",
+            "src": "{{ person.photo }}",
+            "alt": "Fotografía de {{ person.name }}",
+            "style": {
+              "width": "22mm",
+              "height": "27.5mm"
+            }
+          },
+          {
+            "type": "VerticalLayout",
+            "style": {
+              "width": "62%",
+              "padding-left": "8px"
+            },
+            "elements": [
+              {
+                "type": "TextBlock",
+                "text": "{{ person.name }}",
+                "style": {
+                  "font-weight": "bold",
+                  "font-size": "14px"
+                }
+              },
+              {
+                "type": "TextBlock",
+                "text": "{{ person.position }}",
+                "style": {
+                  "font-size": "10px",
+                  "color": "#475569"
+                }
+              },
+              {
+                "type": "TextBlock",
+                "text": "{{ person.area | default('Visita externa') }}",
+                "style": {
+                  "font-size": "10px",
+                  "color": "#475569",
+                  "margin-bottom": "4px"
+                }
+              },
+              {
+                "type": "TextBlock",
+                "text": "Acceso: {{ person.access | default('General') }}",
+                "style": {
+                  "font-size": "10px",
+                  "font-weight": "bold"
+                }
+              }
+            ]
+          },
+          {
+            "type": "QrBlock",
+            "name": "vCard",
+            "text": "BEGIN:VCARD\nVERSION:3.0\nFN:{{ person.name }}\nORG:{{ company.name }}\nTITLE:{{ person.position }}\nEMAIL:{{ person.email }}\nEND:VCARD",
+            "errorCorrection": "Q",
+            "style": {
+              "width": "16mm",
+              "height": "16mm",
+              "margin-left": "auto"
+            }
+          }
+        ]
+      },
+      {
+        "type": "VerticalLayout",
+        "style": {
+          "padding": "0 6px"
+        },
+        "elements": [
+          {
+            "type": "BarcodeBlock",
+            "name": "Número",
+            "text": "{{ person.id }}",
+            "format": "CODE39",
+            "style": {
+              "width": "50mm",
+              "height": "7mm",
+              "margin-left": "auto",
+              "margin-right": "auto"
+            }
+          },
+          {
+            "type": "TextBlock",
+            "text": "{{ person.id }}",
+            "style": {
+              "text-align": "center",
+              "font-size": "8px",
+              "letter-spacing": "1px"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

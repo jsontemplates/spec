@@ -1,0 +1,39 @@
+{
+  "company": {
+    "name": "Andes Servicios Digitales SpA",
+    "rut": "76123456-7",
+    "address": "Av. Providencia 1234, Of. 501, Santiago",
+    "phone": "+56 2 2345 6789",
+    "email": "ventas@andes.example"
+  },
+  "client": {
+    "name": "Distribuidora Pacífico S.A.",
+    "rut": "96777888-5",
+    "contact": "Andrea Vidal",
+    "email": "avidal@pacifico.example"
+  },
+  "quote": {
+    "number": "COT-2026-0121",
+    "date": "2026-07-14",
+    "valid_until": "2026-08-13",
+    "status": "expired",
+    "payment_terms": "Contado",
+    "discount_percent": 5,
+    "notes": "Precios en pesos chilenos, sujetos a reajuste por UF."
+  },
+  "items": [
+    {
+      "sku": "SRV-050",
+      "description": "Auditoría de seguridad web",
+      "quantity": 1,
+      "unit_price": 640000,
+      "total": 640000
+    }
+  ],
+  "totals": {
+    "net": 640000,
+    "discount": 32000,
+    "tax": 115520,
+    "total": 723520
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "$schema": "https://spec.jsontemplates.io/schema/2.0/template.json",
+  "meta": {
+    "name": "Terms (HtmlBlock)"
+  },
+  "options": {
+    "page": {
+      "style": {
+        "size": "letter",
+        "margin": "10mm 12mm"
+      }
+    }
+  },
+  "body": {
+    "type": "VerticalLayout",
+    "elements": [
+      {
+        "type": "HtmlBlock",
+        "name": "Terms",
+        "text": "<h1>Terms and Conditions</h1><p>Lorem ipsum <strong>dolor sit amet</strong>, consectetur adipiscing elit. Pellentesque facilisis turpis ipsum, nec egestas tortor feugiat non. These terms are published by <em>{{ company.name }}</em>; you can also <a href=\"{{ company.terms_url }}\">read the full text online</a>.</p><h2>1. Scope</h2><p style=\"color:#64748b;\">Sed mollis lacus eget erat tempus gravida. Donec ac quam libero. Nullam at magna facilisis, semper dui ut, congue enim.</p><h2>2. Obligations</h2><ul><li>Suspendisse sodales et enim in laoreet.</li><li>Sed sed ligula eget urna venenatis lacinia sed semper felis.</li><li><span style=\"color:#4A7CF5;\"><b>Maecenas at consequat lorem.</b></span></li></ul><h2>3. Contact</h2><p>Questions? Write to <a href=\"mailto:{{ company.email }}\">{{ company.email }}</a>.</p>"
+      }
+    ]
+  }
+}

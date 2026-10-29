@@ -1,0 +1,492 @@
+{
+  "$schema": "https://spec.jsontemplates.io/schema/2.0/template.json",
+  "meta": {
+    "name": "Cotización",
+    "description": "Cotización comercial con descuento opcional y estado de aceptación.",
+    "lang": "es-CL"
+  },
+  "options": {
+    "page": {
+      "style": {
+        "size": "letter",
+        "margin": "12mm 14mm"
+      }
+    }
+  },
+  "body": {
+    "type": "VerticalLayout",
+    "elements": [
+      {
+        "type": "HorizontalLayout",
+        "style": {
+          "margin-bottom": "12px"
+        },
+        "elements": [
+          {
+            "type": "MarkdownBlock",
+            "name": "Emisor",
+            "text": "**{{ company.name }}**\n\nRUT {{ company.rut | format_as('jt.l10n.cl.rut') }}\n\n{{ company.address }}\n\n{{ company.phone }} · {{ company.email }}",
+            "style": {
+              "width": "60%"
+            }
+          },
+          {
+            "type": "VerticalLayout",
+            "name": "Número",
+            "style": {
+              "width": "40%",
+              "text-align": "center",
+              "padding": "8px",
+              "border": "2px solid #4A7CF5"
+            },
+            "elements": [
+              {
+                "type": "TextBlock",
+                "text": "COTIZACIÓN",
+                "style": {
+                  "font-weight": "bold",
+                  "font-size": "18px",
+                  "color": "#4A7CF5"
+                }
+              },
+              {
+                "type": "TextBlock",
+                "text": "N° {{ quote.number }}",
+                "style": {
+                  "font-weight": "bold",
+                  "font-size": "16px"
+                }
+              },
+              {
+                "type": "TextBlock",
+                "text": "Emitida el {{ quote.date | format_as('jt.l10n.es.date.long') }}"
+              },
+              {
+                "type": "TextBlock",
+                "rule": {
+                  "effect": "SHOW",
+                  "condition": {
+                    "type": "AND",
+                    "conditions": [
+                      {
+                        "value": "quote.valid_until",
+                        "schema": {
+                          "not": {
+                            "const": null
+                          }
+                        }
+                      },
+                      {
+                        "value": "quote.status",
+                        "schema": {
+                          "not": {
+                            "enum": [
+                              "expired",
+                              "rejected"
+                            ]
+                          }
+                        }
+                      }
+                    ]
+                  }
+                },
+                "text": "Válida hasta el {{ quote.valid_until | format_as('jt.l10n.es.date.long') }}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "TextBlock",
+        "name": "Aviso de vencimiento",
+        "rule": {
+          "effect": "SHOW",
+          "condition": {
+            "value": "quote.status",
+            "schema": {
+              "enum": [
+                "expired",
+                "rejected"
+              ]
+            }
+          }
+        },
+        "text": "COTIZACIÓN VENCIDA: los precios ya no están vigentes.",
+        "style": {
+          "text-align": "center",
+          "font-weight": "bold",
+          "color": "#ffffff",
+          "background-color": "#dc2626",
+          "padding": "6px",
+          "margin-bottom": "10px"
+        }
+      },
+      {
+        "type": "TextBlock",
+        "name": "Aviso de aceptación",
+        "rule": {
+          "effect": "SHOW",
+          "condition": {
+            "value": "quote.status",
+            "schema": {
+              "const": "accepted"
+            }
+          }
+        },
+        "text": "COTIZACIÓN ACEPTADA el {{ quote.accepted_on | format_as('jt.date.short') }}",
+        "style": {
+          "text-align": "center",
+          "font-weight": "bold",
+          "color": "#ffffff",
+          "background-color": "#16a34a",
+          "padding": "6px",
+          "margin-bottom": "10px"
+        }
+      },
+      {
+        "type": "KeyValueBlock",
+        "name": "Cliente",
+        "style": {
+          "margin-bottom": "12px",
+          "padding": "6px 8px",
+          "background-color": "#f8fafc"
+        },
+        "rows": [
+          {
+            "label": {
+              "type": "TextBlock",
+              "text": "Cliente:",
+              "style": {
+                "font-weight": "bold"
+              }
+            },
+            "value": {
+              "type": "TextBlock",
+              "text": "{{ client.name }}"
+            }
+          },
+          {
+            "label": {
+              "type": "TextBlock",
+              "text": "RUT:",
+              "style": {
+                "font-weight": "bold"
+              }
+            },
+            "value": {
+              "type": "TextBlock",
+              "text": "{{ client.rut | format_as('jt.l10n.cl.rut') }}"
+            }
+          },
+          {
+            "label": {
+              "type": "TextBlock",
+              "text": "Contacto:",
+              "style": {
+                "font-weight": "bold"
+              }
+            },
+            "value": {
+              "type": "TextBlock",
+              "text": "{{ client.contact }}"
+            }
+          },
+          {
+            "label": {
+              "type": "TextBlock",
+              "text": "Correo:",
+              "style": {
+                "font-weight": "bold"
+              }
+            },
+            "value": {
+              "type": "TextBlock",
+              "text": "{{ client.email }}"
+            }
+          },
+          {
+            "label": {
+              "type": "TextBlock",
+              "text": "Condición de pago:",
+              "style": {
+                "font-weight": "bold"
+              }
+            },
+            "value": {
+              "type": "TextBlock",
+              "text": "{{ quote.payment_terms | default('Contado') }}"
+            }
+          }
+        ]
+      },
+      {
+        "type": "TableBlock",
+        "name": "Detalle",
+        "style": {
+          "border": "1px solid #e2e8f0",
+          "margin-bottom": "10px"
+        },
+        "thead": {
+          "style": {
+            "background-color": "#4A7CF5",
+            "color": "#ffffff"
+          }
+        },
+        "tbody": {
+          "each": {
+            "list": "items",
+            "item": "i"
+          }
+        },
+        "columns": [
+          {
+            "style": {
+              "width": "14%"
+            },
+            "th": {
+              "type": "TextBlock",
+              "text": "Código",
+              "style": {
+                "font-weight": "bold"
+              }
+            },
+            "td": {
+              "type": "TextBlock",
+              "text": "{{ i.sku }}",
+              "style": {
+                "color": "#64748b"
+              }
+            }
+          },
+          {
+            "th": {
+              "type": "TextBlock",
+              "text": "Descripción",
+              "style": {
+                "font-weight": "bold"
+              }
+            },
+            "td": {
+              "type": "TextBlock",
+              "text": "{{ i.description }}"
+            }
+          },
+          {
+            "style": {
+              "width": "9%"
+            },
+            "th": {
+              "type": "TextBlock",
+              "text": "Cant.",
+              "style": {
+                "font-weight": "bold",
+                "text-align": "right"
+              }
+            },
+            "td": {
+              "type": "TextBlock",
+              "text": "{{ i.quantity }}",
+              "style": {
+                "text-align": "right"
+              }
+            }
+          },
+          {
+            "style": {
+              "width": "15%"
+            },
+            "th": {
+              "type": "TextBlock",
+              "text": "Precio unit.",
+              "style": {
+                "font-weight": "bold",
+                "text-align": "right"
+              }
+            },
+            "td": {
+              "type": "TextBlock",
+              "text": "{{ i.unit_price | format_as('jt.int') }}",
+              "style": {
+                "text-align": "right"
+              }
+            }
+          },
+          {
+            "style": {
+              "width": "15%"
+            },
+            "th": {
+              "type": "TextBlock",
+              "text": "Total",
+              "style": {
+                "font-weight": "bold",
+                "text-align": "right"
+              }
+            },
+            "td": {
+              "type": "TextBlock",
+              "text": "{{ i.total | format_as('jt.int') }}",
+              "style": {
+                "text-align": "right"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "type": "HorizontalLayout",
+        "style": {
+          "margin-bottom": "12px"
+        },
+        "elements": [
+          {
+            "type": "MarkdownBlock",
+            "name": "Observaciones",
+            "text": "**Observaciones**\n\n{{ quote.notes | default('Sin observaciones.') }}",
+            "style": {
+              "width": "60%",
+              "padding-right": "12px"
+            }
+          },
+          {
+            "type": "KeyValueBlock",
+            "name": "Totales",
+            "style": {
+              "width": "40%"
+            },
+            "rows": [
+              {
+                "label": {
+                  "type": "TextBlock",
+                  "text": "Neto:"
+                },
+                "value": {
+                  "type": "TextBlock",
+                  "text": "$ {{ totals.net | format_as('jt.int') }}",
+                  "style": {
+                    "text-align": "right"
+                  }
+                }
+              },
+              {
+                "label": {
+                  "type": "TextBlock",
+                  "text": "Descuento ({{ quote.discount_percent }}%):"
+                },
+                "value": {
+                  "type": "TextBlock",
+                  "text": "- $ {{ totals.discount | format_as('jt.int') }}",
+                  "style": {
+                    "text-align": "right",
+                    "color": "#dc2626"
+                  },
+                  "rule": {
+                    "effect": "HIDE",
+                    "condition": {
+                      "value": "totals.discount",
+                      "schema": {
+                        "not": {
+                          "exclusiveMinimum": 0
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "label": {
+                  "type": "TextBlock",
+                  "text": "IVA (19%):"
+                },
+                "value": {
+                  "type": "TextBlock",
+                  "text": "$ {{ totals.tax | format_as('jt.int') }}",
+                  "style": {
+                    "text-align": "right"
+                  }
+                }
+              },
+              {
+                "label": {
+                  "type": "TextBlock",
+                  "text": "Total:",
+                  "style": {
+                    "font-weight": "bold",
+                    "font-size": "15px"
+                  }
+                },
+                "value": {
+                  "type": "TextBlock",
+                  "text": "$ {{ totals.total | format_as('jt.int') }}",
+                  "style": {
+                    "text-align": "right",
+                    "font-weight": "bold",
+                    "font-size": "15px"
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "TextBlock",
+        "text": "Son: {{ totals.total | format_as('jt.l10n.es.num2text') }} pesos.",
+        "style": {
+          "font-style": "italic",
+          "color": "#64748b",
+          "margin-bottom": "16px"
+        }
+      },
+      {
+        "type": "TextBlock",
+        "name": "Cómo aceptar",
+        "rule": {
+          "effect": "SHOW",
+          "condition": {
+            "value": "quote.status",
+            "schema": {
+              "const": "sent"
+            }
+          }
+        },
+        "text": "Para aceptar esta cotización responda este correo o escriba a {{ company.email }} indicando el número {{ quote.number }}.",
+        "style": {
+          "padding": "8px",
+          "border": "1px dashed #4A7CF5",
+          "text-align": "center"
+        }
+      },
+      {
+        "type": "VerticalLayout",
+        "name": "Firma",
+        "rule": {
+          "effect": "SHOW",
+          "condition": {
+            "value": "quote.status",
+            "schema": {
+              "const": "accepted"
+            }
+          }
+        },
+        "style": {
+          "margin-top": "36px"
+        },
+        "elements": [
+          {
+            "type": "TextBlock",
+            "text": "Firma de aceptación",
+            "style": {
+              "text-align": "center",
+              "color": "#64748b",
+              "border-top": "1px solid #94a3b8",
+              "padding-top": "4px",
+              "width": "40%",
+              "margin-left": "auto"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,356 @@
+{
+  "$schema": "https://spec.jsontemplates.io/schema/1.0/template.json",
+  "generated_at": "2026-03-24T12:23:28.067Z",
+  "format": "LETTER",
+  "width": 216,
+  "height": 279,
+  "margins": {
+    "left": 5,
+    "top": 5,
+    "right": 5,
+    "bottom": 5
+  },
+  "variables": [
+    {
+      "name": "D",
+      "value": "EnvioDTE.SetDTE.DTE.Documento"
+    },
+    {
+      "name": "I",
+      "value": "D.Encabezado.IdDoc"
+    },
+    {
+      "name": "E",
+      "value": "D.Encabezado.Emisor"
+    },
+    {
+      "name": "R",
+      "value": "D.Encabezado.Receptor"
+    },
+    {
+      "name": "T",
+      "value": "D.Encabezado.Totales"
+    },
+    {
+      "name": "Trans",
+      "value": "D.Encabezado.Transporte"
+    }
+  ],
+  "elements": [
+    {
+      "type": "VerticalLayout",
+      "label": "Documento",
+      "margin": {
+        "top": 0,
+        "right": 0,
+        "bottom": 10,
+        "left": 0
+      },
+      "elements": [
+        {
+          "type": "HorizontalLayout",
+          "label": "Cabecera del DTE",
+          "margin": {
+            "top": 0,
+            "right": 0,
+            "bottom": 10,
+            "left": 0
+          },
+          "elements": [
+            {
+              "type": "VerticalLayout",
+              "label": "Datos Emisor",
+              "colWidth": 65,
+              "elements": [
+                {
+                  "type": "ImageBlock",
+                  "label": "Logo del Emisor",
+                  "src": "https://spec.jsontemplates.io/examples/jsontemplates-logo.png",
+                  "scale": 50,
+                  "align": "left"
+                },
+                {
+                  "type": "HtmlBlock",
+                  "label": "Datos del Emisor",
+                  "content": "<p><b><font color=\"#085294\"><span style=\"font-size: 24px;\">{{ E.RznSoc }}</span></font></b></p><p><b>Giro</b>: {{ E.GiroEmis }}</p><p><b>Dirección</b>: {{ E.DirOrigen }}, {{ E.CmnaOrigen }}, {{ E.CiudadOrigen }}</p>"
+                }
+              ]
+            },
+            {
+              "type": "VerticalLayout",
+              "label": "Identificación del DTE",
+              "colWidth": 35,
+              "elements": [
+                {
+                  "type": "HtmlBlock",
+                  "label": "RUT, Tipo DTE y Folio",
+                  "content": "<p style=\"text-align: center; \"><b><font color=\"#ff0000\">RUT: {{ E.RUTEmisor | format_as('jt.l10n.cl.rut') }}</font></b></p><p style=\"text-align: center; \"><font color=\"#ff0000\"><b><font color=\"#ff0000\"><br></font></b></font></p><p style=\"text-align: center; \"><font color=\"#ff0000\"><font color=\"#ff0000\"><b>Tipo de Documento {{ I.TipoDTE }}</b></font></font></p><p style=\"text-align: center; \"><font color=\"#ff0000\"><b><font color=\"#ff0000\"><br></font></b></font></p><p style=\"text-align: center; \"><font color=\"#ff0000\"><b><font color=\"#ff0000\"># {{ I.Folio }}</font></b></font></p>",
+                  "padding": {
+                    "top": 5,
+                    "right": 0,
+                    "bottom": 5,
+                    "left": 0
+                  },
+                  "border": {
+                    "width": 3,
+                    "style": "solid",
+                    "color": "#ff0000"
+                  }
+                },
+                {
+                  "type": "HtmlBlock",
+                  "label": "Oficina SII",
+                  "content": "<p style=\"text-align: center; \"><b><font color=\"#ff0000\">SII - SANTA CRUZ</font></b></p><p style=\"text-align: right; \"><b>Empresa de Menor Tamaño</b></p>"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "HorizontalLayout",
+          "label": "Detalles de la Transacción",
+          "margin": {
+            "top": 0,
+            "right": 0,
+            "bottom": 10,
+            "left": 0
+          },
+          "elements": [
+            {
+              "type": "HtmlBlock",
+              "label": "Datos del Receptor",
+              "content": "<p><b>Razón social</b>: {{ R.RznSocRecep }}</p><p><b>RUT</b>: {{ R.RUTRecep | format_as('jt.l10n.cl.rut') }}</p><p><b>Giro</b>: {{ R.GiroRecep }}</p><p><b>Dirección</b>: {{ R.DirRecep }}, {{ R.CmnaRecep }}, {{ R.CiudadRecep }}</p><p><b>Contacto</b>: {{ R.Contacto }}</p><p><b>Correo</b>: {{ R.CorreoRecep }}</p>",
+              "margin": {
+                "top": 0,
+                "right": 0,
+                "bottom": 10,
+                "left": 0
+              },
+              "colWidth": 60
+            },
+            {
+              "type": "KeyValueBlock",
+              "renderMode": "list",
+              "labelWidth": 30,
+              "hideEmptyValues": true,
+              "colWidth": 40,
+              "rows": [
+                {
+                  "label": "<p><b>Fecha de emisión</b>:</p>",
+                  "value": "<p>{{ I.FchEmis | format_as('jt.date.long') }}</p>"
+                },
+                {
+                  "label": "<p><b>Fecha de vencimiento</b>:</p>",
+                  "value": "<p>{{ I.FchVenc | format_as('jt.date.short') }}</p>"
+                },
+                {
+                  "label": "<p><b>Vendedor</b>:</p>",
+                  "value": "<p>{{ E.CdgVendedor }}</p>"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "TableBlock",
+          "label": "Detalle de Items",
+          "source": "D.Detalle",
+          "variable": "i",
+          "showHeader": true,
+          "headerFontSize": 13,
+          "headerColor": "#000000",
+          "headerBgColor": "#f3f4f6",
+          "hideEmptyColumns": true,
+          "margin": {
+            "top": 0,
+            "right": 0,
+            "bottom": 10,
+            "left": 0
+          },
+          "border": {
+            "width": 1,
+            "style": "solid",
+            "color": "#d1d5db"
+          },
+          "minHeight": 300,
+          "columns": [
+            {
+              "label": "Código",
+              "value": "{{ i.CdgItem.VlrCodigo }}",
+              "width": 20,
+              "align": "left"
+            },
+            {
+              "label": "Item",
+              "value": "{{ i.NmbItem }}\n{{ i.DscItem }}",
+              "width": null,
+              "align": "left"
+            },
+            {
+              "label": "Cant.",
+              "value": "<div style=\"text-align: right;\">{{ i.QtyItem | format_as('jt.int') }} {{ i.UnmdItem }}</div>",
+              "width": 8,
+              "align": "left"
+            },
+            {
+              "label": "P. unitario",
+              "value": "<div style=\"text-align: right;\">{{ i.PrcItem | format_as('jt.int') }}</div>",
+              "width": 10,
+              "align": "left"
+            },
+            {
+              "label": "Total item",
+              "value": "<div style=\"text-align: right;\">{{ i.MontoItem | format_as('jt.int') }}</div>",
+              "width": 10,
+              "align": "left"
+            }
+          ]
+        },
+        {
+          "type": "HtmlBlock",
+          "label": "Total en Texto y Observación",
+          "content": "<p><b>En total son</b>: {{ T.MntTotal | format_as('num2text') }} pesos.</p><p><br></p><p><b>Observación</b>: {{ I.TermPagoGlosa | default('N/A') }}</p>",
+          "padding": {
+            "top": 5,
+            "right": 5,
+            "bottom": 5,
+            "left": 5
+          },
+          "margin": {
+            "top": 0,
+            "right": 0,
+            "bottom": 10,
+            "left": 0
+          },
+          "border": {
+            "width": 1,
+            "style": "solid",
+            "color": "#d1d5db"
+          }
+        },
+        {
+          "type": "HorizontalLayout",
+          "label": "Pie del DTE",
+          "elements": [
+            {
+              "type": "VerticalLayout",
+              "label": "Timbre",
+              "colWidth": 34,
+              "elements": [
+                {
+                  "type": "Pdf417Block",
+                  "content": "{{ D.TED | format_as('jt.l10n.cl.dte.ted') }}",
+                  "errorCorrection": 3,
+                  "columns": 6,
+                  "align": "left",
+                  "width": 100,
+                  "height": 90
+                },
+                {
+                  "type": "HtmlBlock",
+                  "label": "Autorización SII",
+                  "content": "<p style=\"text-align: center; line-height: 1;\"><span style=\"font-size: 10px;\"><b>Timbre Electrónico SII</b></span></p><p style=\"text-align: center; line-height: 1;\"><span style=\"font-size: 10px;\"><b>Resolución 80 de 2024</b></span></p><p style=\"text-align: center; line-height: 1;\"><span style=\"font-size: 10px;\"><b>Verifique documento: www.sii.cl</b></span></p>"
+                }
+              ]
+            },
+            {
+              "type": "VerticalLayout",
+              "label": "Extra Info",
+              "colWidth": 32,
+              "elements": [
+                {
+                  "type": "ImageBlock",
+                  "label": "Banner de Pago",
+                  "src": "https://cdn.sasco.cl/img/banners/pdf_cotizacion_300x200.png",
+                  "scale": 80,
+                  "align": "center"
+                }
+              ]
+            },
+            {
+              "type": "VerticalLayout",
+              "label": "Totales",
+              "colWidth": 34,
+              "elements": [
+                {
+                  "type": "HorizontalLayout",
+                  "label": "Totales",
+                  "padding": {
+                    "top": 5,
+                    "right": 5,
+                    "bottom": 5,
+                    "left": 5
+                  },
+                  "border": {
+                    "width": 1,
+                    "style": "solid",
+                    "color": "#d1d5db"
+                  },
+                  "elements": [
+                    {
+                      "type": "HtmlBlock",
+                      "label": "Glosa de Totales",
+                      "content": "<p style=\"text-align: right; \"><b>Neto $</b>:</p><p style=\"text-align: right; \"><b>IVA (19%) $</b>:</p><p style=\"text-align: right; \"><b>Total $</b>:</p>",
+                      "colWidth": 45
+                    },
+                    {
+                      "type": "HtmlBlock",
+                      "label": "Valores de Totales",
+                      "content": "<p style=\"text-align: right; \">{{ T.MntNeto | format_as('jt.int') }}</p><p style=\"text-align: right; \">{{ T.IVA | format_as('jt.int') }}</p><p style=\"text-align: right; \">{{ T.MntTotal | format_as('jt.int') }}</p>",
+                      "colWidth": 55
+                    }
+                  ]
+                },
+                {
+                  "type": "BarcodeBlock",
+                  "content": "T{{ I.TipoDTE }}F{{ I.Folio }}",
+                  "format": "CODE128",
+                  "align": "center",
+                  "width": 40,
+                  "height": 60,
+                  "margin": {
+                    "top": 10,
+                    "right": 0,
+                    "bottom": 0,
+                    "left": 0
+                  }
+                },
+                {
+                  "type": "HtmlBlock",
+                  "label": "Texto del Barcode",
+                  "content": "<p style=\"text-align: center; line-height: 1;\"><span style=\"font-size: 10px;\"><b>T{{ I.TipoDTE }}F{{ I.Folio }}</b></span></p>"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "ImageBlock",
+          "label": "Banner de Propaganda",
+          "src": "https://www.sasco.cl/img/banners/sasco-banner-dte-pie-pagina_750x110.png",
+          "scale": 100,
+          "align": "center",
+          "margin": {
+            "top": 20,
+            "right": 0,
+            "bottom": 0,
+            "left": 0
+          }
+        }
+      ]
+    },
+    {
+      "type": "PageBreak",
+      "label": "Términos y Condiciones"
+    },
+    {
+      "type": "VerticalLayout",
+      "elements": [
+        {
+          "type": "HtmlBlock",
+          "content": "<p style=\"text-align: center; \"><b><span style=\"font-size: 18px;\">Términos y Condiciones de Nuestros Productos y Servicios</span></b></p><p><br></p><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque facilisis turpis ipsum, nec egestas tortor feugiat non. Sed mollis lacus eget erat tempus gravida. Donec ac quam libero. Nullam at magna facilisis, semper dui ut, congue enim. Suspendisse sodales et enim in laoreet. Sed sed ligula eget urna venenatis lacinia sed semper felis. Maecenas at consequat lorem. Etiam non euismod nisl, id malesuada libero. In commodo id purus id facilisis. Praesent sollicitudin vulputate sodales.</p><p><br></p><p>Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Ut rhoncus ligula ut leo accumsan, ac interdum est feugiat. Vestibulum pulvinar mauris id sapien malesuada lobortis. Nunc ac nibh ex. Nullam ut blandit felis. Aliquam erat volutpat. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Aenean quis lacus odio. Aenean vitae malesuada purus, eu rutrum eros. Donec eu purus sollicitudin, lacinia velit ut, iaculis urna. Aenean ut dictum risus. Vivamus euismod dolor bibendum, molestie ex in, tristique tellus. Mauris maximus nibh nec dignissim consectetur. Nunc ultrices, libero vitae consequat rutrum, ligula enim hendrerit tellus, in laoreet sem elit non dui.</p><p><br></p><p>Pellentesque porttitor ipsum eu hendrerit pulvinar. Etiam blandit non tellus et fringilla. In hac habitasse platea dictumst. Duis in eros augue. Vestibulum lobortis, magna et fringilla fringilla, arcu justo molestie dolor, at placerat enim lectus vitae metus. Nunc facilisis sapien ut elit scelerisque tristique. Nulla at auctor tellus. Phasellus pharetra tortor ac augue finibus tincidunt. Nam vestibulum enim fringilla ex rhoncus, id placerat metus aliquet. Aenean viverra suscipit purus et dapibus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Fusce quis hendrerit diam, vitae iaculis ex.</p><p><br></p><p>Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Curabitur elementum interdum posuere. Aenean id semper mi. Nulla feugiat aliquam tellus a mattis. Morbi ultricies, risus ut feugiat rhoncus, mauris dolor dignissim odio, quis egestas mauris libero nec mauris. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Nam pretium ultricies lorem quis posuere. Sed ultricies ipsum nec lorem rutrum, in posuere metus convallis. Morbi quam dui, eleifend vel volutpat nec, convallis ac enim. Fusce ut pretium urna, elementum fermentum odio. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Phasellus cursus nunc nisl, sed tempor lectus rhoncus non. Praesent metus elit, molestie vel ornare quis, egestas et risus. Ut tempus elit ac consequat malesuada.</p><p><br></p><p>Morbi justo nisl, rhoncus mollis ultricies nec, fermentum ac nisl. In eu molestie felis. Pellentesque eu eros eros. Maecenas a nulla nec sem blandit vulputate. Mauris sem metus, condimentum ac arcu eu, fringilla sollicitudin odio. In sit amet dolor aliquet, luctus augue eu, imperdiet nibh. Mauris tincidunt arcu sed mauris volutpat, pretium eleifend eros ornare. Nunc mattis facilisis tortor eu convallis. Fusce posuere commodo egestas. Maecenas quam neque, efficitur sit amet arcu non, varius dictum ipsum. Donec finibus feugiat posuere. Duis convallis enim purus, ut facilisis nunc sagittis at. Mauris cursus odio ligula, cursus congue leo porttitor ut. Donec lectus velit, vulputate eu urna laoreet, porta tincidunt est. Nulla facilisi. Sed congue ullamcorper ipsum, feugiat laoreet urna commodo ac.</p>"
+        }
+      ]
+    }
+  ]
+}

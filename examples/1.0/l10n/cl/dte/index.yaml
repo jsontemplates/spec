@@ -1,0 +1,18 @@
+title: DTE (Documentos Tributarios Electrónicos)
+description: Electronic tax documents compliant with Chilean SII regulations.
+order: 1
+
+examples:
+  - title: DTE General (carta)
+    description: Plantilla en formato carta para imprimir en impresora de escritorio.
+    template: template-dte-general.json
+    data:
+      - title: Factura Electrónica T33 — ejemplo oficial SII
+        file: F60T33-ejemplo-oficial-SII.xml
+
+  - title: DTE Continuo (rollo)
+    description: Plantilla en formato continuo para imprimir en impresora térmica.
+    template: template-dte-continuo.json
+    data:
+      - title: Factura Electrónica T33 — ejemplo oficial SII
+        file: F60T33-ejemplo-oficial-SII.xml

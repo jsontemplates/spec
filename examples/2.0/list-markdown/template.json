@@ -1,0 +1,37 @@
+{
+  "$schema": "https://spec.jsontemplates.io/schema/2.0/template.json",
+  "meta": {
+    "name": "List (MarkdownBlock)"
+  },
+  "options": {
+    "page": {
+      "style": {
+        "size": "letter",
+        "margin": "10mm 12mm"
+      }
+    }
+  },
+  "body": {
+    "type": "VerticalLayout",
+    "elements": [
+      {
+        "type": "TextBlock",
+        "text": "{{ list_title }}",
+        "style": {
+          "font-weight": "bold",
+          "font-size": "16px",
+          "margin-bottom": "8px"
+        }
+      },
+      {
+        "type": "MarkdownBlock",
+        "name": "Task",
+        "each": {
+          "list": "tasks",
+          "item": "t"
+        },
+        "text": "- **{{ t.title }}** — {{ t.owner }} (due {{ t.due }})"
+      }
+    ]
+  }
+}

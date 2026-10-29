@@ -1,0 +1,290 @@
+{
+  "$schema": "https://spec.jsontemplates.io/schema/1.0/template.json",
+  "generated_at": "2026-03-24T12:40:36.674Z",
+  "format": "C80",
+  "width": 80,
+  "height": null,
+  "margins": {
+    "left": 1,
+    "top": 1,
+    "right": 1,
+    "bottom": 1
+  },
+  "variables": [
+    {
+      "name": "D",
+      "value": "EnvioDTE.SetDTE.DTE.Documento"
+    },
+    {
+      "name": "I",
+      "value": "D.Encabezado.IdDoc"
+    },
+    {
+      "name": "E",
+      "value": "D.Encabezado.Emisor"
+    },
+    {
+      "name": "R",
+      "value": "D.Encabezado.Receptor"
+    },
+    {
+      "name": "T",
+      "value": "D.Encabezado.Totales"
+    },
+    {
+      "name": "Trans",
+      "value": "D.Encabezado.Transporte"
+    }
+  ],
+  "elements": [
+    {
+      "type": "VerticalLayout",
+      "label": "Documento",
+      "margin": {
+        "top": 0,
+        "right": 0,
+        "bottom": 10,
+        "left": 0
+      },
+      "elements": [
+        {
+          "type": "HtmlBlock",
+          "label": "RUT, Tipo DTE y Folio",
+          "content": "<p style=\"text-align: center; line-height: 1;\"><font color=\"#ff0000\"><span style=\"font-size: 11px;\"><b>RUT: {{ E.RUTEmisor | format_as('jt.l10n.cl.rut') }}</b></span></font></p><p style=\"text-align: center; line-height: 1;\"><br></p><p style=\"text-align: center; line-height: 1;\"><font color=\"#ff0000\"><span style=\"font-size: 11px;\"><b>Tipo de Documento {{ I.TipoDTE }}</b></span></font></p><p style=\"text-align: center; line-height: 1;\"><br></p><p style=\"text-align: center; line-height: 1;\"><font color=\"#ff0000\"><span style=\"font-size: 11px;\"><b># {{ I.Folio }}</b></span></font></p>",
+          "border": {
+            "width": 3,
+            "style": "solid",
+            "color": "#ff0000"
+          }
+        },
+        {
+          "type": "HtmlBlock",
+          "label": "Oficina SII",
+          "content": "<p style=\"text-align: center; \"><b><font color=\"#ff0000\"><span style=\"font-size: 11px;\">SII - SANTA CRUZ</span></font></b></p><p style=\"text-align: right; \"><b><span style=\"font-size: 11px;\">Empresa de Menor Tamaño</span></b></p>",
+          "margin": {
+            "top": 0,
+            "right": 0,
+            "bottom": 10,
+            "left": 0
+          }
+        },
+        {
+          "type": "ImageBlock",
+          "label": "Logo del Emisor",
+          "src": "https://spec.jsontemplates.io/examples/jsontemplates-logo.png",
+          "scale": 60,
+          "align": "center"
+        },
+        {
+          "type": "HtmlBlock",
+          "label": "Datos del Emisor",
+          "content": "<p><b><font color=\"#085294\"><span style=\"font-size: 24px;\">{{ E.RznSoc }}</span></font></b></p><p style=\"line-height: 1;\"><b><span style=\"font-size: 11px;\">Giro</span></b><span style=\"font-size: 11px;\">: {{ E.GiroEmis }}</span></p><p style=\"line-height: 1;\"><b><span style=\"font-size: 11px;\">Dirección</span></b><span style=\"font-size: 11px;\">: {{ E.DirOrigen }}, {{ E.CmnaOrigen }}, {{ E.CiudadOrigen }}</span></p>",
+          "margin": {
+            "top": 0,
+            "right": 0,
+            "bottom": 10,
+            "left": 0
+          }
+        },
+        {
+          "type": "HtmlBlock",
+          "label": "Datos del DTE",
+          "content": "<p style=\"text-align: left; line-height: 1;\"><b><span style=\"font-size: 11px;\">Fecha de emisión</span></b><span style=\"font-size: 11px;\">: {{ I.FchEmis | format_as('jt.date.long') }}</span></p><p style=\"text-align: left; line-height: 1;\"><b><span style=\"font-size: 11px;\">Fecha de vencimiento</span></b><span style=\"font-size: 11px;\">: {{ I.FchVenc | format_as('jt.date.short')}}</span></p>",
+          "margin": {
+            "top": 0,
+            "right": 0,
+            "bottom": 5,
+            "left": 0
+          }
+        },
+        {
+          "type": "HtmlBlock",
+          "label": "Datos del Receptor",
+          "content": "<p style=\"line-height: 1;\"><span style=\"font-size: 11px;\"><b>Razón social</b>: </span><span style=\"font-size: 11px;\">{{ R.RznSocRecep }}</span></p><p style=\"line-height: 1;\"><b><span style=\"font-size: 11px;\">RUT</span></b><span style=\"font-size: 11px;\">: {{ R.RUTRecep | format_as('jt.l10n.cl.rut') }}</span></p><p style=\"line-height: 1;\"><b><span style=\"font-size: 11px;\">Giro</span></b><span style=\"font-size: 11px;\">: {{ R.GiroRecep }}</span></p><p style=\"line-height: 1;\"><b><span style=\"font-size: 11px;\">Dirección</span></b><span style=\"font-size: 11px;\">: {{ R.DirRecep }}, {{ R.CmnaRecep }}</span></p><p style=\"line-height: 1;\"><b><span style=\"font-size: 11px;\">Contacto</span></b><span style=\"font-size: 11px;\">: {{ R.Contacto }}</span></p><p style=\"line-height: 1;\"><b><span style=\"font-size: 11px;\">Correo</span></b><span style=\"font-size: 11px;\">: {{ R.CorreoRecep }}</span></p>",
+          "margin": {
+            "top": 0,
+            "right": 0,
+            "bottom": 10,
+            "left": 0
+          }
+        },
+        {
+          "type": "KeyValueBlock",
+          "label": "Datos de Transporte",
+          "renderMode": "list",
+          "labelWidth": 30,
+          "hideEmptyValues": true,
+          "margin": {
+            "top": 0,
+            "right": 0,
+            "bottom": 10,
+            "left": 0
+          },
+          "condition": "Trans",
+          "rows": [
+            {
+              "label": "<p><span style=\"font-size: 11px;\"><b>Patente</b>:</span></p>",
+              "value": "<p><span style=\"font-size: 11px;\">{{ Trans.Patente }}</span></p>"
+            },
+            {
+              "label": "<p><span style=\"font-size: 11px;\"><b>Transportista</b>:</span></p>",
+              "value": "<p><span style=\"font-size: 11px;\">{{ Trans.RUTTrans }}</span></p>"
+            },
+            {
+              "label": "<p><span style=\"font-size: 11px;\"><b>Chofer</b>:</span></p>",
+              "value": "<p><span style=\"font-size: 11px;\">{{ Trans.Chofer.NombreChofer }} {{ Trans.Chofer.RUTChofer }}</span></p>"
+            },
+            {
+              "label": "<p><span style=\"font-size: 11px;\"><b>Destino</b>:</span></p>",
+              "value": "<p><span style=\"font-size: 11px;\">{{ Trans.DirDest }}, {{ Trans.CmnaDest }}</span></p>"
+            }
+          ]
+        },
+        {
+          "type": "TableBlock",
+          "label": "Detalle de Items",
+          "source": "D.Detalle",
+          "variable": "i",
+          "showHeader": true,
+          "headerFontSize": 11,
+          "headerColor": "#000000",
+          "headerBgColor": "#f3f4f6",
+          "hideEmptyColumns": true,
+          "margin": {
+            "top": 0,
+            "right": 0,
+            "bottom": 10,
+            "left": 0
+          },
+          "border": {
+            "width": 1,
+            "style": "solid",
+            "color": "#d1d5db"
+          },
+          "columns": [
+            {
+              "label": "Item",
+              "value": "<span style=\"font-size: 11px;\">{{ i.NmbItem }}\n{{ i.DscItem }}\n{{ i.QtyItem | format_as('jt.int') }} {{ i.UnmdItem }} x {{ i.PrcItem | format_as('jt.int') }}</span>",
+              "width": null,
+              "align": "left"
+            },
+            {
+              "label": "Subtotal",
+              "value": "<span style=\"font-size: 11px;\">{{ i.MontoItem | format_as('jt.int') }}</span>",
+              "width": 10,
+              "align": "left"
+            }
+          ]
+        },
+        {
+          "type": "KeyValueBlock",
+          "label": "Total en Texto y Observación",
+          "renderMode": "list",
+          "labelWidth": 30,
+          "hideEmptyValues": true,
+          "margin": {
+            "top": 0,
+            "right": 0,
+            "bottom": 10,
+            "left": 0
+          },
+          "rows": [
+            {
+              "label": "<p><span style=\"font-size: 11px;\"><b>En total son</b>:</span></p>",
+              "value": "<p><span style=\"font-size: 11px;\">{{ T.MntTotal | format_as('jt.num2text') }} pesos.</span></p>"
+            },
+            {
+              "label": "<p><span style=\"font-size: 11px;\"><b>Observación</b>:</span></p>",
+              "value": "<p><span style=\"font-size: 11px;\">{{ I.TermPagoGlosa }}</span></p>"
+            }
+          ]
+        },
+        {
+          "type": "HorizontalLayout",
+          "label": "Totales",
+          "padding": {
+            "top": 5,
+            "right": 5,
+            "bottom": 5,
+            "left": 5
+          },
+          "margin": {
+            "top": 0,
+            "right": 0,
+            "bottom": 10,
+            "left": 0
+          },
+          "border": {
+            "width": 1,
+            "style": "solid",
+            "color": "#d1d5db"
+          },
+          "elements": [
+            {
+              "type": "HtmlBlock",
+              "label": "Glosa de Totales",
+              "content": "<p style=\"text-align: right; \"><b><span style=\"font-size: 11px;\">Neto $</span></b><span style=\"font-size: 11px;\">:</span></p><p style=\"text-align: right; \"><b><span style=\"font-size: 11px;\">IVA (19%) $</span></b><span style=\"font-size: 11px;\">:</span></p><p style=\"text-align: right; \"><b><span style=\"font-size: 11px;\">Total $</span></b><span style=\"font-size: 11px;\">:</span></p>",
+              "colWidth": 65
+            },
+            {
+              "type": "HtmlBlock",
+              "label": "Valores de Totales",
+              "content": "<p style=\"text-align: right; \"><span style=\"font-size: 11px;\">{{ T.MntNeto | format_as('jt.int') }}</span></p><p style=\"text-align: right; \"><span style=\"font-size: 11px;\">{{ T.IVA | format_as('jt.int') }}</span></p><p style=\"text-align: right; \"><span style=\"font-size: 11px;\">{{ T.MntTotal | format_as('jt.int') }}</span></p>"
+            }
+          ]
+        },
+        {
+          "type": "Pdf417Block",
+          "content": "{{ D.TED | format_as('jt.l10n.cl.dte.ted') }}",
+          "errorCorrection": 3,
+          "columns": 6,
+          "align": "left",
+          "width": 100,
+          "height": 90
+        },
+        {
+          "type": "HtmlBlock",
+          "label": "Autorización SII",
+          "content": "<p style=\"text-align: center; line-height: 1;\"><span style=\"font-size: 10px;\"><b>Timbre Electrónico SII</b></span></p><p style=\"text-align: center; line-height: 1;\"><span style=\"font-size: 10px;\"><b>Resolución 80 de 2024</b></span></p><p style=\"text-align: center; line-height: 1;\"><span style=\"font-size: 10px;\"><b>Verifique documento: www.sii.cl</b></span></p>"
+        },
+        {
+          "type": "BarcodeBlock",
+          "content": "T{{ I.TipoDTE }}F{{ I.Folio }}",
+          "format": "CODE128",
+          "align": "center",
+          "width": 40,
+          "height": 40,
+          "margin": {
+            "top": 10,
+            "right": 0,
+            "bottom": 0,
+            "left": 0
+          }
+        },
+        {
+          "type": "HtmlBlock",
+          "label": "Texto del Barcode",
+          "content": "<p style=\"text-align: center; line-height: 1;\"><span style=\"font-size: 10px;\"><b>T{{ I.TipoDTE }}F{{ I.Folio }}</b></span></p>",
+          "margin": {
+            "top": 0,
+            "right": 0,
+            "bottom": 10,
+            "left": 0
+          }
+        },
+        {
+          "type": "QrBlock",
+          "content": "{{ E. RUTEmisor }}T{{ I.TipoDTE }}F{{ I.Folio }}",
+          "errorCorrection": "M",
+          "align": "center",
+          "size": 120
+        },
+        {
+          "type": "HtmlBlock",
+          "label": "Texto del QR",
+          "content": "<p style=\"text-align: center; line-height: 1;\"><span style=\"font-size: 10px;\"><b>{{ E.RUTEmisor }}T{{ I.TipoDTE }}F{{ I.Folio }}</b></span></p>"
+        }
+      ]
+    }
+  ]
+}

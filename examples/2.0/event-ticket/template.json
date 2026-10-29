@@ -1,0 +1,265 @@
+{
+  "$schema": "https://spec.jsontemplates.io/schema/2.0/template.json",
+  "meta": {
+    "name": "Entrada de evento",
+    "description": "Entrada con talón desprendible, QR de validación y código de serie.",
+    "lang": "es-CL"
+  },
+  "options": {
+    "page": {
+      "style": {
+        "size": "190mm 75mm",
+        "margin": "4mm"
+      }
+    }
+  },
+  "body": {
+    "type": "HorizontalLayout",
+    "style": {
+      "border": "1px solid #cbd5e1"
+    },
+    "elements": [
+      {
+        "type": "VerticalLayout",
+        "name": "Cuerpo",
+        "style": {
+          "width": "75%",
+          "padding": "8px 10px"
+        },
+        "elements": [
+          {
+            "type": "HorizontalLayout",
+            "style": {
+              "margin-bottom": "6px"
+            },
+            "elements": [
+              {
+                "type": "ImageBlock",
+                "name": "Logo",
+                "src": "{{ event.logo }}",
+                "alt": "Logo de {{ event.name }}",
+                "style": {
+                  "width": "16mm",
+                  "height": "16mm"
+                }
+              },
+              {
+                "type": "VerticalLayout",
+                "style": {
+                  "width": "86%",
+                  "padding-left": "8px"
+                },
+                "elements": [
+                  {
+                    "type": "TextBlock",
+                    "text": "{{ event.name }}",
+                    "style": {
+                      "font-weight": "bold",
+                      "font-size": "22px"
+                    }
+                  },
+                  {
+                    "type": "TextBlock",
+                    "text": "{{ event.date | format_as('jt.l10n.es.date.long') }} · {{ event.time }} h",
+                    "style": {
+                      "font-size": "13px"
+                    }
+                  },
+                  {
+                    "type": "TextBlock",
+                    "text": "{{ event.venue }}",
+                    "style": {
+                      "font-size": "13px",
+                      "color": "#475569"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "TextBlock",
+            "name": "Beneficio VIP",
+            "rule": {
+              "effect": "SHOW",
+              "condition": {
+                "value": "ticket.tier",
+                "schema": {
+                  "const": "VIP"
+                }
+              }
+            },
+            "text": "ACCESO VIP · Lounge y estacionamiento incluidos",
+            "style": {
+              "font-weight": "bold",
+              "color": "#ffffff",
+              "background-color": "#b45309",
+              "padding": "3px 8px",
+              "margin-bottom": "6px"
+            }
+          },
+          {
+            "type": "KeyValueBlock",
+            "name": "Datos",
+            "style": {
+              "font-size": "12px",
+              "margin-bottom": "6px"
+            },
+            "rows": [
+              {
+                "label": {
+                  "type": "TextBlock",
+                  "text": "Entrada:",
+                  "style": {
+                    "font-weight": "bold"
+                  }
+                },
+                "value": {
+                  "type": "TextBlock",
+                  "text": "{{ ticket.tier }}"
+                }
+              },
+              {
+                "label": {
+                  "type": "TextBlock",
+                  "text": "Sector:",
+                  "style": {
+                    "font-weight": "bold"
+                  }
+                },
+                "value": {
+                  "type": "TextBlock",
+                  "rule": {
+                    "effect": "HIDE",
+                    "condition": {
+                      "value": "ticket.tier",
+                      "schema": {
+                        "const": "GENERAL"
+                      }
+                    }
+                  },
+                  "text": "{{ ticket.sector }}"
+                }
+              },
+              {
+                "label": {
+                  "type": "TextBlock",
+                  "text": "Fila / Asiento:",
+                  "style": {
+                    "font-weight": "bold"
+                  }
+                },
+                "value": {
+                  "type": "TextBlock",
+                  "rule": {
+                    "effect": "HIDE",
+                    "condition": {
+                      "value": "ticket.tier",
+                      "schema": {
+                        "const": "GENERAL"
+                      }
+                    }
+                  },
+                  "text": "{{ ticket.row }} / {{ ticket.seat }}"
+                }
+              },
+              {
+                "label": {
+                  "type": "TextBlock",
+                  "text": "Titular:",
+                  "style": {
+                    "font-weight": "bold"
+                  }
+                },
+                "value": {
+                  "type": "TextBlock",
+                  "text": "{{ ticket.holder | default('Al portador') }}"
+                }
+              },
+              {
+                "label": {
+                  "type": "TextBlock",
+                  "text": "Valor:",
+                  "style": {
+                    "font-weight": "bold"
+                  }
+                },
+                "value": {
+                  "type": "TextBlock",
+                  "text": "{{ ticket.price | format_as('jt.int') | default('Invitación') }}"
+                }
+              }
+            ]
+          },
+          {
+            "type": "TextBlock",
+            "each": {
+              "list": "terms",
+              "item": "term"
+            },
+            "text": "{{ term }}",
+            "style": {
+              "font-size": "8px",
+              "color": "#64748b"
+            }
+          }
+        ]
+      },
+      {
+        "type": "VerticalLayout",
+        "name": "Talón",
+        "style": {
+          "width": "25%",
+          "padding": "8px 6px",
+          "border-left": "2px dashed #94a3b8",
+          "background-color": "#f8fafc"
+        },
+        "elements": [
+          {
+            "type": "QrBlock",
+            "name": "Código QR",
+            "text": "https://tickets.example.com/v/{{ ticket.code }}",
+            "errorCorrection": "L",
+            "style": {
+              "width": "28mm",
+              "height": "28mm",
+              "margin-left": "auto",
+              "margin-right": "auto"
+            }
+          },
+          {
+            "type": "TextBlock",
+            "text": "{{ ticket.code }}",
+            "style": {
+              "text-align": "center",
+              "font-weight": "bold",
+              "font-size": "11px",
+              "margin-top": "4px"
+            }
+          },
+          {
+            "type": "BarcodeBlock",
+            "name": "Serie",
+            "text": "{{ ticket.serial }}",
+            "format": "CODE39",
+            "style": {
+              "width": "90%",
+              "height": "10mm",
+              "margin-left": "auto",
+              "margin-right": "auto"
+            }
+          },
+          {
+            "type": "TextBlock",
+            "text": "Serie {{ ticket.serial }}",
+            "style": {
+              "text-align": "center",
+              "font-size": "8px",
+              "color": "#64748b"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

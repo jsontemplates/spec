@@ -1,0 +1,28 @@
+{
+  "sender": {
+    "name": "Northwind Traders",
+    "address": "2200 Harbor Blvd",
+    "city": "Long Beach, CA 90802, US"
+  },
+  "recipient": {
+    "name": "Liam Carter",
+    "address": "88 Maple Street",
+    "city": "Portland",
+    "region": "OR",
+    "postal_code": "97205",
+    "country": "USA",
+    "phone": "+1 503 555 0142"
+  },
+  "shipment": {
+    "service": "GROUND",
+    "tracking": "NW2026102800532",
+    "weight_kg": 1.8,
+    "pieces": 1,
+    "pieces_total": 1,
+    "fragile": false,
+    "signature": false,
+    "declared_value": 60,
+    "date": "2026-10-28",
+    "dimensions": "30 x 20 x 10 cm"
+  }
+}

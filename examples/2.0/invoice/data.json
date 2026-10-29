@@ -1,0 +1,56 @@
+{
+  "company": {
+    "name": "Acme Corp",
+    "address": "742 Evergreen Terrace",
+    "city": "Springfield, IL 62701",
+    "country": "USA",
+    "email": "billing@acme.example",
+    "phone": "+1 555 010 2026",
+    "currency": "USD"
+  },
+  "invoice": {
+    "number": "INV-2026-0042",
+    "date": "2026-03-16",
+    "due_date": "2026-04-15",
+    "payment_terms": "Net 30",
+    "notes": "Please include invoice number in payment reference.",
+    "currency": "USD",
+    "subtotal": 3740.00,
+    "tax_rate": 10,
+    "tax": 374.00,
+    "total": 4114.00
+  },
+  "customer": {
+    "name": "Jane Smith",
+    "company": "Smith & Associates LLC",
+    "address": "1600 Pennsylvania Ave NW",
+    "city": "Washington, DC 20500",
+    "email": "jane.smith@smithassoc.example"
+  },
+  "items": [
+    {
+      "description": "Web Application Development",
+      "qty": 12,
+      "unit_price": 150.00,
+      "total": 1800.00
+    },
+    {
+      "description": "UI/UX Design & Prototyping",
+      "qty": 8,
+      "unit_price": 120.00,
+      "total": 960.00
+    },
+    {
+      "description": "API Integration & Testing",
+      "qty": 6,
+      "unit_price": 130.00,
+      "total": 780.00
+    },
+    {
+      "description": "Technical Documentation",
+      "qty": 4,
+      "unit_price": 50.00,
+      "total": 200.00
+    }
+  ]
+}

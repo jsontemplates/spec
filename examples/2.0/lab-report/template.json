@@ -1,0 +1,288 @@
+{
+  "$schema": "https://spec.jsontemplates.io/schema/2.0/template.json",
+  "meta": {
+    "name": "Lab Report"
+  },
+  "options": {
+    "page": {
+      "style": {
+        "size": "letter",
+        "margin": "10mm 12mm"
+      }
+    }
+  },
+  "body": {
+    "type": "VerticalLayout",
+    "name": "Lab Report",
+    "elements": [
+      {
+        "type": "HorizontalLayout",
+        "name": "Lab Header",
+        "style": {
+          "margin-bottom": "10px"
+        },
+        "elements": [
+          {
+            "type": "VerticalLayout",
+            "style": {
+              "width": "65%"
+            },
+            "elements": [
+              {
+                "type": "TextBlock",
+                "text": "{{ lab.name }}",
+                "style": {
+                  "font-weight": "bold",
+                  "font-size": "18px",
+                  "color": "#4A7CF5"
+                }
+              },
+              {
+                "type": "MarkdownBlock",
+                "text": "{{ lab.address }}\n\n{{ lab.phone }} · {{ lab.email }}"
+              },
+              {
+                "type": "TextBlock",
+                "text": "License: {{ lab.license }}",
+                "style": {
+                  "font-size": "10px",
+                  "color": "#64748b"
+                }
+              }
+            ]
+          },
+          {
+            "type": "VerticalLayout",
+            "style": {
+              "width": "35%",
+              "padding": "8px",
+              "border": "2px solid #4A7CF5"
+            },
+            "elements": [
+              {
+                "type": "TextBlock",
+                "text": "LAB REPORT",
+                "style": {
+                  "text-align": "center",
+                  "font-weight": "bold",
+                  "font-size": "14px"
+                }
+              },
+              {
+                "type": "TextBlock",
+                "text": "{{ report.id }}",
+                "style": {
+                  "text-align": "center",
+                  "color": "#64748b"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "HorizontalLayout",
+        "name": "Patient & Report Info",
+        "style": {
+          "margin-bottom": "10px"
+        },
+        "elements": [
+          {
+            "type": "MarkdownBlock",
+            "name": "Patient",
+            "text": "**Patient:** {{ patient.name }}\n\n**DOB:** {{ patient.dob }} &nbsp; **Age:** {{ patient.age }} &nbsp; **Sex:** {{ patient.sex }}\n\n**ID:** {{ patient.id }}\n\n**Physician:** {{ report.physician }}",
+            "style": {
+              "width": "58%",
+              "padding": "6px 8px",
+              "background-color": "#f8fafc"
+            }
+          },
+          {
+            "type": "KeyValueBlock",
+            "name": "Report Metadata",
+            "style": {
+              "width": "42%"
+            },
+            "rows": [
+              {
+                "label": {
+                  "type": "TextBlock",
+                  "text": "Collected:",
+                  "style": {
+                    "font-weight": "bold"
+                  }
+                },
+                "value": {
+                  "type": "TextBlock",
+                  "text": "{{ report.collected_at }}"
+                }
+              },
+              {
+                "label": {
+                  "type": "TextBlock",
+                  "text": "Received:",
+                  "style": {
+                    "font-weight": "bold"
+                  }
+                },
+                "value": {
+                  "type": "TextBlock",
+                  "text": "{{ report.received_at }}"
+                }
+              },
+              {
+                "label": {
+                  "type": "TextBlock",
+                  "text": "Reported:",
+                  "style": {
+                    "font-weight": "bold"
+                  }
+                },
+                "value": {
+                  "type": "TextBlock",
+                  "text": "{{ report.reported_at }}"
+                }
+              },
+              {
+                "label": {
+                  "type": "TextBlock",
+                  "text": "Sample:",
+                  "style": {
+                    "font-weight": "bold"
+                  }
+                },
+                "value": {
+                  "type": "TextBlock",
+                  "text": "{{ report.sample_type }}"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "TextBlock",
+        "name": "Panel Title",
+        "text": "{{ report.panel_name }}",
+        "style": {
+          "font-weight": "bold",
+          "color": "#ffffff",
+          "background-color": "#4A7CF5",
+          "padding": "4px 8px",
+          "margin-bottom": "4px"
+        }
+      },
+      {
+        "type": "TableBlock",
+        "name": "Results",
+        "style": {
+          "border": "1px solid #d1d5db",
+          "margin-bottom": "10px"
+        },
+        "thead": {
+          "style": {
+            "background-color": "#e2e8f0",
+            "color": "#0f172a",
+            "font-size": "12px"
+          }
+        },
+        "tbody": {
+          "each": {
+            "list": "results",
+            "item": "r"
+          }
+        },
+        "columns": [
+          {
+            "th": {
+              "type": "TextBlock",
+              "text": "Test"
+            },
+            "td": {
+              "type": "TextBlock",
+              "text": "{{ r.test }}"
+            }
+          },
+          {
+            "style": {
+              "width": "28%"
+            },
+            "th": {
+              "type": "TextBlock",
+              "text": "Result"
+            },
+            "td": {
+              "type": "TextBlock",
+              "text": "{{ r.result }} {{ r.unit }}"
+            }
+          },
+          {
+            "style": {
+              "width": "30%"
+            },
+            "th": {
+              "type": "TextBlock",
+              "text": "Reference Range"
+            },
+            "td": {
+              "type": "TextBlock",
+              "text": "{{ r.reference }}"
+            }
+          },
+          {
+            "style": {
+              "width": "12%"
+            },
+            "th": {
+              "type": "TextBlock",
+              "text": "Flag"
+            },
+            "td": {
+              "type": "TextBlock",
+              "text": "{{ r.flag }}"
+            }
+          }
+        ]
+      },
+      {
+        "type": "MarkdownBlock",
+        "name": "Clinical Notes",
+        "text": "**Clinical Notes:**\n\n{{ report.notes }}",
+        "style": {
+          "padding": "6px 8px",
+          "margin-bottom": "10px",
+          "border": "1px solid #d1d5db"
+        }
+      },
+      {
+        "type": "HorizontalLayout",
+        "name": "Signatures",
+        "style": {
+          "margin-top": "10px"
+        },
+        "elements": [
+          {
+            "type": "TextBlock",
+            "text": "Analyst: {{ report.analyst }}",
+            "style": {
+              "width": "50%",
+              "border-top": "1px solid #000",
+              "font-size": "10px",
+              "margin-top": "30px"
+            }
+          },
+          {
+            "type": "TextBlock",
+            "text": "Authorized by: {{ report.authorized_by }}",
+            "style": {
+              "width": "50%",
+              "border-top": "1px solid #000",
+              "font-size": "10px",
+              "margin-top": "30px"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

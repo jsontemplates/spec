@@ -1,0 +1,65 @@
+name: Publish the site
+
+# Publishes schema/ at https://spec.jsontemplates.io/schema/... so that the
+# URL in `$schema` of a template leads to the schema, and examples/ at
+# https://spec.jsontemplates.io/examples/.... The repository must have
+# GitHub Pages enabled with "GitHub Actions" as its source.
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - 'schema/**'
+      - 'examples/**'
+      - 'index.html'
+      - '.github/workflows/pages.yml'
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      # A schema is not published if the specification does not pass its checks.
+      - name: Check the specification
+        run: |
+          npm ci
+          npm test
+
+      - name: Prepare the site
+        run: |
+          mkdir _site
+          cp -R schema _site/schema
+          cp -R examples _site/examples
+          cp index.html _site/index.html
+
+      - name: Upload the site
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4

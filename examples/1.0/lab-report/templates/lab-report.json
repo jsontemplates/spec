@@ -1,0 +1,215 @@
+{
+  "$schema": "https://spec.jsontemplates.io/schema/1.0/template.json",
+  "generated_at": "2026-03-24T11:55:08.144Z",
+  "format": "LETTER",
+  "width": 216,
+  "height": 279,
+  "margins": {
+    "left": 12,
+    "top": 10,
+    "right": 12,
+    "bottom": 10
+  },
+  "elements": [
+    {
+      "type": "VerticalLayout",
+      "label": "Lab Report",
+      "elements": [
+        {
+          "type": "HorizontalLayout",
+          "label": "Lab Header",
+          "margin": {
+            "top": 0,
+            "right": 0,
+            "bottom": 10,
+            "left": 0
+          },
+          "elements": [
+            {
+              "type": "HtmlBlock",
+              "content": "<p><b><span style=\"font-size:18px; color:#4A7CF5;\">{{ lab.name }}</span></b></p><p>{{ lab.address }}</p><p>{{ lab.phone }} · {{ lab.email }}</p><p><span style=\"font-size:10px; color:#64748b;\">License: {{ lab.license }}</span></p>",
+              "colWidth": 65
+            },
+            {
+              "type": "HtmlBlock",
+              "content": "<p style=\"text-align:center;\"><b><span style=\"font-size:14px;\">LAB REPORT</span></b></p><p style=\"text-align:center; color:#64748b;\">{{ report.id }}</p>",
+              "padding": {
+                "top": 8,
+                "right": 8,
+                "bottom": 8,
+                "left": 8
+              },
+              "border": {
+                "width": 2,
+                "style": "solid",
+                "color": "#4A7CF5"
+              },
+              "colWidth": 35
+            }
+          ]
+        },
+        {
+          "type": "HorizontalLayout",
+          "label": "Patient & Report Info",
+          "margin": {
+            "top": 0,
+            "right": 0,
+            "bottom": 10,
+            "left": 0
+          },
+          "elements": [
+            {
+              "type": "HtmlBlock",
+              "label": "Patient",
+              "content": "<p><b>Patient:</b> {{ patient.name }}</p><p><b>DOB:</b> {{ patient.dob }} &nbsp; <b>Age:</b> {{ patient.age }} &nbsp; <b>Sex:</b> {{ patient.sex }}</p><p><b>ID:</b> {{ patient.id }}</p><p><b>Physician:</b> {{ report.physician }}</p>",
+              "padding": {
+                "top": 6,
+                "right": 8,
+                "bottom": 6,
+                "left": 8
+              },
+              "background": "#f8fafc",
+              "colWidth": 58
+            },
+            {
+              "type": "KeyValueBlock",
+              "label": "Report Metadata",
+              "renderMode": "list",
+              "labelWidth": 50,
+              "hideEmptyValues": true,
+              "colWidth": 42,
+              "rows": [
+                {
+                  "label": "<p><b>Collected:</b></p>",
+                  "value": "<p>{{ report.collected_at }}</p>"
+                },
+                {
+                  "label": "<p><b>Received:</b></p>",
+                  "value": "<p>{{ report.received_at }}</p>"
+                },
+                {
+                  "label": "<p><b>Reported:</b></p>",
+                  "value": "<p>{{ report.reported_at }}</p>"
+                },
+                {
+                  "label": "<p><b>Sample:</b></p>",
+                  "value": "<p>{{ report.sample_type }}</p>"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "HtmlBlock",
+          "label": "Panel Title",
+          "content": "<p><b><font color=\"#ffffff\">{{ report.panel_name }}</font></b></p>",
+          "padding": {
+            "top": 4,
+            "right": 8,
+            "bottom": 4,
+            "left": 8
+          },
+          "margin": {
+            "top": 0,
+            "right": 0,
+            "bottom": 4,
+            "left": 0
+          },
+          "background": "#4A7CF5"
+        },
+        {
+          "type": "TableBlock",
+          "label": "Results",
+          "source": "results",
+          "variable": "r",
+          "showHeader": true,
+          "headerFontSize": 12,
+          "headerColor": "#0f172a",
+          "headerBgColor": "#e2e8f0",
+          "hideEmptyColumns": true,
+          "margin": {
+            "top": 0,
+            "right": 0,
+            "bottom": 10,
+            "left": 0
+          },
+          "border": {
+            "width": 1,
+            "style": "solid",
+            "color": "#d1d5db"
+          },
+          "columns": [
+            {
+              "label": "Test",
+              "value": "{{ r.test }}",
+              "width": null,
+              "align": "left"
+            },
+            {
+              "label": "Result",
+              "value": "{{ r.result }} {{ r.unit }}",
+              "width": 28,
+              "align": "left"
+            },
+            {
+              "label": "Reference Range",
+              "value": "{{ r.reference }}",
+              "width": 30,
+              "align": "left"
+            },
+            {
+              "label": "Flag",
+              "value": "{{ r.flag }}",
+              "width": 12,
+              "align": "left"
+            }
+          ]
+        },
+        {
+          "type": "HtmlBlock",
+          "label": "Clinical Notes",
+          "content": "<p><b>Clinical Notes:</b></p><p>{{ report.notes }}</p>",
+          "padding": {
+            "top": 6,
+            "right": 8,
+            "bottom": 6,
+            "left": 8
+          },
+          "margin": {
+            "top": 0,
+            "right": 0,
+            "bottom": 10,
+            "left": 0
+          },
+          "border": {
+            "width": 1,
+            "style": "solid",
+            "color": "#d1d5db"
+          }
+        },
+        {
+          "type": "HorizontalLayout",
+          "label": "Signatures",
+          "margin": {
+            "top": 10,
+            "right": 0,
+            "bottom": 0,
+            "left": 0
+          },
+          "elements": [
+            {
+              "type": "HtmlBlock",
+              "content": "<p><br/><br/></p><p style=\"border-top:1px solid #000; font-size:10px;\">Analyst: {{ report.analyst }}</p>",
+              "colWidth": 50
+            },
+            {
+              "type": "HtmlBlock",
+              "content": "<p><br/><br/></p><p style=\"border-top:1px solid #000; font-size:10px;\">Authorized by: {{ report.authorized_by }}</p>",
+              "colWidth": 50
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

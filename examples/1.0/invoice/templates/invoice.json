@@ -1,0 +1,115 @@
+{
+  "$schema": "https://spec.jsontemplates.io/schema/1.0/template.json",
+  "format": "LETTER",
+  "width": 216,
+  "height": 279,
+  "margins": { "top": 10, "right": 12, "bottom": 10, "left": 12 },
+  "elements": [
+    {
+      "type": "VerticalLayout",
+      "label": "Invoice",
+      "elements": [
+
+        {
+          "type": "HorizontalLayout",
+          "label": "Header",
+          "margin": { "top": 0, "right": 0, "bottom": 10, "left": 0 },
+          "elements": [
+            {
+              "type": "HtmlBlock",
+              "label": "Company Info",
+              "colWidth": 58,
+              "content": "<p><b><span style=\"font-size:22px; color:#4A7CF5;\">{{ company.name }}</span></b></p><p>{{ company.address }}</p><p>{{ company.city }}, {{ company.country }}</p><p>{{ company.email }} · {{ company.phone }}</p>"
+            },
+            {
+              "type": "HtmlBlock",
+              "label": "Invoice Box",
+              "colWidth": 42,
+              "content": "<p style=\"text-align:center;\"><b><span style=\"font-size:20px;\">INVOICE</span></b></p><p style=\"text-align:center;\"><span style=\"font-size:13px;\"># {{ invoice.number }}</span></p><p><b>Date:</b> {{ invoice.date }}</p><p><b>Due date:</b> {{ invoice.due_date }}</p>",
+              "border": { "width": 2, "style": "solid", "color": "#4A7CF5" },
+              "padding": { "top": 8, "right": 10, "bottom": 8, "left": 10 }
+            }
+          ]
+        },
+
+        {
+          "type": "HtmlBlock",
+          "label": "Bill To",
+          "content": "<p><b>Bill To:</b></p><p>{{ customer.name }}</p><p>{{ customer.company }}</p><p>{{ customer.address }}, {{ customer.city }}</p><p>{{ customer.email }}</p>",
+          "margin": { "top": 0, "right": 0, "bottom": 10, "left": 0 },
+          "padding": { "top": 6, "right": 8, "bottom": 6, "left": 8 },
+          "background": "#f8fafc"
+        },
+
+        {
+          "type": "TableBlock",
+          "label": "Line Items",
+          "source": "items",
+          "variable": "item",
+          "showHeader": true,
+          "headerFontSize": 12,
+          "headerColor": "#ffffff",
+          "headerBgColor": "#4A7CF5",
+          "border": { "width": 1, "style": "solid", "color": "#d1d5db" },
+          "minHeight": 160,
+          "margin": { "top": 0, "right": 0, "bottom": 10, "left": 0 },
+          "columns": [
+            {
+              "label": "Description",
+              "value": "{{ item.description }}",
+              "width": null,
+              "align": "left"
+            },
+            {
+              "label": "Qty",
+              "value": "<div style=\"text-align:right;\">{{ item.qty }}</div>",
+              "width": 10,
+              "align": "left"
+            },
+            {
+              "label": "Unit Price",
+              "value": "<div style=\"text-align:right;\">{{ item.unit_price | number_format(2, '.', ',') }}</div>",
+              "width": 22,
+              "align": "left"
+            },
+            {
+              "label": "Total",
+              "value": "<div style=\"text-align:right;\"><b>{{ item.total | number_format(2, '.', ',') }}</b></div>",
+              "width": 22,
+              "align": "left"
+            }
+          ]
+        },
+
+        {
+          "type": "HorizontalLayout",
+          "label": "Totals Row",
+          "elements": [
+            {
+              "type": "HtmlBlock",
+              "label": "Payment Terms",
+              "colWidth": 52,
+              "content": "<p><b>Payment Terms:</b> {{ invoice.payment_terms }}</p><p><b>Notes:</b> {{ invoice.notes }}</p>"
+            },
+            {
+              "type": "HtmlBlock",
+              "label": "Totals",
+              "colWidth": 48,
+              "content": "<p style=\"text-align:right;\"><b>Subtotal:</b> {{ invoice.currency }} {{ invoice.subtotal | number_format(2, '.', ',') }}</p><p style=\"text-align:right;\"><b>Tax ({{ invoice.tax_rate }}%):</b> {{ invoice.currency }} {{ invoice.tax | number_format(2, '.', ',') }}</p><p style=\"text-align:right;\"><b><span style=\"font-size:14px;\">Total: {{ invoice.currency }} {{ invoice.total | number_format(2, '.', ',') }}</span></b></p>",
+              "border": { "width": 1, "style": "solid", "color": "#d1d5db" },
+              "padding": { "top": 6, "right": 8, "bottom": 6, "left": 8 }
+            }
+          ]
+        },
+
+        {
+          "type": "HtmlBlock",
+          "label": "Footer",
+          "content": "<p style=\"text-align:center; color:#64748b;\"><span style=\"font-size:10px;\">Thank you for your business. Please transfer to the account referenced on your purchase order.</span></p>",
+          "margin": { "top": 15, "right": 0, "bottom": 0, "left": 0 }
+        }
+
+      ]
+    }
+  ]
+}

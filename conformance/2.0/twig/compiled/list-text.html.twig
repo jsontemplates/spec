@@ -1,0 +1,9 @@
+<style>.jt,.jt *{box-sizing:border-box;margin:0;padding:0}.jt{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;font-size:13px}.jt table{width:100%;border-collapse:collapse}.jt th,.jt td{text-align:left;vertical-align:top}.jt img{display:block}.jt a{color:inherit}.jt ul,.jt ol{padding-left:1.5em}.jt .jt-inline p{display:inline}@page{size:letter;margin:10mm 12mm}@media screen{.jt{max-width:215.9mm;padding:10mm 12mm 10mm 12mm;margin-left:auto;margin-right:auto}}</style>
+<div class="jt">
+  <div>
+    <div style="font-weight:bold;font-size:16px;margin-bottom:8px;">{{ list_title }}</div>
+    {% for t in tasks %}
+    <div style="margin-bottom:4px;">{{ t.title }} — {{ t.owner }} (due {{ t.due }})</div>
+    {% endfor %}
+  </div>
+</div>

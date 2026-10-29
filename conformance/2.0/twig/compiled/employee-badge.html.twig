@@ -1,0 +1,33 @@
+<style>.jt,.jt *{box-sizing:border-box;margin:0;padding:0}.jt{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;font-size:13px}.jt table{width:100%;border-collapse:collapse}.jt th,.jt td{text-align:left;vertical-align:top}.jt img{display:block}.jt a{color:inherit}.jt ul,.jt ol{padding-left:1.5em}.jt .jt-inline p{display:inline}@page{size:86mm 54mm;margin:0}@media screen{.jt{max-width:86mm;padding:0 0 0 0;margin-left:auto;margin-right:auto}}</style>
+<div class="jt" lang="es-CL">
+  <div>
+    {% if not ((person.id) matches '/^V-/u') %}
+    <div style="text-align:center;font-weight:bold;color:#ffffff;background-color:#0f766e;padding:3px;font-size:11px;">{{ company.name }}</div>
+    {% endif %}
+    {% if (person.id) matches '/^V-/u' %}
+    <div style="text-align:center;font-weight:bold;color:#ffffff;background-color:#c2410c;padding:3px;font-size:11px;">VISITA · {{ company.name }}</div>
+    {% endif %}
+    <div style="display:flex;padding:4px 6px;">
+      <img src="{{ person.photo }}" alt="Fotografía de {{ person.name }}" style="display:block;width:22mm;height:27.5mm;">
+      <div style="width:62%;padding-left:8px;">
+        <div style="font-weight:bold;font-size:14px;">{{ person.name }}</div>
+        <div style="font-size:10px;color:#475569;">{{ person.position }}</div>
+        <div style="font-size:10px;color:#475569;margin-bottom:4px;">{{ person.area | default('Visita externa') }}</div>
+        <div style="font-size:10px;font-weight:bold;">Acceso: {{ person.access | default('General') }}</div>
+      </div>
+      {% set __jt1 %}BEGIN:VCARD
+VERSION:3.0
+FN:{{ (person.name)|raw }}
+ORG:{{ (company.name)|raw }}
+TITLE:{{ (person.position)|raw }}
+EMAIL:{{ (person.email)|raw }}
+END:VCARD{% endset %}
+      <img src="{{ __jt1|jt_qr('Q') }}" style="display:block;width:16mm;height:16mm;margin-left:auto;">
+    </div>
+    <div style="padding:0 6px;">
+      {% set __jt2 %}{{ (person.id)|raw }}{% endset %}
+      <img src="{{ __jt2|jt_barcode('CODE39') }}" style="display:block;width:50mm;height:7mm;margin-left:auto;margin-right:auto;">
+      <div style="text-align:center;font-size:8px;letter-spacing:1px;">{{ person.id }}</div>
+    </div>
+  </div>
+</div>

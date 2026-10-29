@@ -1,0 +1,11 @@
+{
+  "$schema": "https://spec.jsontemplates.io/schema/2.0/template.json",
+  "meta": { "name": "Hello World" },
+  "options": { "page": { "style": { "size": "letter" } } },
+  "body": {
+    "type": "VerticalLayout",
+    "elements": [
+      { "type": "TextBlock", "text": "{{ greeting }} {{ farewell }}" }
+    ]
+  }
+}

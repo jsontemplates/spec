@@ -1,0 +1,39 @@
+{
+  "company": {
+    "name": "Globex Corporation",
+    "address": "100 Industrial Way, Springfield, IL 62701",
+    "email": "payroll@globex.example",
+    "hr_email": "hr@globex.example",
+    "currency": "USD"
+  },
+  "period": {
+    "month": "March",
+    "year": "2026",
+    "start": "2026-03-01",
+    "end": "2026-03-31",
+    "pay_date": "2026-03-31"
+  },
+  "employee": {
+    "name": "Homer J. Simpson",
+    "id": "EMP-0042",
+    "position": "Safety Inspector",
+    "department": "Nuclear Operations"
+  },
+  "earnings": [
+    { "concept": "Base Salary",        "amount": 3500.00 },
+    { "concept": "Overtime (8 h)",     "amount": 262.50 },
+    { "concept": "Transportation Allowance", "amount": 120.00 },
+    { "concept": "Performance Bonus",  "amount": 200.00 }
+  ],
+  "deductions": [
+    { "concept": "Income Tax (15%)",   "amount": 609.37 },
+    { "concept": "Social Security",    "amount": 280.00 },
+    { "concept": "Health Insurance",   "amount": 95.00 },
+    { "concept": "401(k) Contribution","amount": 175.00 }
+  ],
+  "totals": {
+    "gross": 4082.50,
+    "deductions": 1159.37,
+    "net": 2923.13
+  }
+}

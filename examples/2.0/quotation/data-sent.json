@@ -1,0 +1,60 @@
+{
+  "company": {
+    "name": "Andes Servicios Digitales SpA",
+    "rut": "76123456-7",
+    "address": "Av. Providencia 1234, Of. 501, Santiago",
+    "phone": "+56 2 2345 6789",
+    "email": "ventas@andes.example"
+  },
+  "client": {
+    "name": "Comercial Los Aromos Ltda.",
+    "rut": "77888999-K",
+    "contact": "María Soto",
+    "email": "msoto@losaromos.example"
+  },
+  "quote": {
+    "number": "COT-2026-0187",
+    "date": "2026-10-20",
+    "valid_until": "2026-11-19",
+    "status": "sent",
+    "payment_terms": "30 días desde la factura",
+    "discount_percent": 10,
+    "notes": "Incluye instalación y capacitación inicial de 4 horas. Los plazos de entrega son de 10 días hábiles desde la aceptación."
+  },
+  "items": [
+    {
+      "sku": "SRV-001",
+      "description": "Implementación de tienda en línea",
+      "quantity": 1,
+      "unit_price": 850000,
+      "total": 850000
+    },
+    {
+      "sku": "SRV-014",
+      "description": "Integración con facturación electrónica",
+      "quantity": 1,
+      "unit_price": 320000,
+      "total": 320000
+    },
+    {
+      "sku": "LIC-100",
+      "description": "Licencia anual de plataforma",
+      "quantity": 12,
+      "unit_price": 18990,
+      "total": 227880
+    },
+    {
+      "sku": "CAP-002",
+      "description": "Hora de capacitación adicional",
+      "quantity": 4,
+      "unit_price": 35000,
+      "total": 140000
+    }
+  ],
+  "totals": {
+    "net": 1537880,
+    "discount": 153788,
+    "tax": 262997,
+    "total": 1647089
+  }
+}

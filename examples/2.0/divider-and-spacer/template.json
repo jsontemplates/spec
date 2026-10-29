@@ -1,0 +1,61 @@
+{
+  "$schema": "https://spec.jsontemplates.io/schema/2.0/template.json",
+  "meta": {
+    "name": "Divider and Spacer"
+  },
+  "options": {
+    "page": {
+      "style": {
+        "size": "letter",
+        "margin": "10mm 12mm"
+      }
+    }
+  },
+  "body": {
+    "type": "VerticalLayout",
+    "name": "Document",
+    "elements": [
+      {
+        "type": "TextBlock",
+        "text": "{{ title }}",
+        "style": {
+          "font-weight": "bold",
+          "font-size": "20px",
+          "text-align": "center"
+        }
+      },
+      {
+        "type": "TextBlock",
+        "text": "{{ intro }}",
+        "style": {
+          "text-align": "center",
+          "color": "#64748b"
+        }
+      },
+      {
+        "type": "DividerBlock"
+      },
+      {
+        "type": "TextBlock",
+        "text": "{{ section_a }}"
+      },
+      {
+        "type": "SpacerBlock",
+        "style": {
+          "height": "24px"
+        }
+      },
+      {
+        "type": "DividerBlock",
+        "style": {
+          "border-top": "2px solid #4A7CF5",
+          "margin": "10px 0"
+        }
+      },
+      {
+        "type": "TextBlock",
+        "text": "{{ section_b }}"
+      }
+    ]
+  }
+}

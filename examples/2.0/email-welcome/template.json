@@ -1,0 +1,150 @@
+{
+  "$schema": "https://spec.jsontemplates.io/schema/2.0/template.json",
+  "meta": {
+    "name": "Welcome Email"
+  },
+  "body": {
+    "type": "VerticalLayout",
+    "name": "Email",
+    "elements": [
+      {
+        "type": "VerticalLayout",
+        "name": "Header",
+        "style": {
+          "background-color": "#4A7CF5",
+          "padding": "24px 20px"
+        },
+        "elements": [
+          {
+            "type": "TextBlock",
+            "text": "{{ company.name }}",
+            "style": {
+              "text-align": "center",
+              "font-weight": "bold",
+              "font-size": "22px",
+              "color": "#ffffff"
+            }
+          }
+        ]
+      },
+      {
+        "type": "VerticalLayout",
+        "name": "Body",
+        "style": {
+          "padding": "24px 30px"
+        },
+        "elements": [
+          {
+            "type": "MarkdownBlock",
+            "name": "Greeting",
+            "text": "Welcome, **{{ user.name }}**! 👋",
+            "style": {
+              "font-size": "18px",
+              "margin-bottom": "12px"
+            }
+          },
+          {
+            "type": "MarkdownBlock",
+            "name": "Intro",
+            "text": "Thank you for joining **{{ company.name }}**. Your account is ready — here's a quick summary of what you get on the **{{ user.plan }}** plan:",
+            "style": {
+              "margin-bottom": "16px"
+            }
+          },
+          {
+            "type": "TableBlock",
+            "name": "Plan Features",
+            "style": {
+              "border": "1px solid #e2e8f0",
+              "margin-bottom": "20px"
+            },
+            "tbody": {
+              "each": {
+                "list": "features",
+                "item": "f"
+              }
+            },
+            "columns": [
+              {
+                "td": {
+                  "type": "TextBlock",
+                  "text": "{{ f.name }}",
+                  "style": {
+                    "font-weight": "bold"
+                  }
+                }
+              },
+              {
+                "style": {
+                  "width": "35%"
+                },
+                "td": {
+                  "type": "TextBlock",
+                  "text": "{{ f.value }}",
+                  "style": {
+                    "text-align": "right",
+                    "color": "#4A7CF5",
+                    "font-weight": "bold"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "type": "VerticalLayout",
+            "name": "CTA Button",
+            "style": {
+              "text-align": "center",
+              "margin-bottom": "20px"
+            },
+            "elements": [
+              {
+                "type": "MarkdownBlock",
+                "text": "[Go to your Dashboard →]({{ links.dashboard }})",
+                "style": {
+                  "display": "inline-block",
+                  "background-color": "#4A7CF5",
+                  "color": "#ffffff",
+                  "padding": "10px 28px",
+                  "border-radius": "4px",
+                  "font-size": "14px",
+                  "font-weight": "bold"
+                }
+              }
+            ]
+          },
+          {
+            "type": "MarkdownBlock",
+            "name": "Help",
+            "text": "Need help getting started? Check out our [documentation]({{ links.docs }}) or reply to this email — we're happy to help.\n\n— The {{ company.name }} Team"
+          }
+        ]
+      },
+      {
+        "type": "VerticalLayout",
+        "name": "Footer",
+        "style": {
+          "background-color": "#f8fafc",
+          "padding": "16px 20px",
+          "text-align": "center",
+          "color": "#94a3b8",
+          "font-size": "10px"
+        },
+        "elements": [
+          {
+            "type": "TextBlock",
+            "text": "{{ company.name }} · {{ company.address }}"
+          },
+          {
+            "type": "TextBlock",
+            "text": "You received this email because you signed up at {{ company.website }}."
+          },
+          {
+            "type": "MarkdownBlock",
+            "text": "[Unsubscribe]({{ links.unsubscribe }})"
+          }
+        ]
+      }
+    ]
+  }
+}

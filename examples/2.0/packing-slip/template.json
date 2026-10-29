@@ -1,0 +1,322 @@
+{
+  "$schema": "https://spec.jsontemplates.io/schema/2.0/template.json",
+  "meta": {
+    "name": "Packing Slip"
+  },
+  "options": {
+    "page": {
+      "style": {
+        "size": "letter",
+        "margin": "10mm 12mm"
+      }
+    }
+  },
+  "body": {
+    "type": "VerticalLayout",
+    "name": "Packing Slip",
+    "elements": [
+      {
+        "type": "VerticalLayout",
+        "name": "Document Title",
+        "style": {
+          "padding": "6px 0",
+          "margin-bottom": "10px",
+          "border": "2px solid #4A7CF5"
+        },
+        "elements": [
+          {
+            "type": "TextBlock",
+            "text": "PACKING SLIP",
+            "style": {
+              "text-align": "center",
+              "font-weight": "bold",
+              "font-size": "20px"
+            }
+          },
+          {
+            "type": "TextBlock",
+            "text": "Order # {{ shipment.order_number }}",
+            "style": {
+              "text-align": "center",
+              "color": "#64748b"
+            }
+          }
+        ]
+      },
+      {
+        "type": "HorizontalLayout",
+        "name": "Addresses",
+        "style": {
+          "margin-bottom": "10px"
+        },
+        "elements": [
+          {
+            "type": "MarkdownBlock",
+            "name": "Ship From",
+            "text": "**Ship From:**\n\n{{ sender.company }}\n\n{{ sender.address }}\n\n{{ sender.city }}, {{ sender.country }}\n\n{{ sender.phone }}",
+            "style": {
+              "width": "50%",
+              "padding": "6px 8px",
+              "background-color": "#f8fafc"
+            }
+          },
+          {
+            "type": "MarkdownBlock",
+            "name": "Ship To",
+            "text": "**Ship To:**\n\n{{ recipient.name }}\n\n{{ recipient.company }}\n\n{{ recipient.address }}\n\n{{ recipient.city }}, {{ recipient.country }}",
+            "style": {
+              "width": "50%",
+              "padding": "6px 8px",
+              "border": "1px solid #d1d5db"
+            }
+          }
+        ]
+      },
+      {
+        "type": "HorizontalLayout",
+        "name": "Shipment Details",
+        "style": {
+          "margin-bottom": "10px"
+        },
+        "elements": [
+          {
+            "type": "KeyValueBlock",
+            "style": {
+              "width": "50%"
+            },
+            "rows": [
+              {
+                "label": {
+                  "type": "TextBlock",
+                  "text": "Ship Date:",
+                  "style": {
+                    "font-weight": "bold"
+                  }
+                },
+                "value": {
+                  "type": "TextBlock",
+                  "text": "{{ shipment.date }}"
+                }
+              },
+              {
+                "label": {
+                  "type": "TextBlock",
+                  "text": "Carrier:",
+                  "style": {
+                    "font-weight": "bold"
+                  }
+                },
+                "value": {
+                  "type": "TextBlock",
+                  "text": "{{ shipment.carrier }}"
+                }
+              },
+              {
+                "label": {
+                  "type": "TextBlock",
+                  "text": "Service:",
+                  "style": {
+                    "font-weight": "bold"
+                  }
+                },
+                "value": {
+                  "type": "TextBlock",
+                  "text": "{{ shipment.service }}"
+                }
+              }
+            ]
+          },
+          {
+            "type": "KeyValueBlock",
+            "style": {
+              "width": "50%"
+            },
+            "rows": [
+              {
+                "label": {
+                  "type": "TextBlock",
+                  "text": "Weight:",
+                  "style": {
+                    "font-weight": "bold"
+                  }
+                },
+                "value": {
+                  "type": "TextBlock",
+                  "text": "{{ shipment.total_weight }} kg"
+                }
+              },
+              {
+                "label": {
+                  "type": "TextBlock",
+                  "text": "Packages:",
+                  "style": {
+                    "font-weight": "bold"
+                  }
+                },
+                "value": {
+                  "type": "TextBlock",
+                  "text": "{{ shipment.packages }}"
+                }
+              },
+              {
+                "label": {
+                  "type": "TextBlock",
+                  "text": "Notes:",
+                  "style": {
+                    "font-weight": "bold"
+                  }
+                },
+                "value": {
+                  "type": "TextBlock",
+                  "text": "{{ shipment.notes }}"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "VerticalLayout",
+        "style": {
+          "border": "1px solid #d1d5db",
+          "margin-bottom": "10px",
+          "min-height": "120px"
+        },
+        "elements": [
+          {
+            "type": "TableBlock",
+            "name": "Items",
+            "thead": {
+              "style": {
+                "background-color": "#4A7CF5",
+                "color": "#ffffff",
+                "font-size": "12px"
+              }
+            },
+            "tbody": {
+              "each": {
+                "list": "items",
+                "item": "item"
+              }
+            },
+            "columns": [
+              {
+                "style": {
+                  "width": "22%"
+                },
+                "th": {
+                  "type": "TextBlock",
+                  "text": "SKU"
+                },
+                "td": {
+                  "type": "TextBlock",
+                  "text": "{{ item.sku }}"
+                }
+              },
+              {
+                "th": {
+                  "type": "TextBlock",
+                  "text": "Description"
+                },
+                "td": {
+                  "type": "TextBlock",
+                  "text": "{{ item.description }}"
+                }
+              },
+              {
+                "style": {
+                  "width": "12%"
+                },
+                "th": {
+                  "type": "TextBlock",
+                  "text": "Qty"
+                },
+                "td": {
+                  "type": "TextBlock",
+                  "text": "{{ item.qty }}",
+                  "style": {
+                    "text-align": "right"
+                  }
+                }
+              },
+              {
+                "style": {
+                  "width": "20%"
+                },
+                "th": {
+                  "type": "TextBlock",
+                  "text": "Weight (kg)"
+                },
+                "td": {
+                  "type": "TextBlock",
+                  "text": "{{ item.weight }}",
+                  "style": {
+                    "text-align": "right"
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "HorizontalLayout",
+        "name": "Tracking Footer",
+        "elements": [
+          {
+            "type": "VerticalLayout",
+            "style": {
+              "width": "55%"
+            },
+            "elements": [
+              {
+                "type": "BarcodeBlock",
+                "text": "{{ shipment.tracking_number }}",
+                "format": "CODE128",
+                "style": {
+                  "width": "40%",
+                  "height": "60px"
+                }
+              },
+              {
+                "type": "TextBlock",
+                "text": "{{ shipment.tracking_number }}",
+                "style": {
+                  "text-align": "left",
+                  "line-height": "1",
+                  "font-size": "10px",
+                  "font-weight": "bold"
+                }
+              }
+            ]
+          },
+          {
+            "type": "VerticalLayout",
+            "style": {
+              "width": "45%"
+            },
+            "elements": [
+              {
+                "type": "TextBlock",
+                "text": "Received in good condition by:",
+                "style": {
+                  "color": "#64748b",
+                  "font-size": "10px"
+                }
+              },
+              {
+                "type": "TextBlock",
+                "text": "Signature / Date",
+                "style": {
+                  "border-top": "1px solid #000",
+                  "font-size": "10px",
+                  "margin-top": "30px"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

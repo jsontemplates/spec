@@ -1,0 +1,20 @@
+{
+  "pass": {
+    "passenger": "DOE/JOHN",
+    "flight": "LA 2603",
+    "date": "2026-10-30",
+    "gate": null,
+    "boarding": "10:25",
+    "seat": "27C",
+    "priority": false,
+    "origin": {
+      "code": "SCL",
+      "city": "Santiago"
+    },
+    "destination": {
+      "code": "LIM",
+      "city": "Lima"
+    },
+    "bcbp": "M1DOE/JOHN            EK7TQ2P SCLLIMLA  2603301Y 27C  142 100"
+  }
+}

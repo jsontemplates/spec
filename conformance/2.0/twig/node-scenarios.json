@@ -1,0 +1,392 @@
+{
+  "text": {
+    "node": {
+      "type": "TextBlock",
+      "text": "Hello & {{ name }}",
+      "style": {
+        "color": "red"
+      }
+    },
+    "context": "block",
+    "expected": "<div style=\"color:red;\">Hello &amp; {{ name }}</div>"
+  },
+  "text in a line of text": {
+    "node": {
+      "type": "TextBlock",
+      "text": "{{ a }}"
+    },
+    "context": "inline",
+    "expected": "<span class=\"jt-inline\">{{ a }}</span>"
+  },
+  "text without width in a horizontal layout": {
+    "node": {
+      "type": "TextBlock",
+      "text": "x"
+    },
+    "context": "horizontal",
+    "expected": "  <div style=\"flex:1 1 0;min-width:0;\">x</div>"
+  },
+  "text with width in a horizontal layout": {
+    "node": {
+      "type": "TextBlock",
+      "text": "x",
+      "style": {
+        "width": "30%"
+      }
+    },
+    "context": "horizontal",
+    "expected": "  <div style=\"width:30%;\">x</div>"
+  },
+  "text with a style without width in a horizontal layout": {
+    "node": {
+      "type": "TextBlock",
+      "text": "x",
+      "style": {
+        "color": "red"
+      }
+    },
+    "context": "horizontal",
+    "expected": "  <div style=\"flex:1 1 0;min-width:0;color:red;\">x</div>"
+  },
+  "markdown": {
+    "node": {
+      "type": "MarkdownBlock",
+      "text": "**Date:** {{ d }}\n\nok",
+      "style": {
+        "margin-bottom": "10px"
+      }
+    },
+    "context": "block",
+    "expected": "<div style=\"margin-bottom:10px;\">{% apply jt_markdown %}\n**Date:** {{ d }}\n\nok\n{% endapply %}</div>"
+  },
+  "html": {
+    "node": {
+      "type": "HtmlBlock",
+      "text": "<b>x</b> {{ y }}"
+    },
+    "context": "block",
+    "expected": "<div><b>x</b> {{ y }}</div>"
+  },
+  "image": {
+    "node": {
+      "type": "ImageBlock",
+      "src": "{{ logo }}",
+      "alt": "A \"logo\"",
+      "style": {
+        "margin-left": "auto"
+      }
+    },
+    "context": "block",
+    "expected": "<img src=\"{{ logo }}\" alt=\"A &quot;logo&quot;\" style=\"display:block;margin-left:auto;\">"
+  },
+  "image without alt": {
+    "node": {
+      "type": "ImageBlock",
+      "src": "a.png"
+    },
+    "context": "block",
+    "expected": "<img src=\"a.png\" style=\"display:block;\">"
+  },
+  "barcode": {
+    "node": {
+      "type": "BarcodeBlock",
+      "text": "{{ a }}",
+      "format": "EAN13"
+    },
+    "context": "block",
+    "expected": "{% set __jt1 %}{{ (a)|raw }}{% endset %}\n<img src=\"{{ __jt1|jt_barcode('EAN13') }}\" style=\"display:block;\">"
+  },
+  "qr": {
+    "node": {
+      "type": "QrBlock",
+      "text": "a",
+      "errorCorrection": "Q",
+      "style": {
+        "width": "90px"
+      }
+    },
+    "context": "block",
+    "expected": "{% set __jt1 %}a{% endset %}\n<img src=\"{{ __jt1|jt_qr('Q') }}\" style=\"display:block;width:90px;\">"
+  },
+  "pdf417": {
+    "node": {
+      "type": "Pdf417Block",
+      "text": "a",
+      "errorCorrection": 4,
+      "compact": true
+    },
+    "context": "block",
+    "expected": "{% set __jt1 %}a{% endset %}\n<img src=\"{{ __jt1|jt_pdf417(4, true) }}\" style=\"display:block;\">"
+  },
+  "divider": {
+    "node": {
+      "type": "DividerBlock"
+    },
+    "context": "block",
+    "expected": "<div style=\"border-top:1px solid #000;\"></div>"
+  },
+  "divider with a style": {
+    "node": {
+      "type": "DividerBlock",
+      "style": {
+        "border-top": "2px solid red"
+      }
+    },
+    "context": "block",
+    "expected": "<div style=\"border-top:1px solid #000;border-top:2px solid red;\"></div>"
+  },
+  "spacer": {
+    "node": {
+      "type": "SpacerBlock",
+      "style": {
+        "height": "24px"
+      }
+    },
+    "context": "block",
+    "expected": "<div style=\"height:24px;\"></div>"
+  },
+  "page break": {
+    "node": {
+      "type": "PageBreak"
+    },
+    "context": "block",
+    "expected": "<div style=\"break-after:page;\"></div>"
+  },
+  "empty vertical layout": {
+    "node": {
+      "type": "VerticalLayout",
+      "elements": []
+    },
+    "context": "block",
+    "expected": "<div></div>"
+  },
+  "vertical layout": {
+    "node": {
+      "type": "VerticalLayout",
+      "style": {
+        "padding": "4px"
+      },
+      "elements": [
+        {
+          "type": "TextBlock",
+          "text": "x"
+        },
+        {
+          "type": "TextBlock",
+          "text": "x"
+        }
+      ]
+    },
+    "context": "block",
+    "expected": "<div style=\"padding:4px;\">\n  <div>x</div>\n  <div>x</div>\n</div>"
+  },
+  "horizontal layout": {
+    "node": {
+      "type": "HorizontalLayout",
+      "elements": [
+        {
+          "type": "TextBlock",
+          "text": "x"
+        },
+        {
+          "type": "TextBlock",
+          "text": "y",
+          "style": {
+            "width": "30%"
+          }
+        }
+      ]
+    },
+    "context": "block",
+    "expected": "<div style=\"display:flex;\">\n  <div style=\"flex:1 1 0;min-width:0;\">x</div>\n  <div style=\"width:30%;\">y</div>\n</div>"
+  },
+  "key value": {
+    "node": {
+      "type": "KeyValueBlock",
+      "style": {
+        "width": "50%"
+      },
+      "rows": [
+        {
+          "label": {
+            "type": "TextBlock",
+            "text": "A:"
+          },
+          "value": {
+            "type": "TextBlock",
+            "text": "{{ a }}"
+          }
+        },
+        {
+          "label": {
+            "type": "MarkdownBlock",
+            "text": "**B**"
+          },
+          "value": {
+            "type": "TextBlock",
+            "text": "{{ b }}",
+            "each": {
+              "list": "l",
+              "item": "i"
+            }
+          }
+        }
+      ]
+    },
+    "context": "block",
+    "expected": "<div style=\"width:50%;\">\n  {% set __jt1 %}<span class=\"jt-inline\">{{ a }}</span>{% endset %}{% if __jt1|striptags|trim is not empty %}<div><span class=\"jt-inline\">A:</span> {{ __jt1 }}</div>{% endif %}\n  {% set __jt2 %}{% for i in l %}<span class=\"jt-inline\">{{ b }}</span>{% endfor %}{% endset %}{% if __jt2|striptags|trim is not empty %}<div><span class=\"jt-inline\">{% apply jt_markdown %}\n**B**\n{% endapply %}</span> {{ __jt2 }}</div>{% endif %}\n</div>"
+  },
+  "empty key value": {
+    "node": {
+      "type": "KeyValueBlock",
+      "rows": []
+    },
+    "context": "block",
+    "expected": "<div></div>"
+  },
+  "table": {
+    "node": {
+      "type": "TableBlock",
+      "style": {
+        "border": "1px solid red"
+      },
+      "thead": {
+        "style": {
+          "color": "#fff"
+        }
+      },
+      "tbody": {
+        "each": {
+          "list": "rows",
+          "item": "r"
+        },
+        "style": {
+          "color": "red"
+        },
+        "rule": {
+          "effect": "HIDE",
+          "condition": {
+            "value": "r.x",
+            "schema": {
+              "const": 0
+            }
+          }
+        }
+      },
+      "columns": [
+        {
+          "th": {
+            "type": "TextBlock",
+            "text": "A"
+          },
+          "td": {
+            "type": "TextBlock",
+            "text": "{{ r.a }}"
+          },
+          "style": {
+            "width": "10%"
+          }
+        },
+        {
+          "td": {
+            "type": "TextBlock",
+            "text": "{{ r.b }}"
+          }
+        }
+      ]
+    },
+    "context": "block",
+    "expected": "{% set __jt1 = false %}{% set __jt2 = false %}\n{% for r in rows %}\n  {% if not ((r.x) == 0) %}\n    {% set __jt3 %}<span class=\"jt-inline\">{{ r.a }}</span>{% endset %}{% if __jt3|striptags|trim is not empty %}{% set __jt1 = true %}{% endif %}\n    {% set __jt4 %}<span class=\"jt-inline\">{{ r.b }}</span>{% endset %}{% if __jt4|striptags|trim is not empty %}{% set __jt2 = true %}{% endif %}\n  {% endif %}\n{% endfor %}\n<table style=\"border:1px solid red;\">\n  <colgroup>\n    {% if __jt1 %}<col style=\"width:10%;\">{% endif %}\n    {% if __jt2 %}<col>{% endif %}\n  </colgroup>\n  <thead style=\"color:#fff;\">\n    <tr>\n      {% if __jt1 %}<th>\n        <div>A</div>\n      </th>{% endif %}\n      {% if __jt2 %}<th>\n      </th>{% endif %}\n    </tr>\n  </thead>\n  <tbody style=\"color:red;\">\n    {% for r in rows %}\n    {% if not ((r.x) == 0) %}\n    <tr>\n      {% if __jt1 %}<td>\n        <div>{{ r.a }}</div>\n      </td>{% endif %}\n      {% if __jt2 %}<td>\n        <div>{{ r.b }}</div>\n      </td>{% endif %}\n    </tr>\n    {% endif %}\n    {% endfor %}\n  </tbody>\n</table>"
+  },
+  "table without header, widths nor rule": {
+    "node": {
+      "type": "TableBlock",
+      "tbody": {
+        "each": {
+          "list": "rows",
+          "item": "r"
+        }
+      },
+      "columns": [
+        {
+          "td": {
+            "type": "TextBlock",
+            "text": "{{ r.a }}"
+          }
+        }
+      ]
+    },
+    "context": "block",
+    "expected": "{% set __jt1 = false %}\n{% for r in rows %}\n    {% set __jt2 %}<span class=\"jt-inline\">{{ r.a }}</span>{% endset %}{% if __jt2|striptags|trim is not empty %}{% set __jt1 = true %}{% endif %}\n{% endfor %}\n<table>\n  <tbody>\n    {% for r in rows %}\n    <tr>\n      {% if __jt1 %}<td>\n        <div>{{ r.a }}</div>\n      </td>{% endif %}\n    </tr>\n    {% endfor %}\n  </tbody>\n</table>"
+  },
+  "node with a rule": {
+    "node": {
+      "type": "TextBlock",
+      "text": "x",
+      "rule": {
+        "effect": "SHOW",
+        "condition": {
+          "value": "i.ok",
+          "schema": {
+            "const": true
+          }
+        }
+      }
+    },
+    "context": "block",
+    "expected": "{% if (i.ok) == true %}\n<div>x</div>\n{% endif %}"
+  },
+  "node with a repetition": {
+    "node": {
+      "type": "TextBlock",
+      "text": "{{ i }}",
+      "each": {
+        "list": "l",
+        "item": "i"
+      }
+    },
+    "context": "block",
+    "expected": "{% for i in l %}\n<div>{{ i }}</div>\n{% endfor %}"
+  },
+  "node with a repetition and a rule": {
+    "node": {
+      "type": "TextBlock",
+      "text": "x",
+      "each": {
+        "list": "l",
+        "item": "i"
+      },
+      "rule": {
+        "effect": "SHOW",
+        "condition": {
+          "value": "i.ok",
+          "schema": {
+            "const": true
+          }
+        }
+      }
+    },
+    "context": "block",
+    "expected": "{% for i in l %}\n{% if (i.ok) == true %}\n<div>x</div>\n{% endif %}\n{% endfor %}"
+  },
+  "node with a repetition in a line of text": {
+    "node": {
+      "type": "TextBlock",
+      "text": "{{ i }}",
+      "each": {
+        "list": "l",
+        "item": "i"
+      }
+    },
+    "context": "inline",
+    "expected": "{% for i in l %}<span class=\"jt-inline\">{{ i }}</span>{% endfor %}"
+  },
+  "pdf417 with the defaults": {
+    "node": {
+      "type": "Pdf417Block",
+      "text": "a"
+    },
+    "context": "block",
+    "expected": "{% set __jt1 %}a{% endset %}\n<img src=\"{{ __jt1|jt_pdf417(5, false) }}\" style=\"display:block;\">"
+  }
+}

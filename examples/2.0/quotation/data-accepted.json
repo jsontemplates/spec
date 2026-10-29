@@ -1,0 +1,45 @@
+{
+  "company": {
+    "name": "Andes Servicios Digitales SpA",
+    "rut": "76123456-7",
+    "address": "Av. Providencia 1234, Of. 501, Santiago",
+    "phone": "+56 2 2345 6789",
+    "email": "ventas@andes.example"
+  },
+  "client": {
+    "name": "Ferretería El Tornillo SpA",
+    "rut": "76555444-3",
+    "contact": "Jorge Pino",
+    "email": "jpino@eltornillo.example"
+  },
+  "quote": {
+    "number": "COT-2026-0179",
+    "date": "2026-10-02",
+    "valid_until": "2026-11-01",
+    "status": "accepted",
+    "accepted_on": "2026-10-09",
+    "discount_percent": 0
+  },
+  "items": [
+    {
+      "sku": "SRV-021",
+      "description": "Mantención mensual de sitio web (3 meses)",
+      "quantity": 3,
+      "unit_price": 120000,
+      "total": 360000
+    },
+    {
+      "sku": "SRV-030",
+      "description": "Certificado SSL y dominio por un año",
+      "quantity": 1,
+      "unit_price": 45000,
+      "total": 45000
+    }
+  ],
+  "totals": {
+    "net": 405000,
+    "discount": 0,
+    "tax": 76950,
+    "total": 481950
+  }
+}

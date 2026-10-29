@@ -1,0 +1,40 @@
+{
+  "sender": {
+    "company": "Acme Warehouse",
+    "address": "742 Evergreen Terrace",
+    "city": "Springfield, IL 62701",
+    "country": "USA",
+    "phone": "+1 555 010 2026"
+  },
+  "recipient": {
+    "name": "Jane Smith",
+    "company": "Smith & Associates LLC",
+    "address": "1600 Pennsylvania Ave NW",
+    "city": "Washington, DC 20500",
+    "country": "USA"
+  },
+  "shipment": {
+    "order_number": "ORD-2026-0099",
+    "date": "2026-03-16",
+    "carrier": "FedEx",
+    "service": "Ground",
+    "tracking_number": "794644792798",
+    "total_weight": 3.8,
+    "packages": 1,
+    "notes": "Handle with care — fragile contents."
+  },
+  "items": [
+    {
+      "sku": "ACM-WDG-001",
+      "description": "Widget Pro — Model X (Blue)",
+      "qty": 3,
+      "weight": 1.2
+    },
+    {
+      "sku": "ACM-GDG-042",
+      "description": "Gadget Deluxe — 12V Adapter included",
+      "qty": 1,
+      "weight": 2.6
+    }
+  ]
+}

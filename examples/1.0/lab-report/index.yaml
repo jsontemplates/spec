@@ -1,0 +1,11 @@
+title: Laboratory Reports
+description: Clinical lab report with patient data, result table, and analyst signature.
+order: 5
+
+examples:
+  - title: Clinical Lab Report
+    description: Blood panel report with reference ranges and out-of-range highlighting.
+    template: lab-report.json
+    data:
+      - title: Sample blood panel
+        file: lab-report.json

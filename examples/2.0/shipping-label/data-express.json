@@ -1,0 +1,29 @@
+{
+  "sender": {
+    "name": "Northwind Traders",
+    "address": "2200 Harbor Blvd",
+    "city": "Long Beach, CA 90802, US"
+  },
+  "recipient": {
+    "name": "Camila Rojas",
+    "address": "Av. Apoquindo 4501, Of. 802",
+    "city": "Las Condes",
+    "region": "RM",
+    "postal_code": "7550000",
+    "country": "CHILE",
+    "phone": "+56 9 8765 4321"
+  },
+  "shipment": {
+    "service": "EXPRESS 48H",
+    "tracking": "NW2026102800417",
+    "reference": "ORD-88213",
+    "weight_kg": 27.5,
+    "pieces": 1,
+    "pieces_total": 2,
+    "fragile": true,
+    "signature": false,
+    "declared_value": 1250,
+    "date": "2026-10-28",
+    "dimensions": "60 x 40 x 35 cm"
+  }
+}

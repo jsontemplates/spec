@@ -1,0 +1,22 @@
+title: Basics
+description: Minimal examples to get started with JSON Templates.
+order: 1
+
+examples:
+  - title: Hello World
+    description: The simplest possible template — a single text block with one variable.
+    template: hello-world.json
+    data:
+      - title: English
+        file: hello-world-en.json
+      - title: Spanish
+        file: hello-world-es.json
+
+  - title: Hello World (multi-line)
+    description: Two text blocks stacked in a vertical layout, each with its own variable.
+    template: hello-world-multiline.json
+    data:
+      - title: English
+        file: hello-world-en.json
+      - title: Spanish
+        file: hello-world-es.json

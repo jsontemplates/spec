@@ -1,0 +1,8 @@
+{
+  "$schema": "https://spec.jsontemplates.io/schema/2.0/template.json",
+  "foo": 1,
+  "body": {
+    "type": "TextBlock",
+    "text": "x"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "name": "jsontemplates-spec",
+  "private": true,
+  "description": "Checks of the JSON Templates specification: schemas, examples and conformance fixtures.",
+  "type": "module",
+  "scripts": {
+    "test": "node tools/check.mjs"
+  },
+  "devDependencies": {
+    "ajv": "^8.17.1"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

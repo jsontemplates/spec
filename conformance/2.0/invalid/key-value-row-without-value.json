@@ -1,0 +1,14 @@
+{
+  "$schema": "https://spec.jsontemplates.io/schema/2.0/template.json",
+  "body": {
+    "type": "KeyValueBlock",
+    "rows": [
+      {
+        "label": {
+          "type": "TextBlock",
+          "text": "x"
+        }
+      }
+    ]
+  }
+}

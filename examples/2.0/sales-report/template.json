@@ -1,0 +1,346 @@
+{
+  "$schema": "https://spec.jsontemplates.io/schema/2.0/template.json",
+  "meta": {
+    "name": "Monthly Sales Report",
+    "description": "Landscape report with KPI boxes, a chart that falls back to text, a table with conditional colors and a notes page.",
+    "lang": "en"
+  },
+  "options": {
+    "page": {
+      "style": {
+        "size": "A4 landscape",
+        "margin": "12mm"
+      }
+    }
+  },
+  "body": {
+    "type": "VerticalLayout",
+    "elements": [
+      {
+        "type": "TextBlock",
+        "text": "{{ report.title }}",
+        "style": {
+          "font-weight": "bold",
+          "font-size": "22px"
+        }
+      },
+      {
+        "type": "TextBlock",
+        "text": "{{ report.period }} · Generated {{ report.generated | format_as('jt.date.short') }} · {{ report.owner }}",
+        "style": {
+          "color": "#64748b",
+          "margin-bottom": "10px"
+        }
+      },
+      {
+        "type": "HorizontalLayout",
+        "style": {
+          "margin-bottom": "12px"
+        },
+        "elements": [
+          {
+            "type": "VerticalLayout",
+            "name": "KPI",
+            "each": {
+              "list": "kpis",
+              "item": "k"
+            },
+            "style": {
+              "width": "25%",
+              "padding": "8px 10px",
+              "background-color": "#f8fafc",
+              "border-left": "4px solid #4A7CF5"
+            },
+            "elements": [
+              {
+                "type": "TextBlock",
+                "text": "{{ k.label }}",
+                "style": {
+                  "font-size": "10px",
+                  "color": "#64748b",
+                  "text-transform": "uppercase"
+                }
+              },
+              {
+                "type": "TextBlock",
+                "text": "{{ k.value }}",
+                "style": {
+                  "font-weight": "bold",
+                  "font-size": "20px"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "acme:BarChart",
+        "name": "Chart",
+        "data": "regions",
+        "x": "name",
+        "y": "revenue",
+        "title": "Revenue by region",
+        "style": {
+          "height": "60mm",
+          "margin-bottom": "12px"
+        },
+        "fallback": {
+          "type": "TextBlock",
+          "text": "Revenue by region is listed in the table below.",
+          "style": {
+            "font-style": "italic",
+            "color": "#64748b",
+            "margin-bottom": "12px"
+          }
+        }
+      },
+      {
+        "type": "TableBlock",
+        "name": "Regions",
+        "style": {
+          "border": "1px solid #e2e8f0"
+        },
+        "thead": {
+          "style": {
+            "background-color": "#1e293b",
+            "color": "#ffffff"
+          }
+        },
+        "tbody": {
+          "each": {
+            "list": "regions",
+            "item": "r"
+          },
+          "rule": {
+            "effect": "HIDE",
+            "condition": {
+              "value": "r.active",
+              "schema": {
+                "const": false
+              }
+            }
+          },
+          "style": {
+            "font-size": "12px"
+          }
+        },
+        "columns": [
+          {
+            "style": {
+              "width": "16%"
+            },
+            "th": {
+              "type": "TextBlock",
+              "text": "Region",
+              "style": {
+                "font-weight": "bold"
+              }
+            },
+            "td": {
+              "type": "TextBlock",
+              "text": "{{ r.name }}",
+              "style": {
+                "font-weight": "bold"
+              }
+            }
+          },
+          {
+            "style": {
+              "width": "18%"
+            },
+            "th": {
+              "type": "TextBlock",
+              "text": "Manager",
+              "style": {
+                "font-weight": "bold"
+              }
+            },
+            "td": {
+              "type": "TextBlock",
+              "text": "{{ r.manager }}"
+            }
+          },
+          {
+            "style": {
+              "width": "12%"
+            },
+            "th": {
+              "type": "TextBlock",
+              "text": "Units",
+              "style": {
+                "text-align": "right",
+                "font-weight": "bold"
+              }
+            },
+            "td": {
+              "type": "TextBlock",
+              "text": "{{ r.units | format_as('jt.int') }}",
+              "style": {
+                "text-align": "right"
+              }
+            }
+          },
+          {
+            "style": {
+              "width": "18%"
+            },
+            "th": {
+              "type": "TextBlock",
+              "text": "Revenue (USD)",
+              "style": {
+                "text-align": "right",
+                "font-weight": "bold"
+              }
+            },
+            "td": {
+              "type": "TextBlock",
+              "text": "{{ r.revenue | format_as('jt.int') }}",
+              "style": {
+                "text-align": "right"
+              }
+            }
+          },
+          {
+            "style": {
+              "width": "18%"
+            },
+            "th": {
+              "type": "TextBlock",
+              "text": "Target (USD)",
+              "style": {
+                "text-align": "right",
+                "font-weight": "bold"
+              }
+            },
+            "td": {
+              "type": "TextBlock",
+              "text": "{{ r.target | format_as('jt.int') }}",
+              "style": {
+                "text-align": "right"
+              }
+            }
+          },
+          {
+            "style": {
+              "width": "18%"
+            },
+            "th": {
+              "type": "TextBlock",
+              "text": "vs target",
+              "style": {
+                "text-align": "right",
+                "font-weight": "bold"
+              }
+            },
+            "td": {
+              "type": "VerticalLayout",
+              "elements": [
+                {
+                  "type": "TextBlock",
+                  "rule": {
+                    "effect": "SHOW",
+                    "condition": {
+                      "value": "r.variance_pct",
+                      "schema": {
+                        "minimum": 0
+                      }
+                    }
+                  },
+                  "text": "+{{ r.variance_pct | number_format(1, '.', ',') }}%",
+                  "style": {
+                    "text-align": "right",
+                    "color": "#15803d",
+                    "font-weight": "bold"
+                  }
+                },
+                {
+                  "type": "TextBlock",
+                  "rule": {
+                    "effect": "SHOW",
+                    "condition": {
+                      "value": "r.variance_pct",
+                      "schema": {
+                        "exclusiveMaximum": 0
+                      }
+                    }
+                  },
+                  "text": "{{ r.variance_pct | number_format(1, '.', ',') }}%",
+                  "style": {
+                    "text-align": "right",
+                    "color": "#b91c1c",
+                    "font-weight": "bold"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "type": "TextBlock",
+        "text": "Total revenue: USD {{ totals.revenue | format_as('jt.int') }} against a target of USD {{ totals.target | format_as('jt.int') }}.",
+        "style": {
+          "text-align": "right",
+          "font-weight": "bold",
+          "margin-top": "8px"
+        }
+      },
+      {
+        "type": "PageBreak"
+      },
+      {
+        "type": "TextBlock",
+        "text": "Notes by region",
+        "style": {
+          "font-weight": "bold",
+          "font-size": "18px",
+          "margin-bottom": "8px"
+        }
+      },
+      {
+        "type": "VerticalLayout",
+        "name": "Region notes",
+        "rule": {
+          "effect": "SHOW",
+          "condition": {
+            "value": "r.active",
+            "schema": {
+              "const": true
+            }
+          }
+        },
+        "each": {
+          "list": "regions",
+          "item": "r"
+        },
+        "style": {
+          "margin-bottom": "10px",
+          "padding": "6px 8px",
+          "border-left": "3px solid #cbd5e1"
+        },
+        "elements": [
+          {
+            "type": "TextBlock",
+            "text": "{{ r.name }} · {{ r.manager }}",
+            "style": {
+              "font-weight": "bold",
+              "color": "#1e293b"
+            }
+          },
+          {
+            "type": "MarkdownBlock",
+            "each": {
+              "list": "r.notes",
+              "item": "n"
+            },
+            "text": "- {{ n }}",
+            "style": {
+              "font-size": "12px",
+              "margin-left": "10px"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,17 @@
+{
+    "$schema": "https://spec.jsontemplates.io/schema/1.0/template.json",
+    "format": "LETTER",
+    "width": 216,
+    "height": 279,
+    "elements": [
+        {
+            "type": "VerticalLayout",
+            "elements": [
+                {
+                    "type": "TextBlock",
+                    "content": "{{ greeting }} {{ farewell }}"
+                }
+            ]
+        }
+    ]
+}

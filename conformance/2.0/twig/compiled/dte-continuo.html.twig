@@ -1,0 +1,139 @@
+{% set D = EnvioDTE.SetDTE.DTE.Documento %}
+{% set I = D.Encabezado.IdDoc %}
+{% set E = D.Encabezado.Emisor %}
+{% set R = D.Encabezado.Receptor %}
+{% set T = D.Encabezado.Totales %}
+{% set Trans = D.Encabezado.Transporte %}
+<style>.jt,.jt *{box-sizing:border-box;margin:0;padding:0}.jt{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;font-size:13px}.jt table{width:100%;border-collapse:collapse}.jt th,.jt td{text-align:left;vertical-align:top}.jt img{display:block}.jt a{color:inherit}.jt ul,.jt ol{padding-left:1.5em}.jt .jt-inline p{display:inline}@page{size:80mm auto;margin:1mm}@media screen{.jt{max-width:80mm;padding:1mm 1mm 1mm 1mm;margin-left:auto;margin-right:auto}}</style>
+<div class="jt" lang="es-CL">
+  <div style="margin-bottom:10px;">
+    <div style="border:3px solid #ff0000;">
+      <div style="text-align:center;font-weight:bold;color:#ff0000;font-size:11px;line-height:1;">RUT: {{ E.RUTEmisor | format_as('jt.l10n.cl.rut') }}</div>
+      <div style="text-align:center;font-weight:bold;color:#ff0000;font-size:11px;line-height:1;margin-top:13px;">Tipo de Documento {{ I.TipoDTE }}</div>
+      <div style="text-align:center;font-weight:bold;color:#ff0000;font-size:11px;line-height:1;margin-top:13px;"># {{ I.Folio }}</div>
+    </div>
+    <div style="margin-bottom:10px;">
+      <div style="text-align:center;font-weight:bold;color:#ff0000;font-size:11px;">SII - SANTA CRUZ</div>
+      <div style="text-align:right;font-weight:bold;font-size:11px;">Empresa de Menor Tamaño</div>
+    </div>
+    <img src="https://spec.jsontemplates.io/examples/jsontemplates-logo.png" alt="Logo del emisor" style="display:block;max-width:60%;margin-left:auto;margin-right:auto;">
+    <div style="margin-bottom:10px;">
+      <div style="font-weight:bold;font-size:24px;color:#085294;">{{ E.RznSoc }}</div>
+      <div style="font-size:11px;line-height:1;">{% apply jt_markdown %}
+**Giro**: {{ E.GiroEmis }}
+
+**Dirección**: {{ E.DirOrigen }}, {{ E.CmnaOrigen }}, {{ E.CiudadOrigen }}
+{% endapply %}</div>
+    </div>
+    <div style="text-align:left;font-size:11px;line-height:1;margin-bottom:5px;">{% apply jt_markdown %}
+**Fecha de emisión**: {{ I.FchEmis | format_as('jt.l10n.es.date.long') }}
+
+**Fecha de vencimiento**: {{ I.FchVenc | format_as('jt.date.short') }}
+{% endapply %}</div>
+    <div style="font-size:11px;line-height:1;margin-bottom:10px;">{% apply jt_markdown %}
+**Razón social**: {{ R.RznSocRecep }}
+
+**RUT**: {{ R.RUTRecep | format_as('jt.l10n.cl.rut') }}
+
+**Giro**: {{ R.GiroRecep }}
+
+**Dirección**: {{ R.DirRecep }}, {{ R.CmnaRecep }}
+
+**Contacto**: {{ R.Contacto }}
+
+**Correo**: {{ R.CorreoRecep }}
+{% endapply %}</div>
+    {% if not ((Trans) is null) %}
+    <div style="font-size:11px;margin-bottom:10px;">
+      {% set __jt1 %}<span class="jt-inline">{{ Trans.Patente }}</span>{% endset %}{% if __jt1|striptags|trim is not empty %}<div><span class="jt-inline">{% apply jt_markdown %}
+**Patente**:
+{% endapply %}</span> {{ __jt1 }}</div>{% endif %}
+      {% set __jt2 %}<span class="jt-inline">{{ Trans.RUTTrans }}</span>{% endset %}{% if __jt2|striptags|trim is not empty %}<div><span class="jt-inline">{% apply jt_markdown %}
+**Transportista**:
+{% endapply %}</span> {{ __jt2 }}</div>{% endif %}
+      {% set __jt3 %}<span class="jt-inline">{{ Trans.Chofer.NombreChofer }} {{ Trans.Chofer.RUTChofer }}</span>{% endset %}{% if __jt3|striptags|trim is not empty %}<div><span class="jt-inline">{% apply jt_markdown %}
+**Chofer**:
+{% endapply %}</span> {{ __jt3 }}</div>{% endif %}
+      {% set __jt4 %}<span class="jt-inline">{{ Trans.DirDest }}, {{ Trans.CmnaDest }}</span>{% endset %}{% if __jt4|striptags|trim is not empty %}<div><span class="jt-inline">{% apply jt_markdown %}
+**Destino**:
+{% endapply %}</span> {{ __jt4 }}</div>{% endif %}
+    </div>
+    {% endif %}
+    {% set __jt5 = false %}{% set __jt6 = false %}
+    {% for i in D.Detalle %}
+        {% set __jt7 %}<span class="jt-inline" style="font-size:11px;white-space:pre-line;">{{ i.NmbItem }}
+{{ i.DscItem }}
+{{ i.QtyItem | format_as('jt.int') }} {{ i.UnmdItem }} x {{ i.PrcItem | format_as('jt.int') }}</span>{% endset %}{% if __jt7|striptags|trim is not empty %}{% set __jt5 = true %}{% endif %}
+        {% set __jt8 %}<span class="jt-inline" style="font-size:11px;">{{ i.MontoItem | format_as('jt.int') }}</span>{% endset %}{% if __jt8|striptags|trim is not empty %}{% set __jt6 = true %}{% endif %}
+    {% endfor %}
+    <table style="border:1px solid #d1d5db;margin-bottom:10px;">
+      <colgroup>
+        {% if __jt5 %}<col>{% endif %}
+        {% if __jt6 %}<col style="width:10%;">{% endif %}
+      </colgroup>
+      <thead style="background-color:#f3f4f6;color:#000000;font-size:11px;">
+        <tr>
+          {% if __jt5 %}<th>
+            <div>Item</div>
+          </th>{% endif %}
+          {% if __jt6 %}<th>
+            <div>Subtotal</div>
+          </th>{% endif %}
+        </tr>
+      </thead>
+      <tbody>
+        {% for i in D.Detalle %}
+        <tr>
+          {% if __jt5 %}<td>
+            <div style="font-size:11px;white-space:pre-line;">{{ i.NmbItem }}
+{{ i.DscItem }}
+{{ i.QtyItem | format_as('jt.int') }} {{ i.UnmdItem }} x {{ i.PrcItem | format_as('jt.int') }}</div>
+          </td>{% endif %}
+          {% if __jt6 %}<td>
+            <div style="font-size:11px;">{{ i.MontoItem | format_as('jt.int') }}</div>
+          </td>{% endif %}
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <div style="font-size:11px;margin-bottom:10px;">
+      {% set __jt9 %}<span class="jt-inline">{{ T.MntTotal | format_as('jt.l10n.es.num2text') }} pesos.</span>{% endset %}{% if __jt9|striptags|trim is not empty %}<div><span class="jt-inline">{% apply jt_markdown %}
+**En total son**:
+{% endapply %}</span> {{ __jt9 }}</div>{% endif %}
+      {% set __jt10 %}<span class="jt-inline">{{ I.TermPagoGlosa }}</span>{% endset %}{% if __jt10|striptags|trim is not empty %}<div><span class="jt-inline">{% apply jt_markdown %}
+**Observación**:
+{% endapply %}</span> {{ __jt10 }}</div>{% endif %}
+    </div>
+    <div style="display:flex;padding:5px;margin-bottom:10px;border:1px solid #d1d5db;">
+      <div style="width:65%;text-align:right;font-size:11px;">{% apply jt_markdown %}
+**Neto $**:
+
+**IVA (19%) $**:
+
+**Total $**:
+{% endapply %}</div>
+      <div style="flex:1 1 0;min-width:0;text-align:right;font-size:11px;">{% apply jt_markdown %}
+{{ T.MntNeto | format_as('jt.int') }}
+
+{{ T.IVA | format_as('jt.int') }}
+
+{{ T.MntTotal | format_as('jt.int') }}
+{% endapply %}</div>
+    </div>
+    {% set __jt11 %}{{ (D.TED | format_as('jt.l10n.cl.dte.ted'))|raw }}{% endset %}
+    <img src="{{ __jt11|jt_pdf417(5, false) }}" style="display:block;width:100%;height:90px;">
+    <div style="text-align:center;font-size:10px;line-height:1;">{% apply jt_markdown %}
+**Timbre Electrónico SII**
+
+**Resolución 80 de 2024**
+
+**Verifique documento: www.sii.cl**
+{% endapply %}</div>
+    {% set __jt12 %}T{{ (I.TipoDTE)|raw }}F{{ (I.Folio)|raw }}{% endset %}
+    <img src="{{ __jt12|jt_barcode('CODE128') }}" style="display:block;width:40%;height:40px;margin-top:10px;margin-left:auto;margin-right:auto;">
+    <div style="text-align:center;font-weight:bold;font-size:10px;line-height:1;margin-bottom:10px;">T{{ I.TipoDTE }}F{{ I.Folio }}</div>
+    {% set __jt13 %}{{ (E.RUTEmisor)|raw }}T{{ (I.TipoDTE)|raw }}F{{ (I.Folio)|raw }}{% endset %}
+    <img src="{{ __jt13|jt_qr('M') }}" style="display:block;width:120px;height:120px;margin-left:auto;margin-right:auto;">
+    <div style="text-align:center;font-weight:bold;font-size:10px;line-height:1;">{{ E.RUTEmisor }}T{{ I.TipoDTE }}F{{ I.Folio }}</div>
+  </div>
+</div>

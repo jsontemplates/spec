@@ -1,0 +1,238 @@
+{
+  "$schema": "https://spec.jsontemplates.io/schema/2.0/template.json",
+  "meta": {
+    "name": "Invoice",
+    "lang": "en-US",
+    "description": "Invoice with a header, customer data, line items and totals."
+  },
+  "options": {
+    "page": {
+      "style": {
+        "size": "letter",
+        "margin": "10mm 12mm"
+      }
+    }
+  },
+  "body": {
+    "type": "VerticalLayout",
+    "name": "Invoice",
+    "elements": [
+      {
+        "type": "HorizontalLayout",
+        "id": "header",
+        "name": "Header",
+        "style": {
+          "margin-bottom": "10px"
+        },
+        "elements": [
+          {
+            "type": "VerticalLayout",
+            "name": "Company Info",
+            "style": {
+              "width": "58%"
+            },
+            "elements": [
+              {
+                "type": "TextBlock",
+                "text": "{{ company.name }}",
+                "style": {
+                  "font-weight": "bold",
+                  "font-size": "22px",
+                  "color": "#4A7CF5"
+                }
+              },
+              {
+                "type": "MarkdownBlock",
+                "text": "{{ company.address }}\n\n{{ company.city }}, {{ company.country }}\n\n{{ company.email }} · {{ company.phone }}"
+              }
+            ]
+          },
+          {
+            "type": "VerticalLayout",
+            "name": "Invoice Box",
+            "style": {
+              "width": "42%",
+              "border": "2px solid #4A7CF5",
+              "padding": "8px 10px"
+            },
+            "elements": [
+              {
+                "type": "TextBlock",
+                "text": "INVOICE",
+                "style": {
+                  "text-align": "center",
+                  "font-weight": "bold",
+                  "font-size": "20px"
+                }
+              },
+              {
+                "type": "TextBlock",
+                "text": "# {{ invoice.number }}",
+                "style": {
+                  "text-align": "center",
+                  "font-size": "13px"
+                }
+              },
+              {
+                "type": "MarkdownBlock",
+                "text": "**Date:** {{ invoice.date }}\n\n**Due date:** {{ invoice.due_date }}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "MarkdownBlock",
+        "name": "Bill To",
+        "text": "**Bill To:**\n\n{{ customer.name }}\n\n{{ customer.company }}\n\n{{ customer.address }}, {{ customer.city }}\n\n{{ customer.email }}",
+        "style": {
+          "margin-bottom": "10px",
+          "padding": "6px 8px",
+          "background-color": "#f8fafc"
+        }
+      },
+      {
+        "type": "VerticalLayout",
+        "style": {
+          "border": "1px solid #d1d5db",
+          "margin-bottom": "10px",
+          "min-height": "160px"
+        },
+        "elements": [
+          {
+            "type": "TableBlock",
+            "id": "line-items",
+            "name": "Line Items",
+            "thead": {
+              "style": {
+                "background-color": "#4A7CF5",
+                "color": "#ffffff",
+                "font-size": "12px"
+              }
+            },
+            "tbody": {
+              "each": {
+                "list": "items",
+                "item": "item"
+              }
+            },
+            "columns": [
+              {
+                "th": {
+                  "type": "TextBlock",
+                  "text": "Description"
+                },
+                "td": {
+                  "type": "TextBlock",
+                  "text": "{{ item.description }}"
+                }
+              },
+              {
+                "style": {
+                  "width": "10%"
+                },
+                "th": {
+                  "type": "TextBlock",
+                  "text": "Qty"
+                },
+                "td": {
+                  "type": "TextBlock",
+                  "text": "{{ item.qty }}",
+                  "style": {
+                    "text-align": "right"
+                  }
+                }
+              },
+              {
+                "style": {
+                  "width": "22%"
+                },
+                "th": {
+                  "type": "TextBlock",
+                  "text": "Unit Price"
+                },
+                "td": {
+                  "type": "TextBlock",
+                  "text": "{{ item.unit_price | number_format(2, '.', ',') }}",
+                  "style": {
+                    "text-align": "right"
+                  }
+                }
+              },
+              {
+                "style": {
+                  "width": "22%"
+                },
+                "th": {
+                  "type": "TextBlock",
+                  "text": "Total"
+                },
+                "td": {
+                  "type": "TextBlock",
+                  "text": "{{ item.total | number_format(2, '.', ',') }}",
+                  "style": {
+                    "text-align": "right",
+                    "font-weight": "bold"
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "HorizontalLayout",
+        "id": "totals",
+        "name": "Totals Row",
+        "elements": [
+          {
+            "type": "MarkdownBlock",
+            "name": "Payment Terms",
+            "text": "**Payment Terms:** {{ invoice.payment_terms }}\n\n**Notes:** {{ invoice.notes }}",
+            "style": {
+              "width": "52%"
+            }
+          },
+          {
+            "type": "VerticalLayout",
+            "name": "Totals",
+            "style": {
+              "width": "48%",
+              "border": "1px solid #d1d5db",
+              "padding": "6px 8px"
+            },
+            "elements": [
+              {
+                "type": "MarkdownBlock",
+                "text": "**Subtotal:** {{ invoice.currency }} {{ invoice.subtotal | number_format(2, '.', ',') }}\n\n**Tax ({{ invoice.tax_rate }}%):** {{ invoice.currency }} {{ invoice.tax | number_format(2, '.', ',') }}",
+                "style": {
+                  "text-align": "right"
+                }
+              },
+              {
+                "type": "TextBlock",
+                "text": "Total: {{ invoice.currency }} {{ invoice.total | number_format(2, '.', ',') }}",
+                "style": {
+                  "text-align": "right",
+                  "font-weight": "bold",
+                  "font-size": "14px"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "TextBlock",
+        "name": "Footer",
+        "text": "Thank you for your business. Please transfer to the account referenced on your purchase order.",
+        "style": {
+          "text-align": "center",
+          "color": "#64748b",
+          "font-size": "10px",
+          "margin-top": "15px"
+        }
+      }
+    ]
+  }
+}

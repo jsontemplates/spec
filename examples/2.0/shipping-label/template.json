@@ -1,0 +1,312 @@
+{
+  "$schema": "https://spec.jsontemplates.io/schema/2.0/template.json",
+  "meta": {
+    "name": "Shipping Label",
+    "description": "4x6 inch parcel label with tracking codes and handling banners.",
+    "lang": "en"
+  },
+  "options": {
+    "page": {
+      "style": {
+        "size": "100mm 150mm",
+        "margin": "4mm"
+      }
+    }
+  },
+  "body": {
+    "type": "VerticalLayout",
+    "elements": [
+      {
+        "type": "HorizontalLayout",
+        "style": {
+          "margin-bottom": "6px"
+        },
+        "elements": [
+          {
+            "type": "TextBlock",
+            "text": "{{ shipment.service }}",
+            "style": {
+              "width": "60%",
+              "font-weight": "bold",
+              "font-size": "26px",
+              "color": "#ffffff",
+              "background-color": "#111827",
+              "padding": "6px 8px"
+            }
+          },
+          {
+            "type": "VerticalLayout",
+            "style": {
+              "width": "40%",
+              "padding": "4px 0"
+            },
+            "elements": [
+              {
+                "type": "TextBlock",
+                "text": "{{ shipment.weight_kg | number_format(1, '.', ',') }} kg",
+                "style": {
+                  "text-align": "right",
+                  "font-weight": "bold"
+                }
+              },
+              {
+                "type": "TextBlock",
+                "text": "{{ shipment.pieces }} of {{ shipment.pieces_total }}",
+                "style": {
+                  "text-align": "right"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "TextBlock",
+        "name": "Priority",
+        "rule": {
+          "effect": "SHOW",
+          "condition": {
+            "value": "shipment.service",
+            "schema": {
+              "pattern": "^(EXPRESS|OVERNIGHT)"
+            }
+          }
+        },
+        "text": "PRIORITY DELIVERY",
+        "style": {
+          "text-align": "center",
+          "font-weight": "bold",
+          "font-size": "15px",
+          "color": "#ffffff",
+          "background-color": "#ea580c",
+          "padding": "4px",
+          "margin-bottom": "4px"
+        }
+      },
+      {
+        "type": "TextBlock",
+        "name": "Fragile",
+        "rule": {
+          "effect": "SHOW",
+          "condition": {
+            "value": "shipment.fragile",
+            "schema": {
+              "const": true
+            }
+          }
+        },
+        "text": "FRAGILE - HANDLE WITH CARE",
+        "style": {
+          "text-align": "center",
+          "font-weight": "bold",
+          "font-size": "15px",
+          "color": "#ffffff",
+          "background-color": "#dc2626",
+          "padding": "4px",
+          "margin-bottom": "4px"
+        }
+      },
+      {
+        "type": "TextBlock",
+        "name": "Heavy",
+        "rule": {
+          "effect": "SHOW",
+          "condition": {
+            "value": "shipment.weight_kg",
+            "schema": {
+              "minimum": 25
+            }
+          }
+        },
+        "text": "HEAVY - TWO-PERSON LIFT",
+        "style": {
+          "text-align": "center",
+          "font-weight": "bold",
+          "font-size": "15px",
+          "color": "#ffffff",
+          "background-color": "#7c3aed",
+          "padding": "4px",
+          "margin-bottom": "4px"
+        }
+      },
+      {
+        "type": "TextBlock",
+        "name": "Signature",
+        "rule": {
+          "effect": "SHOW",
+          "condition": {
+            "type": "OR",
+            "conditions": [
+              {
+                "value": "shipment.signature",
+                "schema": {
+                  "const": true
+                }
+              },
+              {
+                "value": "shipment.declared_value",
+                "schema": {
+                  "minimum": 500
+                }
+              }
+            ]
+          }
+        },
+        "text": "SIGNATURE REQUIRED",
+        "style": {
+          "text-align": "center",
+          "font-weight": "bold",
+          "font-size": "15px",
+          "color": "#ffffff",
+          "background-color": "#0369a1",
+          "padding": "4px",
+          "margin-bottom": "4px"
+        }
+      },
+      {
+        "type": "MarkdownBlock",
+        "name": "Ship from",
+        "text": "**FROM**\n\n{{ sender.name }}\n\n{{ sender.address }}, {{ sender.city }}",
+        "style": {
+          "font-size": "10px",
+          "color": "#475569",
+          "margin": "6px 0"
+        }
+      },
+      {
+        "type": "VerticalLayout",
+        "name": "Ship to",
+        "style": {
+          "padding": "8px 0",
+          "border-top": "2px solid #111827",
+          "border-bottom": "2px solid #111827"
+        },
+        "elements": [
+          {
+            "type": "TextBlock",
+            "text": "SHIP TO",
+            "style": {
+              "font-size": "10px",
+              "color": "#475569"
+            }
+          },
+          {
+            "type": "TextBlock",
+            "text": "{{ recipient.name }}",
+            "style": {
+              "font-weight": "bold",
+              "font-size": "18px"
+            }
+          },
+          {
+            "type": "TextBlock",
+            "text": "{{ recipient.address }}",
+            "style": {
+              "font-size": "14px"
+            }
+          },
+          {
+            "type": "TextBlock",
+            "text": "{{ recipient.city }}, {{ recipient.region }} {{ recipient.postal_code }}",
+            "style": {
+              "font-weight": "bold",
+              "font-size": "16px"
+            }
+          },
+          {
+            "type": "TextBlock",
+            "text": "{{ recipient.country }}",
+            "style": {
+              "font-size": "14px"
+            }
+          },
+          {
+            "type": "TextBlock",
+            "text": "Phone: {{ recipient.phone }}",
+            "style": {
+              "font-size": "11px",
+              "margin-top": "4px"
+            }
+          }
+        ]
+      },
+      {
+        "type": "SpacerBlock",
+        "style": {
+          "height": "8px"
+        }
+      },
+      {
+        "type": "HorizontalLayout",
+        "style": {
+          "margin-bottom": "6px"
+        },
+        "elements": [
+          {
+            "type": "QrBlock",
+            "name": "Tracking QR",
+            "text": "https://track.example.com/t/{{ shipment.tracking }}",
+            "errorCorrection": "H",
+            "style": {
+              "width": "30mm",
+              "height": "30mm"
+            }
+          },
+          {
+            "type": "VerticalLayout",
+            "style": {
+              "width": "70%",
+              "padding-left": "6px"
+            },
+            "elements": [
+              {
+                "type": "BarcodeBlock",
+                "name": "Tracking barcode",
+                "text": "{{ shipment.tracking }}",
+                "format": "CODE128",
+                "style": {
+                  "width": "100%",
+                  "height": "22mm"
+                }
+              },
+              {
+                "type": "TextBlock",
+                "text": "{{ shipment.tracking }}",
+                "style": {
+                  "text-align": "center",
+                  "font-weight": "bold",
+                  "letter-spacing": "1px"
+                }
+              },
+              {
+                "type": "TextBlock",
+                "text": "Ref: {{ shipment.reference | default('none') }}",
+                "style": {
+                  "text-align": "center",
+                  "font-size": "10px",
+                  "color": "#475569"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "DividerBlock",
+        "style": {
+          "border-top": "1px dashed #94a3b8",
+          "margin": "4px 0"
+        }
+      },
+      {
+        "type": "TextBlock",
+        "text": "Ship date {{ shipment.date }} · Dim. {{ shipment.dimensions }}",
+        "style": {
+          "text-align": "center",
+          "font-size": "9px",
+          "color": "#64748b"
+        }
+      }
+    ]
+  }
+}

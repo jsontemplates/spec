@@ -1,0 +1,13 @@
+{
+  "$schema": "https://spec.jsontemplates.io/schema/2.0/template.json",
+  "body": {
+    "type": "TableBlock",
+    "tbody": {
+      "each": {
+        "list": "a",
+        "item": "i"
+      }
+    },
+    "columns": []
+  }
+}

@@ -1,0 +1,132 @@
+{
+  "format": "jt.l10n.en.num2text",
+  "cases": [
+    {
+      "value": 0,
+      "text": "zero"
+    },
+    {
+      "value": 1,
+      "text": "one"
+    },
+    {
+      "value": 13,
+      "text": "thirteen"
+    },
+    {
+      "value": 19,
+      "text": "nineteen"
+    },
+    {
+      "value": 20,
+      "text": "twenty"
+    },
+    {
+      "value": 21,
+      "text": "twenty-one"
+    },
+    {
+      "value": 40,
+      "text": "forty"
+    },
+    {
+      "value": 99,
+      "text": "ninety-nine"
+    },
+    {
+      "value": 100,
+      "text": "one hundred"
+    },
+    {
+      "value": 101,
+      "text": "one hundred one"
+    },
+    {
+      "value": 115,
+      "text": "one hundred fifteen"
+    },
+    {
+      "value": 342,
+      "text": "three hundred forty-two"
+    },
+    {
+      "value": 999,
+      "text": "nine hundred ninety-nine"
+    },
+    {
+      "value": 1000,
+      "text": "one thousand"
+    },
+    {
+      "value": 1001,
+      "text": "one thousand one"
+    },
+    {
+      "value": 2500,
+      "text": "two thousand five hundred"
+    },
+    {
+      "value": 21000,
+      "text": "twenty-one thousand"
+    },
+    {
+      "value": 100000,
+      "text": "one hundred thousand"
+    },
+    {
+      "value": 119000,
+      "text": "one hundred nineteen thousand"
+    },
+    {
+      "value": 999999,
+      "text": "nine hundred ninety-nine thousand nine hundred ninety-nine"
+    },
+    {
+      "value": 1000000,
+      "text": "one million"
+    },
+    {
+      "value": 1000001,
+      "text": "one million one"
+    },
+    {
+      "value": 1500000,
+      "text": "one million five hundred thousand"
+    },
+    {
+      "value": 123456789,
+      "text": "one hundred twenty-three million four hundred fifty-six thousand seven hundred eighty-nine"
+    },
+    {
+      "value": 1000000000,
+      "text": "one billion"
+    },
+    {
+      "value": 2000000000000,
+      "text": "two trillion"
+    },
+    {
+      "value": 999999999999999,
+      "text": "nine hundred ninety-nine trillion nine hundred ninety-nine billion nine hundred ninety-nine million nine hundred ninety-nine thousand nine hundred ninety-nine"
+    },
+    {
+      "value": -5,
+      "text": "minus five"
+    },
+    {
+      "value": "21000",
+      "text": "twenty-one thousand"
+    }
+  ],
+  "invalid": [
+    1.5,
+    "1.5",
+    "abc",
+    1000000000000000,
+    -1000000000000000,
+    [
+      1
+    ],
+    true
+  ]
+}

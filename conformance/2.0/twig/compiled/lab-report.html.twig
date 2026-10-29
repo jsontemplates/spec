@@ -1,0 +1,96 @@
+<style>.jt,.jt *{box-sizing:border-box;margin:0;padding:0}.jt{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;font-size:13px}.jt table{width:100%;border-collapse:collapse}.jt th,.jt td{text-align:left;vertical-align:top}.jt img{display:block}.jt a{color:inherit}.jt ul,.jt ol{padding-left:1.5em}.jt .jt-inline p{display:inline}@page{size:letter;margin:10mm 12mm}@media screen{.jt{max-width:215.9mm;padding:10mm 12mm 10mm 12mm;margin-left:auto;margin-right:auto}}</style>
+<div class="jt">
+  <div>
+    <div style="display:flex;margin-bottom:10px;">
+      <div style="width:65%;">
+        <div style="font-weight:bold;font-size:18px;color:#4A7CF5;">{{ lab.name }}</div>
+        <div>{% apply jt_markdown %}
+{{ lab.address }}
+
+{{ lab.phone }} · {{ lab.email }}
+{% endapply %}</div>
+        <div style="font-size:10px;color:#64748b;">License: {{ lab.license }}</div>
+      </div>
+      <div style="width:35%;padding:8px;border:2px solid #4A7CF5;">
+        <div style="text-align:center;font-weight:bold;font-size:14px;">LAB REPORT</div>
+        <div style="text-align:center;color:#64748b;">{{ report.id }}</div>
+      </div>
+    </div>
+    <div style="display:flex;margin-bottom:10px;">
+      <div style="width:58%;padding:6px 8px;background-color:#f8fafc;">{% apply jt_markdown %}
+**Patient:** {{ patient.name }}
+
+**DOB:** {{ patient.dob }} &nbsp; **Age:** {{ patient.age }} &nbsp; **Sex:** {{ patient.sex }}
+
+**ID:** {{ patient.id }}
+
+**Physician:** {{ report.physician }}
+{% endapply %}</div>
+      <div style="width:42%;">
+        {% set __jt1 %}<span class="jt-inline">{{ report.collected_at }}</span>{% endset %}{% if __jt1|striptags|trim is not empty %}<div><span class="jt-inline" style="font-weight:bold;">Collected:</span> {{ __jt1 }}</div>{% endif %}
+        {% set __jt2 %}<span class="jt-inline">{{ report.received_at }}</span>{% endset %}{% if __jt2|striptags|trim is not empty %}<div><span class="jt-inline" style="font-weight:bold;">Received:</span> {{ __jt2 }}</div>{% endif %}
+        {% set __jt3 %}<span class="jt-inline">{{ report.reported_at }}</span>{% endset %}{% if __jt3|striptags|trim is not empty %}<div><span class="jt-inline" style="font-weight:bold;">Reported:</span> {{ __jt3 }}</div>{% endif %}
+        {% set __jt4 %}<span class="jt-inline">{{ report.sample_type }}</span>{% endset %}{% if __jt4|striptags|trim is not empty %}<div><span class="jt-inline" style="font-weight:bold;">Sample:</span> {{ __jt4 }}</div>{% endif %}
+      </div>
+    </div>
+    <div style="font-weight:bold;color:#ffffff;background-color:#4A7CF5;padding:4px 8px;margin-bottom:4px;">{{ report.panel_name }}</div>
+    {% set __jt5 = false %}{% set __jt6 = false %}{% set __jt7 = false %}{% set __jt8 = false %}
+    {% for r in results %}
+        {% set __jt9 %}<span class="jt-inline">{{ r.test }}</span>{% endset %}{% if __jt9|striptags|trim is not empty %}{% set __jt5 = true %}{% endif %}
+        {% set __jt10 %}<span class="jt-inline">{{ r.result }} {{ r.unit }}</span>{% endset %}{% if __jt10|striptags|trim is not empty %}{% set __jt6 = true %}{% endif %}
+        {% set __jt11 %}<span class="jt-inline">{{ r.reference }}</span>{% endset %}{% if __jt11|striptags|trim is not empty %}{% set __jt7 = true %}{% endif %}
+        {% set __jt12 %}<span class="jt-inline">{{ r.flag }}</span>{% endset %}{% if __jt12|striptags|trim is not empty %}{% set __jt8 = true %}{% endif %}
+    {% endfor %}
+    <table style="border:1px solid #d1d5db;margin-bottom:10px;">
+      <colgroup>
+        {% if __jt5 %}<col>{% endif %}
+        {% if __jt6 %}<col style="width:28%;">{% endif %}
+        {% if __jt7 %}<col style="width:30%;">{% endif %}
+        {% if __jt8 %}<col style="width:12%;">{% endif %}
+      </colgroup>
+      <thead style="background-color:#e2e8f0;color:#0f172a;font-size:12px;">
+        <tr>
+          {% if __jt5 %}<th>
+            <div>Test</div>
+          </th>{% endif %}
+          {% if __jt6 %}<th>
+            <div>Result</div>
+          </th>{% endif %}
+          {% if __jt7 %}<th>
+            <div>Reference Range</div>
+          </th>{% endif %}
+          {% if __jt8 %}<th>
+            <div>Flag</div>
+          </th>{% endif %}
+        </tr>
+      </thead>
+      <tbody>
+        {% for r in results %}
+        <tr>
+          {% if __jt5 %}<td>
+            <div>{{ r.test }}</div>
+          </td>{% endif %}
+          {% if __jt6 %}<td>
+            <div>{{ r.result }} {{ r.unit }}</div>
+          </td>{% endif %}
+          {% if __jt7 %}<td>
+            <div>{{ r.reference }}</div>
+          </td>{% endif %}
+          {% if __jt8 %}<td>
+            <div>{{ r.flag }}</div>
+          </td>{% endif %}
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <div style="padding:6px 8px;margin-bottom:10px;border:1px solid #d1d5db;">{% apply jt_markdown %}
+**Clinical Notes:**
+
+{{ report.notes }}
+{% endapply %}</div>
+    <div style="display:flex;margin-top:10px;">
+      <div style="width:50%;border-top:1px solid #000;font-size:10px;margin-top:30px;">Analyst: {{ report.analyst }}</div>
+      <div style="width:50%;border-top:1px solid #000;font-size:10px;margin-top:30px;">Authorized by: {{ report.authorized_by }}</div>
+    </div>
+  </div>
+</div>

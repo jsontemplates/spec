@@ -1,0 +1,92 @@
+{
+  "$schema": "https://spec.jsontemplates.io/schema/1.0/template.json",
+  "format": "LETTER",
+  "width": 216,
+  "height": 279,
+  "margins": { "top": 0, "right": 0, "bottom": 0, "left": 0 },
+  "elements": [
+    {
+      "type": "VerticalLayout",
+      "label": "Email",
+      "elements": [
+
+        {
+          "type": "HtmlBlock",
+          "label": "Header",
+          "content": "<p style=\"text-align:center;\"><b><span style=\"font-size:22px; color:#ffffff;\">{{ company.name }}</span></b></p>",
+          "background": "#4A7CF5",
+          "padding": { "top": 24, "right": 20, "bottom": 24, "left": 20 }
+        },
+
+        {
+          "type": "VerticalLayout",
+          "label": "Body",
+          "padding": { "top": 24, "right": 30, "bottom": 24, "left": 30 },
+          "elements": [
+
+            {
+              "type": "HtmlBlock",
+              "label": "Greeting",
+              "content": "<p><span style=\"font-size:18px;\">Welcome, <b>{{ user.name }}</b>! 👋</span></p>",
+              "margin": { "top": 0, "right": 0, "bottom": 12, "left": 0 }
+            },
+
+            {
+              "type": "HtmlBlock",
+              "label": "Intro",
+              "content": "<p>Thank you for joining <b>{{ company.name }}</b>. Your account is ready — here's a quick summary of what you get on the <b>{{ user.plan }}</b> plan:</p>",
+              "margin": { "top": 0, "right": 0, "bottom": 16, "left": 0 }
+            },
+
+            {
+              "type": "TableBlock",
+              "label": "Plan Features",
+              "source": "features",
+              "variable": "f",
+              "showHeader": false,
+              "border": { "width": 1, "style": "solid", "color": "#e2e8f0" },
+              "margin": { "top": 0, "right": 0, "bottom": 20, "left": 0 },
+              "columns": [
+                {
+                  "label": "Feature",
+                  "value": "<b>{{ f.name }}</b>",
+                  "width": null,
+                  "align": "left"
+                },
+                {
+                  "label": "Value",
+                  "value": "<div style=\"text-align:right; color:#4A7CF5;\"><b>{{ f.value }}</b></div>",
+                  "width": 35,
+                  "align": "left"
+                }
+              ]
+            },
+
+            {
+              "type": "HtmlBlock",
+              "label": "CTA Button",
+              "content": "<p style=\"text-align:center;\"><a href=\"{{ links.dashboard }}\"><span style=\"background:#4A7CF5; color:#ffffff; padding:10px 28px; border-radius:4px; font-size:14px; font-weight:bold; text-decoration:none;\">Go to your Dashboard →</span></a></p>",
+              "margin": { "top": 0, "right": 0, "bottom": 20, "left": 0 }
+            },
+
+            {
+              "type": "HtmlBlock",
+              "label": "Help",
+              "content": "<p>Need help getting started? Check out our <a href=\"{{ links.docs }}\">documentation</a> or reply to this email — we're happy to help.</p><p>— The {{ company.name }} Team</p>"
+            }
+
+          ]
+        },
+
+        {
+          "type": "HtmlBlock",
+          "label": "Footer",
+          "content": "<p style=\"text-align:center; color:#94a3b8;\"><span style=\"font-size:10px;\">{{ company.name }} · {{ company.address }}<br/>You received this email because you signed up at {{ company.website }}.<br/><a href=\"{{ links.unsubscribe }}\" style=\"color:#94a3b8;\">Unsubscribe</a></span></p>",
+          "background": "#f8fafc",
+          "padding": { "top": 16, "right": 20, "bottom": 16, "left": 20 }
+        }
+
+      ]
+    }
+  ]
+}

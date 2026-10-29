@@ -1,0 +1,107 @@
+<style>.jt,.jt *{box-sizing:border-box;margin:0;padding:0}.jt{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;font-size:13px}.jt table{width:100%;border-collapse:collapse}.jt th,.jt td{text-align:left;vertical-align:top}.jt img{display:block}.jt a{color:inherit}.jt ul,.jt ol{padding-left:1.5em}.jt .jt-inline p{display:inline}@page{size:A4 landscape;margin:12mm}@media screen{.jt{max-width:297mm;padding:12mm 12mm 12mm 12mm;margin-left:auto;margin-right:auto}}</style>
+<div class="jt" lang="en">
+  <div>
+    <div style="font-weight:bold;font-size:22px;">{{ report.title }}</div>
+    <div style="color:#64748b;margin-bottom:10px;">{{ report.period }} · Generated {{ report.generated | format_as('jt.date.short') }} · {{ report.owner }}</div>
+    <div style="display:flex;margin-bottom:12px;">
+      {% for k in kpis %}
+      <div style="width:25%;padding:8px 10px;background-color:#f8fafc;border-left:4px solid #4A7CF5;">
+        <div style="font-size:10px;color:#64748b;text-transform:uppercase;">{{ k.label }}</div>
+        <div style="font-weight:bold;font-size:20px;">{{ k.value }}</div>
+      </div>
+      {% endfor %}
+    </div>
+    <div style="font-style:italic;color:#64748b;margin-bottom:12px;">Revenue by region is listed in the table below.</div>
+    {% set __jt1 = false %}{% set __jt2 = false %}{% set __jt3 = false %}{% set __jt4 = false %}{% set __jt5 = false %}{% set __jt6 = false %}
+    {% for r in regions %}
+      {% if not ((r.active) == false) %}
+        {% set __jt7 %}<span class="jt-inline" style="font-weight:bold;">{{ r.name }}</span>{% endset %}{% if __jt7|striptags|trim is not empty %}{% set __jt1 = true %}{% endif %}
+        {% set __jt8 %}<span class="jt-inline">{{ r.manager }}</span>{% endset %}{% if __jt8|striptags|trim is not empty %}{% set __jt2 = true %}{% endif %}
+        {% set __jt9 %}<span class="jt-inline" style="text-align:right;">{{ r.units | format_as('jt.int') }}</span>{% endset %}{% if __jt9|striptags|trim is not empty %}{% set __jt3 = true %}{% endif %}
+        {% set __jt10 %}<span class="jt-inline" style="text-align:right;">{{ r.revenue | format_as('jt.int') }}</span>{% endset %}{% if __jt10|striptags|trim is not empty %}{% set __jt4 = true %}{% endif %}
+        {% set __jt11 %}<span class="jt-inline" style="text-align:right;">{{ r.target | format_as('jt.int') }}</span>{% endset %}{% if __jt11|striptags|trim is not empty %}{% set __jt5 = true %}{% endif %}
+        {% set __jt12 %}<span class="jt-inline">{% if (r.variance_pct) >= 0 %}<span class="jt-inline" style="text-align:right;color:#15803d;font-weight:bold;">+{{ r.variance_pct | number_format(1, '.', ',') }}%</span>{% endif %}{% if (r.variance_pct) < 0 %}<span class="jt-inline" style="text-align:right;color:#b91c1c;font-weight:bold;">{{ r.variance_pct | number_format(1, '.', ',') }}%</span>{% endif %}</span>{% endset %}{% if __jt12|striptags|trim is not empty %}{% set __jt6 = true %}{% endif %}
+      {% endif %}
+    {% endfor %}
+    <table style="border:1px solid #e2e8f0;">
+      <colgroup>
+        {% if __jt1 %}<col style="width:16%;">{% endif %}
+        {% if __jt2 %}<col style="width:18%;">{% endif %}
+        {% if __jt3 %}<col style="width:12%;">{% endif %}
+        {% if __jt4 %}<col style="width:18%;">{% endif %}
+        {% if __jt5 %}<col style="width:18%;">{% endif %}
+        {% if __jt6 %}<col style="width:18%;">{% endif %}
+      </colgroup>
+      <thead style="background-color:#1e293b;color:#ffffff;">
+        <tr>
+          {% if __jt1 %}<th>
+            <div style="font-weight:bold;">Region</div>
+          </th>{% endif %}
+          {% if __jt2 %}<th>
+            <div style="font-weight:bold;">Manager</div>
+          </th>{% endif %}
+          {% if __jt3 %}<th>
+            <div style="text-align:right;font-weight:bold;">Units</div>
+          </th>{% endif %}
+          {% if __jt4 %}<th>
+            <div style="text-align:right;font-weight:bold;">Revenue (USD)</div>
+          </th>{% endif %}
+          {% if __jt5 %}<th>
+            <div style="text-align:right;font-weight:bold;">Target (USD)</div>
+          </th>{% endif %}
+          {% if __jt6 %}<th>
+            <div style="text-align:right;font-weight:bold;">vs target</div>
+          </th>{% endif %}
+        </tr>
+      </thead>
+      <tbody style="font-size:12px;">
+        {% for r in regions %}
+        {% if not ((r.active) == false) %}
+        <tr>
+          {% if __jt1 %}<td>
+            <div style="font-weight:bold;">{{ r.name }}</div>
+          </td>{% endif %}
+          {% if __jt2 %}<td>
+            <div>{{ r.manager }}</div>
+          </td>{% endif %}
+          {% if __jt3 %}<td>
+            <div style="text-align:right;">{{ r.units | format_as('jt.int') }}</div>
+          </td>{% endif %}
+          {% if __jt4 %}<td>
+            <div style="text-align:right;">{{ r.revenue | format_as('jt.int') }}</div>
+          </td>{% endif %}
+          {% if __jt5 %}<td>
+            <div style="text-align:right;">{{ r.target | format_as('jt.int') }}</div>
+          </td>{% endif %}
+          {% if __jt6 %}<td>
+            <div>
+              {% if (r.variance_pct) >= 0 %}
+              <div style="text-align:right;color:#15803d;font-weight:bold;">+{{ r.variance_pct | number_format(1, '.', ',') }}%</div>
+              {% endif %}
+              {% if (r.variance_pct) < 0 %}
+              <div style="text-align:right;color:#b91c1c;font-weight:bold;">{{ r.variance_pct | number_format(1, '.', ',') }}%</div>
+              {% endif %}
+            </div>
+          </td>{% endif %}
+        </tr>
+        {% endif %}
+        {% endfor %}
+      </tbody>
+    </table>
+    <div style="text-align:right;font-weight:bold;margin-top:8px;">Total revenue: USD {{ totals.revenue | format_as('jt.int') }} against a target of USD {{ totals.target | format_as('jt.int') }}.</div>
+    <div style="break-after:page;"></div>
+    <div style="font-weight:bold;font-size:18px;margin-bottom:8px;">Notes by region</div>
+    {% for r in regions %}
+    {% if (r.active) == true %}
+    <div style="margin-bottom:10px;padding:6px 8px;border-left:3px solid #cbd5e1;">
+      <div style="font-weight:bold;color:#1e293b;">{{ r.name }} · {{ r.manager }}</div>
+      {% for n in r.notes %}
+      <div style="font-size:12px;margin-left:10px;">{% apply jt_markdown %}
+- {{ n }}
+{% endapply %}</div>
+      {% endfor %}
+    </div>
+    {% endif %}
+    {% endfor %}
+  </div>
+</div>

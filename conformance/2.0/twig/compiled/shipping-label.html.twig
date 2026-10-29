@@ -1,0 +1,52 @@
+<style>.jt,.jt *{box-sizing:border-box;margin:0;padding:0}.jt{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;font-size:13px}.jt table{width:100%;border-collapse:collapse}.jt th,.jt td{text-align:left;vertical-align:top}.jt img{display:block}.jt a{color:inherit}.jt ul,.jt ol{padding-left:1.5em}.jt .jt-inline p{display:inline}@page{size:100mm 150mm;margin:4mm}@media screen{.jt{max-width:100mm;padding:4mm 4mm 4mm 4mm;margin-left:auto;margin-right:auto}}</style>
+<div class="jt" lang="en">
+  <div>
+    <div style="display:flex;margin-bottom:6px;">
+      <div style="width:60%;font-weight:bold;font-size:26px;color:#ffffff;background-color:#111827;padding:6px 8px;">{{ shipment.service }}</div>
+      <div style="width:40%;padding:4px 0;">
+        <div style="text-align:right;font-weight:bold;">{{ shipment.weight_kg | number_format(1, '.', ',') }} kg</div>
+        <div style="text-align:right;">{{ shipment.pieces }} of {{ shipment.pieces_total }}</div>
+      </div>
+    </div>
+    {% if (shipment.service) matches '/^(EXPRESS|OVERNIGHT)/u' %}
+    <div style="text-align:center;font-weight:bold;font-size:15px;color:#ffffff;background-color:#ea580c;padding:4px;margin-bottom:4px;">PRIORITY DELIVERY</div>
+    {% endif %}
+    {% if (shipment.fragile) == true %}
+    <div style="text-align:center;font-weight:bold;font-size:15px;color:#ffffff;background-color:#dc2626;padding:4px;margin-bottom:4px;">FRAGILE - HANDLE WITH CARE</div>
+    {% endif %}
+    {% if (shipment.weight_kg) >= 25 %}
+    <div style="text-align:center;font-weight:bold;font-size:15px;color:#ffffff;background-color:#7c3aed;padding:4px;margin-bottom:4px;">HEAVY - TWO-PERSON LIFT</div>
+    {% endif %}
+    {% if ((shipment.signature) == true or (shipment.declared_value) >= 500) %}
+    <div style="text-align:center;font-weight:bold;font-size:15px;color:#ffffff;background-color:#0369a1;padding:4px;margin-bottom:4px;">SIGNATURE REQUIRED</div>
+    {% endif %}
+    <div style="font-size:10px;color:#475569;margin:6px 0;">{% apply jt_markdown %}
+**FROM**
+
+{{ sender.name }}
+
+{{ sender.address }}, {{ sender.city }}
+{% endapply %}</div>
+    <div style="padding:8px 0;border-top:2px solid #111827;border-bottom:2px solid #111827;">
+      <div style="font-size:10px;color:#475569;">SHIP TO</div>
+      <div style="font-weight:bold;font-size:18px;">{{ recipient.name }}</div>
+      <div style="font-size:14px;">{{ recipient.address }}</div>
+      <div style="font-weight:bold;font-size:16px;">{{ recipient.city }}, {{ recipient.region }} {{ recipient.postal_code }}</div>
+      <div style="font-size:14px;">{{ recipient.country }}</div>
+      <div style="font-size:11px;margin-top:4px;">Phone: {{ recipient.phone }}</div>
+    </div>
+    <div style="height:8px;"></div>
+    <div style="display:flex;margin-bottom:6px;">
+      {% set __jt1 %}https://track.example.com/t/{{ (shipment.tracking)|raw }}{% endset %}
+      <img src="{{ __jt1|jt_qr('H') }}" style="display:block;width:30mm;height:30mm;">
+      <div style="width:70%;padding-left:6px;">
+        {% set __jt2 %}{{ (shipment.tracking)|raw }}{% endset %}
+        <img src="{{ __jt2|jt_barcode('CODE128') }}" style="display:block;width:100%;height:22mm;">
+        <div style="text-align:center;font-weight:bold;letter-spacing:1px;">{{ shipment.tracking }}</div>
+        <div style="text-align:center;font-size:10px;color:#475569;">Ref: {{ shipment.reference | default('none') }}</div>
+      </div>
+    </div>
+    <div style="border-top:1px solid #000;border-top:1px dashed #94a3b8;margin:4px 0;"></div>
+    <div style="text-align:center;font-size:9px;color:#64748b;">Ship date {{ shipment.date }} · Dim. {{ shipment.dimensions }}</div>
+  </div>
+</div>

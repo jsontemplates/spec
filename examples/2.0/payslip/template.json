@@ -1,0 +1,301 @@
+{
+  "$schema": "https://spec.jsontemplates.io/schema/2.0/template.json",
+  "meta": {
+    "name": "Payslip"
+  },
+  "options": {
+    "page": {
+      "style": {
+        "size": "letter",
+        "margin": "10mm 12mm"
+      }
+    }
+  },
+  "body": {
+    "type": "VerticalLayout",
+    "name": "Payslip",
+    "elements": [
+      {
+        "type": "VerticalLayout",
+        "name": "Company Header",
+        "style": {
+          "padding": "8px 10px",
+          "margin-bottom": "8px",
+          "background-color": "#f8fafc"
+        },
+        "elements": [
+          {
+            "type": "TextBlock",
+            "text": "{{ company.name }}",
+            "style": {
+              "font-weight": "bold",
+              "font-size": "20px",
+              "color": "#4A7CF5"
+            }
+          },
+          {
+            "type": "TextBlock",
+            "text": "{{ company.address }} · {{ company.email }}",
+            "style": {
+              "color": "#64748b"
+            }
+          }
+        ]
+      },
+      {
+        "type": "TextBlock",
+        "name": "Payslip Title",
+        "text": "PAYSLIP — {{ period.month }} {{ period.year }}",
+        "style": {
+          "text-align": "center",
+          "font-weight": "bold",
+          "font-size": "16px",
+          "margin-bottom": "8px"
+        }
+      },
+      {
+        "type": "HorizontalLayout",
+        "name": "Employee & Period Info",
+        "style": {
+          "margin-bottom": "10px"
+        },
+        "elements": [
+          {
+            "type": "MarkdownBlock",
+            "name": "Employee Info",
+            "text": "**Employee:** {{ employee.name }}\n\n**ID:** {{ employee.id }}\n\n**Position:** {{ employee.position }}\n\n**Department:** {{ employee.department }}",
+            "style": {
+              "width": "60%"
+            }
+          },
+          {
+            "type": "KeyValueBlock",
+            "name": "Pay Details",
+            "style": {
+              "width": "40%"
+            },
+            "rows": [
+              {
+                "label": {
+                  "type": "TextBlock",
+                  "text": "Pay Date:",
+                  "style": {
+                    "font-weight": "bold"
+                  }
+                },
+                "value": {
+                  "type": "TextBlock",
+                  "text": "{{ period.pay_date }}"
+                }
+              },
+              {
+                "label": {
+                  "type": "TextBlock",
+                  "text": "Pay Period:",
+                  "style": {
+                    "font-weight": "bold"
+                  }
+                },
+                "value": {
+                  "type": "TextBlock",
+                  "text": "{{ period.start }} – {{ period.end }}"
+                }
+              },
+              {
+                "label": {
+                  "type": "TextBlock",
+                  "text": "Currency:",
+                  "style": {
+                    "font-weight": "bold"
+                  }
+                },
+                "value": {
+                  "type": "TextBlock",
+                  "text": "{{ company.currency }}"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "HorizontalLayout",
+        "name": "Earnings & Deductions",
+        "style": {
+          "margin-bottom": "10px"
+        },
+        "elements": [
+          {
+            "type": "VerticalLayout",
+            "name": "Earnings",
+            "style": {
+              "width": "50%"
+            },
+            "elements": [
+              {
+                "type": "TextBlock",
+                "text": "Earnings",
+                "style": {
+                  "font-weight": "bold",
+                  "color": "#ffffff",
+                  "background-color": "#4A7CF5",
+                  "padding": "4px 6px"
+                }
+              },
+              {
+                "type": "TableBlock",
+                "style": {
+                  "padding": "0 5px",
+                  "border": "1px solid #d1d5db"
+                },
+                "tbody": {
+                  "each": {
+                    "list": "earnings",
+                    "item": "e"
+                  }
+                },
+                "columns": [
+                  {
+                    "td": {
+                      "type": "TextBlock",
+                      "text": "{{ e.concept }}"
+                    }
+                  },
+                  {
+                    "style": {
+                      "width": "35%"
+                    },
+                    "td": {
+                      "type": "TextBlock",
+                      "text": "{{ e.amount | number_format(2, '.', ',') }}",
+                      "style": {
+                        "text-align": "right"
+                      }
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "TextBlock",
+                "text": "Gross: {{ company.currency }} {{ totals.gross | number_format(2, '.', ',') }}",
+                "style": {
+                  "text-align": "right",
+                  "font-weight": "bold",
+                  "padding": "4px 6px",
+                  "border": "1px solid #d1d5db"
+                }
+              }
+            ]
+          },
+          {
+            "type": "VerticalLayout",
+            "name": "Deductions",
+            "style": {
+              "width": "50%"
+            },
+            "elements": [
+              {
+                "type": "TextBlock",
+                "text": "Deductions",
+                "style": {
+                  "font-weight": "bold",
+                  "color": "#ffffff",
+                  "background-color": "#64748b",
+                  "padding": "4px 6px"
+                }
+              },
+              {
+                "type": "TableBlock",
+                "style": {
+                  "padding": "0 5px",
+                  "border": "1px solid #d1d5db"
+                },
+                "tbody": {
+                  "each": {
+                    "list": "deductions",
+                    "item": "d"
+                  }
+                },
+                "columns": [
+                  {
+                    "td": {
+                      "type": "TextBlock",
+                      "text": "{{ d.concept }}"
+                    }
+                  },
+                  {
+                    "style": {
+                      "width": "35%"
+                    },
+                    "td": {
+                      "type": "TextBlock",
+                      "text": "{{ d.amount | number_format(2, '.', ',') }}",
+                      "style": {
+                        "text-align": "right"
+                      }
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "TextBlock",
+                "text": "Total deductions: {{ company.currency }} {{ totals.deductions | number_format(2, '.', ',') }}",
+                "style": {
+                  "text-align": "right",
+                  "font-weight": "bold",
+                  "padding": "4px 6px",
+                  "border": "1px solid #d1d5db"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "HorizontalLayout",
+        "name": "Net Pay",
+        "elements": [
+          {
+            "type": "TextBlock",
+            "text": "This payslip is generated automatically. For questions contact HR at {{ company.hr_email }}.",
+            "style": {
+              "width": "55%",
+              "color": "#64748b",
+              "font-size": "10px"
+            }
+          },
+          {
+            "type": "VerticalLayout",
+            "name": "Net Pay Box",
+            "style": {
+              "width": "45%",
+              "padding": "8px 10px",
+              "border": "2px solid #4A7CF5"
+            },
+            "elements": [
+              {
+                "type": "TextBlock",
+                "text": "NET PAY",
+                "style": {
+                  "text-align": "center",
+                  "font-weight": "bold",
+                  "font-size": "14px",
+                  "color": "#4A7CF5"
+                }
+              },
+              {
+                "type": "TextBlock",
+                "text": "{{ company.currency }} {{ totals.net | number_format(2, '.', ',') }}",
+                "style": {
+                  "text-align": "center",
+                  "font-weight": "bold",
+                  "font-size": "18px"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

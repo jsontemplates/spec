@@ -1,0 +1,217 @@
+{
+  "$schema": "https://spec.jsontemplates.io/schema/1.0/template.json",
+  "generated_at": "2026-03-23T20:25:13.362Z",
+  "format": "LETTER",
+  "width": 216,
+  "height": 279,
+  "margins": {
+    "left": 12,
+    "top": 10,
+    "right": 12,
+    "bottom": 10
+  },
+  "elements": [
+    {
+      "type": "VerticalLayout",
+      "label": "Packing Slip",
+      "elements": [
+        {
+          "type": "HtmlBlock",
+          "label": "Document Title",
+          "content": "<p style=\"text-align:center;\"><b><span style=\"font-size:20px;\">PACKING SLIP</span></b></p><p style=\"text-align:center; color:#64748b;\">Order # {{ shipment.order_number }}</p>",
+          "padding": {
+            "top": 6,
+            "right": 0,
+            "bottom": 6,
+            "left": 0
+          },
+          "margin": {
+            "top": 0,
+            "right": 0,
+            "bottom": 10,
+            "left": 0
+          },
+          "border": {
+            "width": 2,
+            "style": "solid",
+            "color": "#4A7CF5"
+          }
+        },
+        {
+          "type": "HorizontalLayout",
+          "label": "Addresses",
+          "margin": {
+            "top": 0,
+            "right": 0,
+            "bottom": 10,
+            "left": 0
+          },
+          "elements": [
+            {
+              "type": "HtmlBlock",
+              "label": "Ship From",
+              "content": "<p><b>Ship From:</b></p><p>{{ sender.company }}</p><p>{{ sender.address }}</p><p>{{ sender.city }}, {{ sender.country }}</p><p>{{ sender.phone }}</p>",
+              "padding": {
+                "top": 6,
+                "right": 8,
+                "bottom": 6,
+                "left": 8
+              },
+              "background": "#f8fafc",
+              "colWidth": 50
+            },
+            {
+              "type": "HtmlBlock",
+              "label": "Ship To",
+              "content": "<p><b>Ship To:</b></p><p>{{ recipient.name }}</p><p>{{ recipient.company }}</p><p>{{ recipient.address }}</p><p>{{ recipient.city }}, {{ recipient.country }}</p>",
+              "padding": {
+                "top": 6,
+                "right": 8,
+                "bottom": 6,
+                "left": 8
+              },
+              "border": {
+                "width": 1,
+                "style": "solid",
+                "color": "#d1d5db"
+              },
+              "colWidth": 50
+            }
+          ]
+        },
+        {
+          "type": "HorizontalLayout",
+          "label": "Shipment Details",
+          "margin": {
+            "top": 0,
+            "right": 0,
+            "bottom": 10,
+            "left": 0
+          },
+          "elements": [
+            {
+              "type": "KeyValueBlock",
+              "renderMode": "list",
+              "labelWidth": 40,
+              "hideEmptyValues": true,
+              "colWidth": 50,
+              "rows": [
+                {
+                  "label": "<p><b>Ship Date:</b></p>",
+                  "value": "<p>{{ shipment.date }}</p>"
+                },
+                {
+                  "label": "<p><b>Carrier:</b></p>",
+                  "value": "<p>{{ shipment.carrier }}</p>"
+                },
+                {
+                  "label": "<p><b>Service:</b></p>",
+                  "value": "<p>{{ shipment.service }}</p>"
+                }
+              ]
+            },
+            {
+              "type": "KeyValueBlock",
+              "renderMode": "list",
+              "labelWidth": 40,
+              "hideEmptyValues": true,
+              "colWidth": 50,
+              "rows": [
+                {
+                  "label": "<p><b>Weight:</b></p>",
+                  "value": "<p>{{ shipment.total_weight }} kg</p>"
+                },
+                {
+                  "label": "<p><b>Packages:</b></p>",
+                  "value": "<p>{{ shipment.packages }}</p>"
+                },
+                {
+                  "label": "<p><b>Notes:</b></p>",
+                  "value": "<p>{{ shipment.notes }}</p>"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "TableBlock",
+          "label": "Items",
+          "source": "items",
+          "variable": "item",
+          "showHeader": true,
+          "headerFontSize": 12,
+          "headerColor": "#ffffff",
+          "headerBgColor": "#4A7CF5",
+          "hideEmptyColumns": true,
+          "margin": {
+            "top": 0,
+            "right": 0,
+            "bottom": 10,
+            "left": 0
+          },
+          "border": {
+            "width": 1,
+            "style": "solid",
+            "color": "#d1d5db"
+          },
+          "minHeight": 120,
+          "columns": [
+            {
+              "label": "SKU",
+              "value": "{{ item.sku }}",
+              "width": 22,
+              "align": "left"
+            },
+            {
+              "label": "Description",
+              "value": "{{ item.description }}",
+              "width": null,
+              "align": "left"
+            },
+            {
+              "label": "Qty",
+              "value": "<div style=\"text-align:right;\">{{ item.qty }}</div>",
+              "width": 12,
+              "align": "left"
+            },
+            {
+              "label": "Weight (kg)",
+              "value": "<div style=\"text-align:right;\">{{ item.weight }}</div>",
+              "width": 20,
+              "align": "left"
+            }
+          ]
+        },
+        {
+          "type": "HorizontalLayout",
+          "label": "Tracking Footer",
+          "elements": [
+            {
+              "type": "VerticalLayout",
+              "colWidth": 55,
+              "elements": [
+                {
+                  "type": "BarcodeBlock",
+                  "content": "{{ shipment.tracking_number }}",
+                  "format": "CODE128",
+                  "align": "left",
+                  "width": 40,
+                  "height": 60
+                },
+                {
+                  "type": "HtmlBlock",
+                  "content": "<p style=\"text-align: left; line-height: 1;\"><span style=\"font-size:10px;\"><b>{{ shipment.tracking_number }}</b></span></p>"
+                }
+              ]
+            },
+            {
+              "type": "HtmlBlock",
+              "content": "<p style=\"color:#64748b;\"><span style=\"font-size:10px;\">Received in good condition by:</span></p><p><br/><br/></p><p style=\"border-top:1px solid #000; font-size:10px;\">Signature / Date</p>",
+              "colWidth": 45
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

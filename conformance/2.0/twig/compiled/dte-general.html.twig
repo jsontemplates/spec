@@ -1,0 +1,185 @@
+{% set D = EnvioDTE.SetDTE.DTE.Documento %}
+{% set I = D.Encabezado.IdDoc %}
+{% set E = D.Encabezado.Emisor %}
+{% set R = D.Encabezado.Receptor %}
+{% set T = D.Encabezado.Totales %}
+{% set Trans = D.Encabezado.Transporte %}
+<style>.jt,.jt *{box-sizing:border-box;margin:0;padding:0}.jt{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;font-size:13px}.jt table{width:100%;border-collapse:collapse}.jt th,.jt td{text-align:left;vertical-align:top}.jt img{display:block}.jt a{color:inherit}.jt ul,.jt ol{padding-left:1.5em}.jt .jt-inline p{display:inline}@page{size:letter;margin:5mm}@media screen{.jt{max-width:215.9mm;padding:5mm 5mm 5mm 5mm;margin-left:auto;margin-right:auto}}</style>
+<div class="jt" lang="es-CL">
+  <div>
+    <div style="margin-bottom:10px;">
+      <div style="display:flex;margin-bottom:10px;">
+        <div style="width:65%;">
+          <img src="https://spec.jsontemplates.io/examples/jsontemplates-logo.png" alt="Logo del emisor" style="display:block;max-width:50%;">
+          <div>
+            <div style="font-weight:bold;font-size:24px;color:#085294;">{{ E.RznSoc }}</div>
+            <div>{% apply jt_markdown %}
+**Giro**: {{ E.GiroEmis }}
+
+**Dirección**: {{ E.DirOrigen }}, {{ E.CmnaOrigen }}, {{ E.CiudadOrigen }}
+{% endapply %}</div>
+          </div>
+        </div>
+        <div style="width:35%;">
+          <div style="padding:5px 0;border:3px solid #ff0000;">
+            <div style="text-align:center;font-weight:bold;color:#ff0000;">RUT: {{ E.RUTEmisor | format_as('jt.l10n.cl.rut') }}</div>
+            <div style="text-align:center;font-weight:bold;color:#ff0000;margin-top:15px;">Tipo de Documento {{ I.TipoDTE }}</div>
+            <div style="text-align:center;font-weight:bold;color:#ff0000;margin-top:15px;"># {{ I.Folio }}</div>
+          </div>
+          <div>
+            <div style="text-align:center;font-weight:bold;color:#ff0000;">SII - SANTA CRUZ</div>
+            <div style="text-align:right;font-weight:bold;">Empresa de Menor Tamaño</div>
+          </div>
+        </div>
+      </div>
+      <div style="display:flex;margin-bottom:10px;">
+        <div style="width:60%;margin-bottom:10px;">{% apply jt_markdown %}
+**Razón social**: {{ R.RznSocRecep }}
+
+**RUT**: {{ R.RUTRecep | format_as('jt.l10n.cl.rut') }}
+
+**Giro**: {{ R.GiroRecep }}
+
+**Dirección**: {{ R.DirRecep }}, {{ R.CmnaRecep }}, {{ R.CiudadRecep }}
+
+**Contacto**: {{ R.Contacto }}
+
+**Correo**: {{ R.CorreoRecep }}
+{% endapply %}</div>
+        <div style="width:40%;">
+          {% set __jt1 %}<span class="jt-inline">{{ I.FchEmis | format_as('jt.l10n.es.date.long') }}</span>{% endset %}{% if __jt1|striptags|trim is not empty %}<div><span class="jt-inline">{% apply jt_markdown %}
+**Fecha de emisión**:
+{% endapply %}</span> {{ __jt1 }}</div>{% endif %}
+          {% set __jt2 %}<span class="jt-inline">{{ I.FchVenc | format_as('jt.date.short') }}</span>{% endset %}{% if __jt2|striptags|trim is not empty %}<div><span class="jt-inline">{% apply jt_markdown %}
+**Fecha de vencimiento**:
+{% endapply %}</span> {{ __jt2 }}</div>{% endif %}
+          {% set __jt3 %}<span class="jt-inline">{{ E.CdgVendedor }}</span>{% endset %}{% if __jt3|striptags|trim is not empty %}<div><span class="jt-inline">{% apply jt_markdown %}
+**Vendedor**:
+{% endapply %}</span> {{ __jt3 }}</div>{% endif %}
+        </div>
+      </div>
+      <div style="border:1px solid #d1d5db;margin-bottom:10px;min-height:300px;">
+        {% set __jt4 = false %}{% set __jt5 = false %}{% set __jt6 = false %}{% set __jt7 = false %}{% set __jt8 = false %}
+        {% for i in D.Detalle %}
+            {% set __jt9 %}<span class="jt-inline">{{ i.CdgItem.VlrCodigo }}</span>{% endset %}{% if __jt9|striptags|trim is not empty %}{% set __jt4 = true %}{% endif %}
+            {% set __jt10 %}<span class="jt-inline" style="white-space:pre-line;">{{ i.NmbItem }}
+{{ i.DscItem }}</span>{% endset %}{% if __jt10|striptags|trim is not empty %}{% set __jt5 = true %}{% endif %}
+            {% set __jt11 %}<span class="jt-inline" style="text-align:right;">{{ i.QtyItem | format_as('jt.int') }} {{ i.UnmdItem }}</span>{% endset %}{% if __jt11|striptags|trim is not empty %}{% set __jt6 = true %}{% endif %}
+            {% set __jt12 %}<span class="jt-inline" style="text-align:right;">{{ i.PrcItem | format_as('jt.int') }}</span>{% endset %}{% if __jt12|striptags|trim is not empty %}{% set __jt7 = true %}{% endif %}
+            {% set __jt13 %}<span class="jt-inline" style="text-align:right;">{{ i.MontoItem | format_as('jt.int') }}</span>{% endset %}{% if __jt13|striptags|trim is not empty %}{% set __jt8 = true %}{% endif %}
+        {% endfor %}
+        <table>
+          <colgroup>
+            {% if __jt4 %}<col style="width:20%;">{% endif %}
+            {% if __jt5 %}<col>{% endif %}
+            {% if __jt6 %}<col style="width:8%;">{% endif %}
+            {% if __jt7 %}<col style="width:10%;">{% endif %}
+            {% if __jt8 %}<col style="width:10%;">{% endif %}
+          </colgroup>
+          <thead style="background-color:#f3f4f6;color:#000000;font-size:13px;">
+            <tr>
+              {% if __jt4 %}<th>
+                <div>Código</div>
+              </th>{% endif %}
+              {% if __jt5 %}<th>
+                <div>Item</div>
+              </th>{% endif %}
+              {% if __jt6 %}<th>
+                <div>Cant.</div>
+              </th>{% endif %}
+              {% if __jt7 %}<th>
+                <div>P. unitario</div>
+              </th>{% endif %}
+              {% if __jt8 %}<th>
+                <div>Total item</div>
+              </th>{% endif %}
+            </tr>
+          </thead>
+          <tbody>
+            {% for i in D.Detalle %}
+            <tr>
+              {% if __jt4 %}<td>
+                <div>{{ i.CdgItem.VlrCodigo }}</div>
+              </td>{% endif %}
+              {% if __jt5 %}<td>
+                <div style="white-space:pre-line;">{{ i.NmbItem }}
+{{ i.DscItem }}</div>
+              </td>{% endif %}
+              {% if __jt6 %}<td>
+                <div style="text-align:right;">{{ i.QtyItem | format_as('jt.int') }} {{ i.UnmdItem }}</div>
+              </td>{% endif %}
+              {% if __jt7 %}<td>
+                <div style="text-align:right;">{{ i.PrcItem | format_as('jt.int') }}</div>
+              </td>{% endif %}
+              {% if __jt8 %}<td>
+                <div style="text-align:right;">{{ i.MontoItem | format_as('jt.int') }}</div>
+              </td>{% endif %}
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      <div style="padding:5px;margin-bottom:10px;border:1px solid #d1d5db;">
+        <div>{% apply jt_markdown %}
+**En total son**: {{ T.MntTotal | format_as('jt.l10n.es.num2text') }} pesos.
+{% endapply %}</div>
+        <div style="margin-top:15px;">{% apply jt_markdown %}
+**Observación**: {{ I.TermPagoGlosa | default('N/A') }}
+{% endapply %}</div>
+      </div>
+      <div style="display:flex;">
+        <div style="width:34%;">
+          {% set __jt14 %}{{ (D.TED | format_as('jt.l10n.cl.dte.ted'))|raw }}{% endset %}
+          <img src="{{ __jt14|jt_pdf417(5, false) }}" style="display:block;width:100%;height:90px;">
+          <div style="text-align:center;font-size:10px;line-height:1;">{% apply jt_markdown %}
+**Timbre Electrónico SII**
+
+**Resolución 80 de 2024**
+
+**Verifique documento: www.sii.cl**
+{% endapply %}</div>
+        </div>
+        <div style="width:32%;">
+          <img src="https://cdn.sasco.cl/img/banners/pdf_cotizacion_300x200.png" alt="Banner de pago" style="display:block;max-width:80%;margin-left:auto;margin-right:auto;">
+        </div>
+        <div style="width:34%;">
+          <div style="display:flex;padding:5px;border:1px solid #d1d5db;">
+            <div style="width:45%;text-align:right;">{% apply jt_markdown %}
+**Neto $**:
+
+**IVA (19%) $**:
+
+**Total $**:
+{% endapply %}</div>
+            <div style="width:55%;text-align:right;">{% apply jt_markdown %}
+{{ T.MntNeto | format_as('jt.int') }}
+
+{{ T.IVA | format_as('jt.int') }}
+
+{{ T.MntTotal | format_as('jt.int') }}
+{% endapply %}</div>
+          </div>
+          {% set __jt15 %}T{{ (I.TipoDTE)|raw }}F{{ (I.Folio)|raw }}{% endset %}
+          <img src="{{ __jt15|jt_barcode('CODE128') }}" style="display:block;width:40%;height:60px;margin-top:10px;margin-left:auto;margin-right:auto;">
+          <div style="text-align:center;font-weight:bold;font-size:10px;line-height:1;">T{{ I.TipoDTE }}F{{ I.Folio }}</div>
+        </div>
+      </div>
+      <img src="https://www.sasco.cl/img/banners/sasco-banner-dte-pie-pagina_750x110.png" alt="Banner publicitario" style="display:block;max-width:100%;margin-top:20px;margin-left:auto;margin-right:auto;">
+    </div>
+    <div style="break-after:page;"></div>
+    <div>
+      <div style="text-align:center;font-weight:bold;font-size:18px;margin-bottom:15px;">Términos y Condiciones de Nuestros Productos y Servicios</div>
+      <div>{% apply jt_markdown %}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque facilisis turpis ipsum, nec egestas tortor feugiat non. Sed mollis lacus eget erat tempus gravida. Donec ac quam libero. Nullam at magna facilisis, semper dui ut, congue enim. Suspendisse sodales et enim in laoreet. Sed sed ligula eget urna venenatis lacinia sed semper felis. Maecenas at consequat lorem. Etiam non euismod nisl, id malesuada libero. In commodo id purus id facilisis. Praesent sollicitudin vulputate sodales.
+
+Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Ut rhoncus ligula ut leo accumsan, ac interdum est feugiat. Vestibulum pulvinar mauris id sapien malesuada lobortis. Nunc ac nibh ex. Nullam ut blandit felis. Aliquam erat volutpat. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Aenean quis lacus odio. Aenean vitae malesuada purus, eu rutrum eros. Donec eu purus sollicitudin, lacinia velit ut, iaculis urna. Aenean ut dictum risus. Vivamus euismod dolor bibendum, molestie ex in, tristique tellus. Mauris maximus nibh nec dignissim consectetur. Nunc ultrices, libero vitae consequat rutrum, ligula enim hendrerit tellus, in laoreet sem elit non dui.
+
+Pellentesque porttitor ipsum eu hendrerit pulvinar. Etiam blandit non tellus et fringilla. In hac habitasse platea dictumst. Duis in eros augue. Vestibulum lobortis, magna et fringilla fringilla, arcu justo molestie dolor, at placerat enim lectus vitae metus. Nunc facilisis sapien ut elit scelerisque tristique. Nulla at auctor tellus. Phasellus pharetra tortor ac augue finibus tincidunt. Nam vestibulum enim fringilla ex rhoncus, id placerat metus aliquet. Aenean viverra suscipit purus et dapibus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Fusce quis hendrerit diam, vitae iaculis ex.
+
+Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Curabitur elementum interdum posuere. Aenean id semper mi. Nulla feugiat aliquam tellus a mattis. Morbi ultricies, risus ut feugiat rhoncus, mauris dolor dignissim odio, quis egestas mauris libero nec mauris. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Nam pretium ultricies lorem quis posuere. Sed ultricies ipsum nec lorem rutrum, in posuere metus convallis. Morbi quam dui, eleifend vel volutpat nec, convallis ac enim. Fusce ut pretium urna, elementum fermentum odio. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Phasellus cursus nunc nisl, sed tempor lectus rhoncus non. Praesent metus elit, molestie vel ornare quis, egestas et risus. Ut tempus elit ac consequat malesuada.
+
+Morbi justo nisl, rhoncus mollis ultricies nec, fermentum ac nisl. In eu molestie felis. Pellentesque eu eros eros. Maecenas a nulla nec sem blandit vulputate. Mauris sem metus, condimentum ac arcu eu, fringilla sollicitudin odio. In sit amet dolor aliquet, luctus augue eu, imperdiet nibh. Mauris tincidunt arcu sed mauris volutpat, pretium eleifend eros ornare. Nunc mattis facilisis tortor eu convallis. Fusce posuere commodo egestas. Maecenas quam neque, efficitur sit amet arcu non, varius dictum ipsum. Donec finibus feugiat posuere. Duis convallis enim purus, ut facilisis nunc sagittis at. Mauris cursus odio ligula, cursus congue leo porttitor ut. Donec lectus velit, vulputate eu urna laoreet, porta tincidunt est. Nulla facilisi. Sed congue ullamcorper ipsum, feugiat laoreet urna commodo ac.
+{% endapply %}</div>
+    </div>
+  </div>
+</div>

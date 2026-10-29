@@ -1,0 +1,89 @@
+<style>.jt,.jt *{box-sizing:border-box;margin:0;padding:0}.jt{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;font-size:13px}.jt table{width:100%;border-collapse:collapse}.jt th,.jt td{text-align:left;vertical-align:top}.jt img{display:block}.jt a{color:inherit}.jt ul,.jt ol{padding-left:1.5em}.jt .jt-inline p{display:inline}@page{size:letter;margin:10mm 12mm}@media screen{.jt{max-width:215.9mm;padding:10mm 12mm 10mm 12mm;margin-left:auto;margin-right:auto}}</style>
+<div class="jt">
+  <div>
+    <div style="padding:8px 10px;margin-bottom:8px;background-color:#f8fafc;">
+      <div style="font-weight:bold;font-size:20px;color:#4A7CF5;">{{ company.name }}</div>
+      <div style="color:#64748b;">{{ company.address }} · {{ company.email }}</div>
+    </div>
+    <div style="text-align:center;font-weight:bold;font-size:16px;margin-bottom:8px;">PAYSLIP — {{ period.month }} {{ period.year }}</div>
+    <div style="display:flex;margin-bottom:10px;">
+      <div style="width:60%;">{% apply jt_markdown %}
+**Employee:** {{ employee.name }}
+
+**ID:** {{ employee.id }}
+
+**Position:** {{ employee.position }}
+
+**Department:** {{ employee.department }}
+{% endapply %}</div>
+      <div style="width:40%;">
+        {% set __jt1 %}<span class="jt-inline">{{ period.pay_date }}</span>{% endset %}{% if __jt1|striptags|trim is not empty %}<div><span class="jt-inline" style="font-weight:bold;">Pay Date:</span> {{ __jt1 }}</div>{% endif %}
+        {% set __jt2 %}<span class="jt-inline">{{ period.start }} – {{ period.end }}</span>{% endset %}{% if __jt2|striptags|trim is not empty %}<div><span class="jt-inline" style="font-weight:bold;">Pay Period:</span> {{ __jt2 }}</div>{% endif %}
+        {% set __jt3 %}<span class="jt-inline">{{ company.currency }}</span>{% endset %}{% if __jt3|striptags|trim is not empty %}<div><span class="jt-inline" style="font-weight:bold;">Currency:</span> {{ __jt3 }}</div>{% endif %}
+      </div>
+    </div>
+    <div style="display:flex;margin-bottom:10px;">
+      <div style="width:50%;">
+        <div style="font-weight:bold;color:#ffffff;background-color:#4A7CF5;padding:4px 6px;">Earnings</div>
+        {% set __jt4 = false %}{% set __jt5 = false %}
+        {% for e in earnings %}
+            {% set __jt6 %}<span class="jt-inline">{{ e.concept }}</span>{% endset %}{% if __jt6|striptags|trim is not empty %}{% set __jt4 = true %}{% endif %}
+            {% set __jt7 %}<span class="jt-inline" style="text-align:right;">{{ e.amount | number_format(2, '.', ',') }}</span>{% endset %}{% if __jt7|striptags|trim is not empty %}{% set __jt5 = true %}{% endif %}
+        {% endfor %}
+        <table style="padding:0 5px;border:1px solid #d1d5db;">
+          <colgroup>
+            {% if __jt4 %}<col>{% endif %}
+            {% if __jt5 %}<col style="width:35%;">{% endif %}
+          </colgroup>
+          <tbody>
+            {% for e in earnings %}
+            <tr>
+              {% if __jt4 %}<td>
+                <div>{{ e.concept }}</div>
+              </td>{% endif %}
+              {% if __jt5 %}<td>
+                <div style="text-align:right;">{{ e.amount | number_format(2, '.', ',') }}</div>
+              </td>{% endif %}
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        <div style="text-align:right;font-weight:bold;padding:4px 6px;border:1px solid #d1d5db;">Gross: {{ company.currency }} {{ totals.gross | number_format(2, '.', ',') }}</div>
+      </div>
+      <div style="width:50%;">
+        <div style="font-weight:bold;color:#ffffff;background-color:#64748b;padding:4px 6px;">Deductions</div>
+        {% set __jt8 = false %}{% set __jt9 = false %}
+        {% for d in deductions %}
+            {% set __jt10 %}<span class="jt-inline">{{ d.concept }}</span>{% endset %}{% if __jt10|striptags|trim is not empty %}{% set __jt8 = true %}{% endif %}
+            {% set __jt11 %}<span class="jt-inline" style="text-align:right;">{{ d.amount | number_format(2, '.', ',') }}</span>{% endset %}{% if __jt11|striptags|trim is not empty %}{% set __jt9 = true %}{% endif %}
+        {% endfor %}
+        <table style="padding:0 5px;border:1px solid #d1d5db;">
+          <colgroup>
+            {% if __jt8 %}<col>{% endif %}
+            {% if __jt9 %}<col style="width:35%;">{% endif %}
+          </colgroup>
+          <tbody>
+            {% for d in deductions %}
+            <tr>
+              {% if __jt8 %}<td>
+                <div>{{ d.concept }}</div>
+              </td>{% endif %}
+              {% if __jt9 %}<td>
+                <div style="text-align:right;">{{ d.amount | number_format(2, '.', ',') }}</div>
+              </td>{% endif %}
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        <div style="text-align:right;font-weight:bold;padding:4px 6px;border:1px solid #d1d5db;">Total deductions: {{ company.currency }} {{ totals.deductions | number_format(2, '.', ',') }}</div>
+      </div>
+    </div>
+    <div style="display:flex;">
+      <div style="width:55%;color:#64748b;font-size:10px;">This payslip is generated automatically. For questions contact HR at {{ company.hr_email }}.</div>
+      <div style="width:45%;padding:8px 10px;border:2px solid #4A7CF5;">
+        <div style="text-align:center;font-weight:bold;font-size:14px;color:#4A7CF5;">NET PAY</div>
+        <div style="text-align:center;font-weight:bold;font-size:18px;">{{ company.currency }} {{ totals.net | number_format(2, '.', ',') }}</div>
+      </div>
+    </div>
+  </div>
+</div>

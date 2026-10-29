@@ -1,0 +1,417 @@
+{
+  "$schema": "https://spec.jsontemplates.io/schema/2.0/template.json",
+  "meta": {
+    "name": "DTE Continuo",
+    "lang": "es-CL"
+  },
+  "options": {
+    "page": {
+      "style": {
+        "size": "80mm auto",
+        "margin": "1mm"
+      }
+    }
+  },
+  "variables": [
+    {
+      "name": "D",
+      "value": "EnvioDTE.SetDTE.DTE.Documento"
+    },
+    {
+      "name": "I",
+      "value": "D.Encabezado.IdDoc"
+    },
+    {
+      "name": "E",
+      "value": "D.Encabezado.Emisor"
+    },
+    {
+      "name": "R",
+      "value": "D.Encabezado.Receptor"
+    },
+    {
+      "name": "T",
+      "value": "D.Encabezado.Totales"
+    },
+    {
+      "name": "Trans",
+      "value": "D.Encabezado.Transporte"
+    }
+  ],
+  "body": {
+    "type": "VerticalLayout",
+    "name": "Documento",
+    "style": {
+      "margin-bottom": "10px"
+    },
+    "elements": [
+      {
+        "type": "VerticalLayout",
+        "name": "RUT, Tipo DTE y Folio",
+        "style": {
+          "border": "3px solid #ff0000"
+        },
+        "elements": [
+          {
+            "type": "TextBlock",
+            "text": "RUT: {{ E.RUTEmisor | format_as('jt.l10n.cl.rut') }}",
+            "style": {
+              "text-align": "center",
+              "font-weight": "bold",
+              "color": "#ff0000",
+              "font-size": "11px",
+              "line-height": "1"
+            }
+          },
+          {
+            "type": "TextBlock",
+            "text": "Tipo de Documento {{ I.TipoDTE }}",
+            "style": {
+              "text-align": "center",
+              "font-weight": "bold",
+              "color": "#ff0000",
+              "font-size": "11px",
+              "line-height": "1",
+              "margin-top": "13px"
+            }
+          },
+          {
+            "type": "TextBlock",
+            "text": "# {{ I.Folio }}",
+            "style": {
+              "text-align": "center",
+              "font-weight": "bold",
+              "color": "#ff0000",
+              "font-size": "11px",
+              "line-height": "1",
+              "margin-top": "13px"
+            }
+          }
+        ]
+      },
+      {
+        "type": "VerticalLayout",
+        "name": "Oficina SII",
+        "style": {
+          "margin-bottom": "10px"
+        },
+        "elements": [
+          {
+            "type": "TextBlock",
+            "text": "SII - SANTA CRUZ",
+            "style": {
+              "text-align": "center",
+              "font-weight": "bold",
+              "color": "#ff0000",
+              "font-size": "11px"
+            }
+          },
+          {
+            "type": "TextBlock",
+            "text": "Empresa de Menor Tamaño",
+            "style": {
+              "text-align": "right",
+              "font-weight": "bold",
+              "font-size": "11px"
+            }
+          }
+        ]
+      },
+      {
+        "type": "ImageBlock",
+        "name": "Logo del Emisor",
+        "src": "https://spec.jsontemplates.io/examples/jsontemplates-logo.png",
+        "alt": "Logo del emisor",
+        "style": {
+          "max-width": "60%",
+          "margin-left": "auto",
+          "margin-right": "auto"
+        }
+      },
+      {
+        "type": "VerticalLayout",
+        "name": "Datos del Emisor",
+        "style": {
+          "margin-bottom": "10px"
+        },
+        "elements": [
+          {
+            "type": "TextBlock",
+            "text": "{{ E.RznSoc }}",
+            "style": {
+              "font-weight": "bold",
+              "font-size": "24px",
+              "color": "#085294"
+            }
+          },
+          {
+            "type": "MarkdownBlock",
+            "text": "**Giro**: {{ E.GiroEmis }}\n\n**Dirección**: {{ E.DirOrigen }}, {{ E.CmnaOrigen }}, {{ E.CiudadOrigen }}",
+            "style": {
+              "font-size": "11px",
+              "line-height": "1"
+            }
+          }
+        ]
+      },
+      {
+        "type": "MarkdownBlock",
+        "name": "Datos del DTE",
+        "text": "**Fecha de emisión**: {{ I.FchEmis | format_as('jt.l10n.es.date.long') }}\n\n**Fecha de vencimiento**: {{ I.FchVenc | format_as('jt.date.short') }}",
+        "style": {
+          "text-align": "left",
+          "font-size": "11px",
+          "line-height": "1",
+          "margin-bottom": "5px"
+        }
+      },
+      {
+        "type": "MarkdownBlock",
+        "name": "Datos del Receptor",
+        "text": "**Razón social**: {{ R.RznSocRecep }}\n\n**RUT**: {{ R.RUTRecep | format_as('jt.l10n.cl.rut') }}\n\n**Giro**: {{ R.GiroRecep }}\n\n**Dirección**: {{ R.DirRecep }}, {{ R.CmnaRecep }}\n\n**Contacto**: {{ R.Contacto }}\n\n**Correo**: {{ R.CorreoRecep }}",
+        "style": {
+          "font-size": "11px",
+          "line-height": "1",
+          "margin-bottom": "10px"
+        }
+      },
+      {
+        "type": "KeyValueBlock",
+        "name": "Datos de Transporte",
+        "rule": {
+          "effect": "HIDE",
+          "condition": {
+            "value": "Trans",
+            "schema": {
+              "const": null
+            }
+          }
+        },
+        "style": {
+          "font-size": "11px",
+          "margin-bottom": "10px"
+        },
+        "rows": [
+          {
+            "label": {
+              "type": "MarkdownBlock",
+              "text": "**Patente**:"
+            },
+            "value": {
+              "type": "TextBlock",
+              "text": "{{ Trans.Patente }}"
+            }
+          },
+          {
+            "label": {
+              "type": "MarkdownBlock",
+              "text": "**Transportista**:"
+            },
+            "value": {
+              "type": "TextBlock",
+              "text": "{{ Trans.RUTTrans }}"
+            }
+          },
+          {
+            "label": {
+              "type": "MarkdownBlock",
+              "text": "**Chofer**:"
+            },
+            "value": {
+              "type": "TextBlock",
+              "text": "{{ Trans.Chofer.NombreChofer }} {{ Trans.Chofer.RUTChofer }}"
+            }
+          },
+          {
+            "label": {
+              "type": "MarkdownBlock",
+              "text": "**Destino**:"
+            },
+            "value": {
+              "type": "TextBlock",
+              "text": "{{ Trans.DirDest }}, {{ Trans.CmnaDest }}"
+            }
+          }
+        ]
+      },
+      {
+        "type": "TableBlock",
+        "name": "Detalle de Items",
+        "style": {
+          "border": "1px solid #d1d5db",
+          "margin-bottom": "10px"
+        },
+        "thead": {
+          "style": {
+            "background-color": "#f3f4f6",
+            "color": "#000000",
+            "font-size": "11px"
+          }
+        },
+        "tbody": {
+          "each": {
+            "list": "D.Detalle",
+            "item": "i"
+          }
+        },
+        "columns": [
+          {
+            "th": {
+              "type": "TextBlock",
+              "text": "Item"
+            },
+            "td": {
+              "type": "TextBlock",
+              "text": "{{ i.NmbItem }}\n{{ i.DscItem }}\n{{ i.QtyItem | format_as('jt.int') }} {{ i.UnmdItem }} x {{ i.PrcItem | format_as('jt.int') }}",
+              "style": {
+                "font-size": "11px",
+                "white-space": "pre-line"
+              }
+            }
+          },
+          {
+            "style": {
+              "width": "10%"
+            },
+            "th": {
+              "type": "TextBlock",
+              "text": "Subtotal"
+            },
+            "td": {
+              "type": "TextBlock",
+              "text": "{{ i.MontoItem | format_as('jt.int') }}",
+              "style": {
+                "font-size": "11px"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "type": "KeyValueBlock",
+        "name": "Total en Texto y Observación",
+        "style": {
+          "font-size": "11px",
+          "margin-bottom": "10px"
+        },
+        "rows": [
+          {
+            "label": {
+              "type": "MarkdownBlock",
+              "text": "**En total son**:"
+            },
+            "value": {
+              "type": "TextBlock",
+              "text": "{{ T.MntTotal | format_as('jt.l10n.es.num2text') }} pesos."
+            }
+          },
+          {
+            "label": {
+              "type": "MarkdownBlock",
+              "text": "**Observación**:"
+            },
+            "value": {
+              "type": "TextBlock",
+              "text": "{{ I.TermPagoGlosa }}"
+            }
+          }
+        ]
+      },
+      {
+        "type": "HorizontalLayout",
+        "name": "Totales",
+        "style": {
+          "padding": "5px",
+          "margin-bottom": "10px",
+          "border": "1px solid #d1d5db"
+        },
+        "elements": [
+          {
+            "type": "MarkdownBlock",
+            "name": "Glosa de Totales",
+            "text": "**Neto $**:\n\n**IVA (19%) $**:\n\n**Total $**:",
+            "style": {
+              "width": "65%",
+              "text-align": "right",
+              "font-size": "11px"
+            }
+          },
+          {
+            "type": "MarkdownBlock",
+            "name": "Valores de Totales",
+            "text": "{{ T.MntNeto | format_as('jt.int') }}\n\n{{ T.IVA | format_as('jt.int') }}\n\n{{ T.MntTotal | format_as('jt.int') }}",
+            "style": {
+              "text-align": "right",
+              "font-size": "11px"
+            }
+          }
+        ]
+      },
+      {
+        "type": "Pdf417Block",
+        "text": "{{ D.TED | format_as('jt.l10n.cl.dte.ted') }}",
+        "errorCorrection": 5,
+        "style": {
+          "width": "100%",
+          "height": "90px"
+        }
+      },
+      {
+        "type": "MarkdownBlock",
+        "name": "Autorización SII",
+        "text": "**Timbre Electrónico SII**\n\n**Resolución 80 de 2024**\n\n**Verifique documento: www.sii.cl**",
+        "style": {
+          "text-align": "center",
+          "font-size": "10px",
+          "line-height": "1"
+        }
+      },
+      {
+        "type": "BarcodeBlock",
+        "text": "T{{ I.TipoDTE }}F{{ I.Folio }}",
+        "format": "CODE128",
+        "style": {
+          "width": "40%",
+          "height": "40px",
+          "margin-top": "10px",
+          "margin-left": "auto",
+          "margin-right": "auto"
+        }
+      },
+      {
+        "type": "TextBlock",
+        "name": "Texto del Barcode",
+        "text": "T{{ I.TipoDTE }}F{{ I.Folio }}",
+        "style": {
+          "text-align": "center",
+          "font-weight": "bold",
+          "font-size": "10px",
+          "line-height": "1",
+          "margin-bottom": "10px"
+        }
+      },
+      {
+        "type": "QrBlock",
+        "text": "{{ E.RUTEmisor }}T{{ I.TipoDTE }}F{{ I.Folio }}",
+        "errorCorrection": "M",
+        "style": {
+          "width": "120px",
+          "height": "120px",
+          "margin-left": "auto",
+          "margin-right": "auto"
+        }
+      },
+      {
+        "type": "TextBlock",
+        "name": "Texto del QR",
+        "text": "{{ E.RUTEmisor }}T{{ I.TipoDTE }}F{{ I.Folio }}",
+        "style": {
+          "text-align": "center",
+          "font-weight": "bold",
+          "font-size": "10px",
+          "line-height": "1"
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "$schema": "https://spec.jsontemplates.io/schema/2.0/template.json",
+  "body": {
+    "type": "Pdf417Block",
+    "text": "x",
+    "errorCorrection": 9
+  }
+}

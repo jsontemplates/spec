@@ -1,0 +1,7 @@
+{
+  "company": {
+    "name": "Acme Corp",
+    "email": "legal@acme.example",
+    "terms_url": "https://acme.example/terms"
+  }
+}

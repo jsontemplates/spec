@@ -1,0 +1,421 @@
+{
+  "$schema": "https://spec.jsontemplates.io/schema/2.0/template.json",
+  "meta": {
+    "name": "Estado de cuenta",
+    "description": "Estado de cuenta bancario con resumen, aviso de sobregiro y movimientos contabilizados.",
+    "lang": "es-CL"
+  },
+  "options": {
+    "page": {
+      "style": {
+        "size": "letter",
+        "margin": "14mm"
+      }
+    }
+  },
+  "variables": [
+    {
+      "name": "holder",
+      "value": "customer"
+    },
+    {
+      "name": "account",
+      "value": "holder.account"
+    }
+  ],
+  "body": {
+    "type": "VerticalLayout",
+    "elements": [
+      {
+        "type": "HorizontalLayout",
+        "style": {
+          "margin-bottom": "10px"
+        },
+        "elements": [
+          {
+            "type": "TextBlock",
+            "text": "Banco Austral",
+            "style": {
+              "width": "50%",
+              "font-weight": "bold",
+              "font-size": "20px",
+              "color": "#0f766e"
+            }
+          },
+          {
+            "type": "VerticalLayout",
+            "style": {
+              "width": "50%"
+            },
+            "elements": [
+              {
+                "type": "TextBlock",
+                "text": "ESTADO DE CUENTA",
+                "style": {
+                  "text-align": "right",
+                  "font-weight": "bold"
+                }
+              },
+              {
+                "type": "TextBlock",
+                "text": "Del {{ period.from | format_as('jt.date.short') }} al {{ period.to | format_as('jt.date.short') }}",
+                "style": {
+                  "text-align": "right",
+                  "color": "#64748b"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "KeyValueBlock",
+        "name": "Titular",
+        "style": {
+          "margin-bottom": "10px"
+        },
+        "rows": [
+          {
+            "label": {
+              "type": "TextBlock",
+              "text": "Titular:",
+              "style": {
+                "font-weight": "bold"
+              }
+            },
+            "value": {
+              "type": "TextBlock",
+              "text": "{{ holder.name }}"
+            }
+          },
+          {
+            "label": {
+              "type": "TextBlock",
+              "text": "RUT:",
+              "style": {
+                "font-weight": "bold"
+              }
+            },
+            "value": {
+              "type": "TextBlock",
+              "text": "{{ holder.rut | format_as('jt.l10n.cl.rut') }}"
+            }
+          },
+          {
+            "label": {
+              "type": "TextBlock",
+              "text": "Cuenta:",
+              "style": {
+                "font-weight": "bold"
+              }
+            },
+            "value": {
+              "type": "TextBlock",
+              "text": "{{ account.number }} ({{ account.label }})"
+            }
+          },
+          {
+            "label": {
+              "type": "TextBlock",
+              "text": "Ejecutivo:",
+              "style": {
+                "font-weight": "bold"
+              }
+            },
+            "value": {
+              "type": "TextBlock",
+              "text": "{{ holder.officer | default('Atención por canales digitales') }}"
+            }
+          }
+        ]
+      },
+      {
+        "type": "HorizontalLayout",
+        "name": "Resumen",
+        "style": {
+          "margin-bottom": "10px"
+        },
+        "elements": [
+          {
+            "type": "VerticalLayout",
+            "style": {
+              "width": "25%",
+              "padding": "6px 8px",
+              "background-color": "#f8fafc",
+              "border": "1px solid #e2e8f0"
+            },
+            "elements": [
+              {
+                "type": "TextBlock",
+                "text": "Saldo inicial",
+                "style": {
+                  "font-size": "10px",
+                  "color": "#64748b"
+                }
+              },
+              {
+                "type": "TextBlock",
+                "text": "$ {{ summary.opening | format_as('jt.int') }}",
+                "style": {
+                  "font-weight": "bold",
+                  "font-size": "15px",
+                  "color": "#0f172a"
+                }
+              }
+            ]
+          },
+          {
+            "type": "VerticalLayout",
+            "style": {
+              "width": "25%",
+              "padding": "6px 8px",
+              "background-color": "#f8fafc",
+              "border": "1px solid #e2e8f0"
+            },
+            "elements": [
+              {
+                "type": "TextBlock",
+                "text": "Abonos",
+                "style": {
+                  "font-size": "10px",
+                  "color": "#64748b"
+                }
+              },
+              {
+                "type": "TextBlock",
+                "text": "$ {{ summary.credits | format_as('jt.int') }}",
+                "style": {
+                  "font-weight": "bold",
+                  "font-size": "15px",
+                  "color": "#15803d"
+                }
+              }
+            ]
+          },
+          {
+            "type": "VerticalLayout",
+            "style": {
+              "width": "25%",
+              "padding": "6px 8px",
+              "background-color": "#f8fafc",
+              "border": "1px solid #e2e8f0"
+            },
+            "elements": [
+              {
+                "type": "TextBlock",
+                "text": "Cargos",
+                "style": {
+                  "font-size": "10px",
+                  "color": "#64748b"
+                }
+              },
+              {
+                "type": "TextBlock",
+                "text": "$ {{ summary.debits | format_as('jt.int') }}",
+                "style": {
+                  "font-weight": "bold",
+                  "font-size": "15px",
+                  "color": "#b91c1c"
+                }
+              }
+            ]
+          },
+          {
+            "type": "VerticalLayout",
+            "style": {
+              "width": "25%",
+              "padding": "6px 8px",
+              "background-color": "#f8fafc",
+              "border": "1px solid #e2e8f0"
+            },
+            "elements": [
+              {
+                "type": "TextBlock",
+                "text": "Saldo final",
+                "style": {
+                  "font-size": "10px",
+                  "color": "#64748b"
+                }
+              },
+              {
+                "type": "TextBlock",
+                "text": "$ {{ summary.closing | format_as('jt.int') }}",
+                "style": {
+                  "font-weight": "bold",
+                  "font-size": "15px",
+                  "color": "#0f172a"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "TextBlock",
+        "name": "Aviso de sobregiro",
+        "rule": {
+          "effect": "SHOW",
+          "condition": {
+            "type": "AND",
+            "conditions": [
+              {
+                "value": "account.type",
+                "schema": {
+                  "const": "checking"
+                }
+              },
+              {
+                "value": "summary.closing",
+                "schema": {
+                  "exclusiveMaximum": 0
+                }
+              }
+            ]
+          }
+        },
+        "text": "Su cuenta corriente cerró el período con saldo negativo. Los sobregiros generan intereses según su contrato.",
+        "style": {
+          "font-weight": "bold",
+          "color": "#ffffff",
+          "background-color": "#b91c1c",
+          "padding": "6px 8px",
+          "margin-bottom": "10px"
+        }
+      },
+      {
+        "type": "TableBlock",
+        "name": "Movimientos",
+        "style": {
+          "border": "1px solid #e2e8f0",
+          "margin-bottom": "10px"
+        },
+        "thead": {
+          "style": {
+            "background-color": "#0f766e",
+            "color": "#ffffff"
+          }
+        },
+        "tbody": {
+          "each": {
+            "list": "movements",
+            "item": "m"
+          },
+          "rule": {
+            "effect": "HIDE",
+            "condition": {
+              "value": "m.posted",
+              "schema": {
+                "const": false
+              }
+            }
+          },
+          "style": {
+            "font-size": "11px"
+          }
+        },
+        "columns": [
+          {
+            "style": {
+              "width": "13%"
+            },
+            "th": {
+              "type": "TextBlock",
+              "text": "Fecha",
+              "style": {
+                "font-weight": "bold"
+              }
+            },
+            "td": {
+              "type": "TextBlock",
+              "text": "{{ m.date | format_as('jt.date.short') }}"
+            }
+          },
+          {
+            "th": {
+              "type": "TextBlock",
+              "text": "Detalle",
+              "style": {
+                "font-weight": "bold"
+              }
+            },
+            "td": {
+              "type": "TextBlock",
+              "text": "{{ m.description }}"
+            }
+          },
+          {
+            "style": {
+              "width": "16%"
+            },
+            "th": {
+              "type": "TextBlock",
+              "text": "Cargos",
+              "style": {
+                "text-align": "right",
+                "font-weight": "bold"
+              }
+            },
+            "td": {
+              "type": "TextBlock",
+              "text": "{{ m.debit | format_as('jt.int') }}",
+              "style": {
+                "text-align": "right",
+                "color": "#b91c1c"
+              }
+            }
+          },
+          {
+            "style": {
+              "width": "16%"
+            },
+            "th": {
+              "type": "TextBlock",
+              "text": "Abonos",
+              "style": {
+                "text-align": "right",
+                "font-weight": "bold"
+              }
+            },
+            "td": {
+              "type": "TextBlock",
+              "text": "{{ m.credit | format_as('jt.int') }}",
+              "style": {
+                "text-align": "right",
+                "color": "#15803d"
+              }
+            }
+          },
+          {
+            "style": {
+              "width": "16%"
+            },
+            "th": {
+              "type": "TextBlock",
+              "text": "Saldo",
+              "style": {
+                "text-align": "right",
+                "font-weight": "bold"
+              }
+            },
+            "td": {
+              "type": "TextBlock",
+              "text": "{{ m.balance | format_as('jt.int') }}",
+              "style": {
+                "text-align": "right"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "type": "MarkdownBlock",
+        "name": "Notas",
+        "text": "Las operaciones pendientes de contabilizar no se incluyen y aparecerán en el próximo estado de cuenta.\n\nDudas o reclamos: **{{ bank.phone }}** o [{{ bank.web }}](https://{{ bank.web }}).",
+        "style": {
+          "font-size": "10px",
+          "color": "#64748b"
+        }
+      }
+    ]
+  }
+}

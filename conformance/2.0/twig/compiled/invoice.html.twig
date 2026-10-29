@@ -1,0 +1,104 @@
+<style>.jt,.jt *{box-sizing:border-box;margin:0;padding:0}.jt{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;font-size:13px}.jt table{width:100%;border-collapse:collapse}.jt th,.jt td{text-align:left;vertical-align:top}.jt img{display:block}.jt a{color:inherit}.jt ul,.jt ol{padding-left:1.5em}.jt .jt-inline p{display:inline}@page{size:letter;margin:10mm 12mm}@media screen{.jt{max-width:215.9mm;padding:10mm 12mm 10mm 12mm;margin-left:auto;margin-right:auto}}</style>
+<div class="jt" lang="en-US">
+  <div>
+    <div style="display:flex;margin-bottom:10px;">
+      <div style="width:58%;">
+        <div style="font-weight:bold;font-size:22px;color:#4A7CF5;">{{ company.name }}</div>
+        <div>{% apply jt_markdown %}
+{{ company.address }}
+
+{{ company.city }}, {{ company.country }}
+
+{{ company.email }} · {{ company.phone }}
+{% endapply %}</div>
+      </div>
+      <div style="width:42%;border:2px solid #4A7CF5;padding:8px 10px;">
+        <div style="text-align:center;font-weight:bold;font-size:20px;">INVOICE</div>
+        <div style="text-align:center;font-size:13px;"># {{ invoice.number }}</div>
+        <div>{% apply jt_markdown %}
+**Date:** {{ invoice.date }}
+
+**Due date:** {{ invoice.due_date }}
+{% endapply %}</div>
+      </div>
+    </div>
+    <div style="margin-bottom:10px;padding:6px 8px;background-color:#f8fafc;">{% apply jt_markdown %}
+**Bill To:**
+
+{{ customer.name }}
+
+{{ customer.company }}
+
+{{ customer.address }}, {{ customer.city }}
+
+{{ customer.email }}
+{% endapply %}</div>
+    <div style="border:1px solid #d1d5db;margin-bottom:10px;min-height:160px;">
+      {% set __jt1 = false %}{% set __jt2 = false %}{% set __jt3 = false %}{% set __jt4 = false %}
+      {% for item in items %}
+          {% set __jt5 %}<span class="jt-inline">{{ item.description }}</span>{% endset %}{% if __jt5|striptags|trim is not empty %}{% set __jt1 = true %}{% endif %}
+          {% set __jt6 %}<span class="jt-inline" style="text-align:right;">{{ item.qty }}</span>{% endset %}{% if __jt6|striptags|trim is not empty %}{% set __jt2 = true %}{% endif %}
+          {% set __jt7 %}<span class="jt-inline" style="text-align:right;">{{ item.unit_price | number_format(2, '.', ',') }}</span>{% endset %}{% if __jt7|striptags|trim is not empty %}{% set __jt3 = true %}{% endif %}
+          {% set __jt8 %}<span class="jt-inline" style="text-align:right;font-weight:bold;">{{ item.total | number_format(2, '.', ',') }}</span>{% endset %}{% if __jt8|striptags|trim is not empty %}{% set __jt4 = true %}{% endif %}
+      {% endfor %}
+      <table>
+        <colgroup>
+          {% if __jt1 %}<col>{% endif %}
+          {% if __jt2 %}<col style="width:10%;">{% endif %}
+          {% if __jt3 %}<col style="width:22%;">{% endif %}
+          {% if __jt4 %}<col style="width:22%;">{% endif %}
+        </colgroup>
+        <thead style="background-color:#4A7CF5;color:#ffffff;font-size:12px;">
+          <tr>
+            {% if __jt1 %}<th>
+              <div>Description</div>
+            </th>{% endif %}
+            {% if __jt2 %}<th>
+              <div>Qty</div>
+            </th>{% endif %}
+            {% if __jt3 %}<th>
+              <div>Unit Price</div>
+            </th>{% endif %}
+            {% if __jt4 %}<th>
+              <div>Total</div>
+            </th>{% endif %}
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in items %}
+          <tr>
+            {% if __jt1 %}<td>
+              <div>{{ item.description }}</div>
+            </td>{% endif %}
+            {% if __jt2 %}<td>
+              <div style="text-align:right;">{{ item.qty }}</div>
+            </td>{% endif %}
+            {% if __jt3 %}<td>
+              <div style="text-align:right;">{{ item.unit_price | number_format(2, '.', ',') }}</div>
+            </td>{% endif %}
+            {% if __jt4 %}<td>
+              <div style="text-align:right;font-weight:bold;">{{ item.total | number_format(2, '.', ',') }}</div>
+            </td>{% endif %}
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <div style="display:flex;">
+      <div style="width:52%;">{% apply jt_markdown %}
+**Payment Terms:** {{ invoice.payment_terms }}
+
+**Notes:** {{ invoice.notes }}
+{% endapply %}</div>
+      <div style="width:48%;border:1px solid #d1d5db;padding:6px 8px;">
+        <div style="text-align:right;">{% apply jt_markdown %}
+**Subtotal:** {{ invoice.currency }} {{ invoice.subtotal | number_format(2, '.', ',') }}
+
+**Tax ({{ invoice.tax_rate }}%):** {{ invoice.currency }} {{ invoice.tax | number_format(2, '.', ',') }}
+{% endapply %}</div>
+        <div style="text-align:right;font-weight:bold;font-size:14px;">Total: {{ invoice.currency }} {{ invoice.total | number_format(2, '.', ',') }}</div>
+      </div>
+    </div>
+    <div style="text-align:center;color:#64748b;font-size:10px;margin-top:15px;">Thank you for your business. Please transfer to the account referenced on your purchase order.</div>
+  </div>
+</div>

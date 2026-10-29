@@ -1,0 +1,12 @@
+{
+  "company": {
+    "name": "Andes Servicios Digitales"
+  },
+  "person": {
+    "id": "V-120934",
+    "name": "Patricia Lagos",
+    "position": "Proveedora - Mantención",
+    "email": "plagos@proveedor.example",
+    "photo": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI5NiIgaGVpZ2h0PSIxMjAiIHZpZXdCb3g9IjAgMCA5NiAxMjAiPjxyZWN0IHdpZHRoPSI5NiIgaGVpZ2h0PSIxMjAiIGZpbGw9IiNmZWQ3YWEiLz48Y2lyY2xlIGN4PSI0OCIgY3k9IjQ1IiByPSIyMiIgZmlsbD0iI2MyNDEwYyIvPjxwYXRoIGQ9Ik04IDEyMGMwLTI2IDE4LTQyIDQwLTQyczQwIDE2IDQwIDQyeiIgZmlsbD0iI2MyNDEwYyIvPjwvc3ZnPg=="
+  }
+}

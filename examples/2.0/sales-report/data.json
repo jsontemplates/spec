@@ -1,0 +1,92 @@
+{
+  "report": {
+    "title": "Monthly Sales Report",
+    "period": "September 2026",
+    "generated": "2026-10-02",
+    "owner": "Commercial Analytics"
+  },
+  "kpis": [
+    {
+      "label": "Revenue",
+      "value": "USD 2.41 M"
+    },
+    {
+      "label": "Units sold",
+      "value": "48.230"
+    },
+    {
+      "label": "Average ticket",
+      "value": "USD 50"
+    },
+    {
+      "label": "Regions on target",
+      "value": "3 of 5"
+    }
+  ],
+  "regions": [
+    {
+      "name": "North",
+      "manager": "Elena Ruiz",
+      "units": 12800,
+      "revenue": 642000,
+      "target": 600000,
+      "variance_pct": 7.0,
+      "active": true,
+      "notes": [
+        "Two new distributors signed in September.",
+        "Back-to-school campaign beat its goal."
+      ]
+    },
+    {
+      "name": "Central",
+      "manager": "Tomás Herrera",
+      "units": 15300,
+      "revenue": 801500,
+      "target": 780000,
+      "variance_pct": 2.8,
+      "active": true,
+      "notes": [
+        "Stable demand in the metropolitan area."
+      ]
+    },
+    {
+      "name": "South",
+      "manager": "Valeria Mena",
+      "units": 9100,
+      "revenue": 438200,
+      "target": 520000,
+      "variance_pct": -15.7,
+      "active": true,
+      "notes": [
+        "Port strike delayed 1,200 units to October.",
+        "Promotional budget was cut by 20%."
+      ]
+    },
+    {
+      "name": "East",
+      "manager": "Pablo Díaz",
+      "units": 7400,
+      "revenue": 351300,
+      "target": 360000,
+      "variance_pct": -2.4,
+      "active": true,
+      "notes": [
+        "Closed the quarter 2.4% under target."
+      ]
+    },
+    {
+      "name": "West (closed)",
+      "manager": "Sofía Araya",
+      "units": 3630,
+      "revenue": 177000,
+      "target": 200000,
+      "variance_pct": -11.5,
+      "active": false,
+      "notes": []
+    }
+  ],
+  "totals": {
+    "revenue": 2410000,
+    "target": 2460000
+  }
+}

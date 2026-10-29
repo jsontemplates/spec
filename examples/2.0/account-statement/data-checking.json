@@ -1,0 +1,76 @@
+{
+  "bank": {
+    "phone": "600 123 4000",
+    "web": "bancoaustral.example"
+  },
+  "period": {
+    "from": "2026-09-01",
+    "to": "2026-09-30"
+  },
+  "customer": {
+    "name": "Inversiones Villarroel y Cía. Ltda.",
+    "rut": "76321654-9",
+    "officer": "Carolina Bravo",
+    "account": {
+      "number": "00-123-45678-09",
+      "label": "Cuenta corriente",
+      "type": "checking"
+    }
+  },
+  "summary": {
+    "opening": 1250000,
+    "credits": 2140000,
+    "debits": 3510000,
+    "closing": -120000
+  },
+  "movements": [
+    {
+      "date": "2026-09-02",
+      "description": "Transferencia recibida - Cliente Los Aromos",
+      "credit": 1500000,
+      "debit": null,
+      "balance": 2750000,
+      "posted": true
+    },
+    {
+      "date": "2026-09-05",
+      "description": "Pago proveedores - Nómina 0934",
+      "credit": null,
+      "debit": 1820000,
+      "balance": 930000,
+      "posted": true
+    },
+    {
+      "date": "2026-09-12",
+      "description": "Pago de arriendo oficina",
+      "credit": null,
+      "debit": 950000,
+      "balance": -20000,
+      "posted": true
+    },
+    {
+      "date": "2026-09-18",
+      "description": "Depósito en efectivo",
+      "credit": 640000,
+      "debit": null,
+      "balance": 620000,
+      "posted": true
+    },
+    {
+      "date": "2026-09-25",
+      "description": "Pago de remuneraciones",
+      "credit": null,
+      "debit": 740000,
+      "balance": -120000,
+      "posted": true
+    },
+    {
+      "date": "2026-09-30",
+      "description": "Compra con tarjeta - en tránsito",
+      "credit": null,
+      "debit": 58000,
+      "balance": null,
+      "posted": false
+    }
+  ]
+}

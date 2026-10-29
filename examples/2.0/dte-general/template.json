@@ -1,0 +1,502 @@
+{
+  "$schema": "https://spec.jsontemplates.io/schema/2.0/template.json",
+  "meta": {
+    "name": "DTE General",
+    "lang": "es-CL"
+  },
+  "options": {
+    "page": {
+      "style": {
+        "size": "letter",
+        "margin": "5mm"
+      }
+    }
+  },
+  "variables": [
+    {
+      "name": "D",
+      "value": "EnvioDTE.SetDTE.DTE.Documento"
+    },
+    {
+      "name": "I",
+      "value": "D.Encabezado.IdDoc"
+    },
+    {
+      "name": "E",
+      "value": "D.Encabezado.Emisor"
+    },
+    {
+      "name": "R",
+      "value": "D.Encabezado.Receptor"
+    },
+    {
+      "name": "T",
+      "value": "D.Encabezado.Totales"
+    },
+    {
+      "name": "Trans",
+      "value": "D.Encabezado.Transporte"
+    }
+  ],
+  "body": {
+    "type": "VerticalLayout",
+    "elements": [
+      {
+        "type": "VerticalLayout",
+        "name": "Documento",
+        "style": {
+          "margin-bottom": "10px"
+        },
+        "elements": [
+          {
+            "type": "HorizontalLayout",
+            "name": "Cabecera del DTE",
+            "style": {
+              "margin-bottom": "10px"
+            },
+            "elements": [
+              {
+                "type": "VerticalLayout",
+                "name": "Datos Emisor",
+                "style": {
+                  "width": "65%"
+                },
+                "elements": [
+                  {
+                    "type": "ImageBlock",
+                    "name": "Logo del Emisor",
+                    "src": "https://spec.jsontemplates.io/examples/jsontemplates-logo.png",
+                    "alt": "Logo del emisor",
+                    "style": {
+                      "max-width": "50%"
+                    }
+                  },
+                  {
+                    "type": "VerticalLayout",
+                    "name": "Datos del Emisor",
+                    "elements": [
+                      {
+                        "type": "TextBlock",
+                        "text": "{{ E.RznSoc }}",
+                        "style": {
+                          "font-weight": "bold",
+                          "font-size": "24px",
+                          "color": "#085294"
+                        }
+                      },
+                      {
+                        "type": "MarkdownBlock",
+                        "text": "**Giro**: {{ E.GiroEmis }}\n\n**Dirección**: {{ E.DirOrigen }}, {{ E.CmnaOrigen }}, {{ E.CiudadOrigen }}"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "VerticalLayout",
+                "name": "Identificación del DTE",
+                "style": {
+                  "width": "35%"
+                },
+                "elements": [
+                  {
+                    "type": "VerticalLayout",
+                    "name": "RUT, Tipo DTE y Folio",
+                    "style": {
+                      "padding": "5px 0",
+                      "border": "3px solid #ff0000"
+                    },
+                    "elements": [
+                      {
+                        "type": "TextBlock",
+                        "text": "RUT: {{ E.RUTEmisor | format_as('jt.l10n.cl.rut') }}",
+                        "style": {
+                          "text-align": "center",
+                          "font-weight": "bold",
+                          "color": "#ff0000"
+                        }
+                      },
+                      {
+                        "type": "TextBlock",
+                        "text": "Tipo de Documento {{ I.TipoDTE }}",
+                        "style": {
+                          "text-align": "center",
+                          "font-weight": "bold",
+                          "color": "#ff0000",
+                          "margin-top": "15px"
+                        }
+                      },
+                      {
+                        "type": "TextBlock",
+                        "text": "# {{ I.Folio }}",
+                        "style": {
+                          "text-align": "center",
+                          "font-weight": "bold",
+                          "color": "#ff0000",
+                          "margin-top": "15px"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "type": "VerticalLayout",
+                    "name": "Oficina SII",
+                    "elements": [
+                      {
+                        "type": "TextBlock",
+                        "text": "SII - SANTA CRUZ",
+                        "style": {
+                          "text-align": "center",
+                          "font-weight": "bold",
+                          "color": "#ff0000"
+                        }
+                      },
+                      {
+                        "type": "TextBlock",
+                        "text": "Empresa de Menor Tamaño",
+                        "style": {
+                          "text-align": "right",
+                          "font-weight": "bold"
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "HorizontalLayout",
+            "name": "Detalles de la Transacción",
+            "style": {
+              "margin-bottom": "10px"
+            },
+            "elements": [
+              {
+                "type": "MarkdownBlock",
+                "name": "Datos del Receptor",
+                "text": "**Razón social**: {{ R.RznSocRecep }}\n\n**RUT**: {{ R.RUTRecep | format_as('jt.l10n.cl.rut') }}\n\n**Giro**: {{ R.GiroRecep }}\n\n**Dirección**: {{ R.DirRecep }}, {{ R.CmnaRecep }}, {{ R.CiudadRecep }}\n\n**Contacto**: {{ R.Contacto }}\n\n**Correo**: {{ R.CorreoRecep }}",
+                "style": {
+                  "width": "60%",
+                  "margin-bottom": "10px"
+                }
+              },
+              {
+                "type": "KeyValueBlock",
+                "style": {
+                  "width": "40%"
+                },
+                "rows": [
+                  {
+                    "label": {
+                      "type": "MarkdownBlock",
+                      "text": "**Fecha de emisión**:"
+                    },
+                    "value": {
+                      "type": "TextBlock",
+                      "text": "{{ I.FchEmis | format_as('jt.l10n.es.date.long') }}"
+                    }
+                  },
+                  {
+                    "label": {
+                      "type": "MarkdownBlock",
+                      "text": "**Fecha de vencimiento**:"
+                    },
+                    "value": {
+                      "type": "TextBlock",
+                      "text": "{{ I.FchVenc | format_as('jt.date.short') }}"
+                    }
+                  },
+                  {
+                    "label": {
+                      "type": "MarkdownBlock",
+                      "text": "**Vendedor**:"
+                    },
+                    "value": {
+                      "type": "TextBlock",
+                      "text": "{{ E.CdgVendedor }}"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "VerticalLayout",
+            "style": {
+              "border": "1px solid #d1d5db",
+              "margin-bottom": "10px",
+              "min-height": "300px"
+            },
+            "elements": [
+              {
+                "type": "TableBlock",
+                "name": "Detalle de Items",
+                "thead": {
+                  "style": {
+                    "background-color": "#f3f4f6",
+                    "color": "#000000",
+                    "font-size": "13px"
+                  }
+                },
+                "tbody": {
+                  "each": {
+                    "list": "D.Detalle",
+                    "item": "i"
+                  }
+                },
+                "columns": [
+                  {
+                    "style": {
+                      "width": "20%"
+                    },
+                    "th": {
+                      "type": "TextBlock",
+                      "text": "Código"
+                    },
+                    "td": {
+                      "type": "TextBlock",
+                      "text": "{{ i.CdgItem.VlrCodigo }}"
+                    }
+                  },
+                  {
+                    "th": {
+                      "type": "TextBlock",
+                      "text": "Item"
+                    },
+                    "td": {
+                      "type": "TextBlock",
+                      "text": "{{ i.NmbItem }}\n{{ i.DscItem }}",
+                      "style": {
+                        "white-space": "pre-line"
+                      }
+                    }
+                  },
+                  {
+                    "style": {
+                      "width": "8%"
+                    },
+                    "th": {
+                      "type": "TextBlock",
+                      "text": "Cant."
+                    },
+                    "td": {
+                      "type": "TextBlock",
+                      "text": "{{ i.QtyItem | format_as('jt.int') }} {{ i.UnmdItem }}",
+                      "style": {
+                        "text-align": "right"
+                      }
+                    }
+                  },
+                  {
+                    "style": {
+                      "width": "10%"
+                    },
+                    "th": {
+                      "type": "TextBlock",
+                      "text": "P. unitario"
+                    },
+                    "td": {
+                      "type": "TextBlock",
+                      "text": "{{ i.PrcItem | format_as('jt.int') }}",
+                      "style": {
+                        "text-align": "right"
+                      }
+                    }
+                  },
+                  {
+                    "style": {
+                      "width": "10%"
+                    },
+                    "th": {
+                      "type": "TextBlock",
+                      "text": "Total item"
+                    },
+                    "td": {
+                      "type": "TextBlock",
+                      "text": "{{ i.MontoItem | format_as('jt.int') }}",
+                      "style": {
+                        "text-align": "right"
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "VerticalLayout",
+            "name": "Total en Texto y Observación",
+            "style": {
+              "padding": "5px",
+              "margin-bottom": "10px",
+              "border": "1px solid #d1d5db"
+            },
+            "elements": [
+              {
+                "type": "MarkdownBlock",
+                "text": "**En total son**: {{ T.MntTotal | format_as('jt.l10n.es.num2text') }} pesos."
+              },
+              {
+                "type": "MarkdownBlock",
+                "text": "**Observación**: {{ I.TermPagoGlosa | default('N/A') }}",
+                "style": {
+                  "margin-top": "15px"
+                }
+              }
+            ]
+          },
+          {
+            "type": "HorizontalLayout",
+            "name": "Pie del DTE",
+            "elements": [
+              {
+                "type": "VerticalLayout",
+                "name": "Timbre",
+                "style": {
+                  "width": "34%"
+                },
+                "elements": [
+                  {
+                    "type": "Pdf417Block",
+                    "text": "{{ D.TED | format_as('jt.l10n.cl.dte.ted') }}",
+                    "errorCorrection": 5,
+                    "style": {
+                      "width": "100%",
+                      "height": "90px"
+                    }
+                  },
+                  {
+                    "type": "MarkdownBlock",
+                    "name": "Autorización SII",
+                    "text": "**Timbre Electrónico SII**\n\n**Resolución 80 de 2024**\n\n**Verifique documento: www.sii.cl**",
+                    "style": {
+                      "text-align": "center",
+                      "font-size": "10px",
+                      "line-height": "1"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "VerticalLayout",
+                "name": "Extra Info",
+                "style": {
+                  "width": "32%"
+                },
+                "elements": [
+                  {
+                    "type": "ImageBlock",
+                    "name": "Banner de Pago",
+                    "src": "https://cdn.sasco.cl/img/banners/pdf_cotizacion_300x200.png",
+                    "alt": "Banner de pago",
+                    "style": {
+                      "max-width": "80%",
+                      "margin-left": "auto",
+                      "margin-right": "auto"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "VerticalLayout",
+                "name": "Totales",
+                "style": {
+                  "width": "34%"
+                },
+                "elements": [
+                  {
+                    "type": "HorizontalLayout",
+                    "name": "Totales",
+                    "style": {
+                      "padding": "5px",
+                      "border": "1px solid #d1d5db"
+                    },
+                    "elements": [
+                      {
+                        "type": "MarkdownBlock",
+                        "name": "Glosa de Totales",
+                        "text": "**Neto $**:\n\n**IVA (19%) $**:\n\n**Total $**:",
+                        "style": {
+                          "width": "45%",
+                          "text-align": "right"
+                        }
+                      },
+                      {
+                        "type": "MarkdownBlock",
+                        "name": "Valores de Totales",
+                        "text": "{{ T.MntNeto | format_as('jt.int') }}\n\n{{ T.IVA | format_as('jt.int') }}\n\n{{ T.MntTotal | format_as('jt.int') }}",
+                        "style": {
+                          "width": "55%",
+                          "text-align": "right"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "type": "BarcodeBlock",
+                    "text": "T{{ I.TipoDTE }}F{{ I.Folio }}",
+                    "format": "CODE128",
+                    "style": {
+                      "width": "40%",
+                      "height": "60px",
+                      "margin-top": "10px",
+                      "margin-left": "auto",
+                      "margin-right": "auto"
+                    }
+                  },
+                  {
+                    "type": "TextBlock",
+                    "name": "Texto del Barcode",
+                    "text": "T{{ I.TipoDTE }}F{{ I.Folio }}",
+                    "style": {
+                      "text-align": "center",
+                      "font-weight": "bold",
+                      "font-size": "10px",
+                      "line-height": "1"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "ImageBlock",
+            "name": "Banner de Propaganda",
+            "src": "https://www.sasco.cl/img/banners/sasco-banner-dte-pie-pagina_750x110.png",
+            "alt": "Banner publicitario",
+            "style": {
+              "max-width": "100%",
+              "margin-top": "20px",
+              "margin-left": "auto",
+              "margin-right": "auto"
+            }
+          }
+        ]
+      },
+      {
+        "type": "PageBreak",
+        "name": "Términos y Condiciones"
+      },
+      {
+        "type": "VerticalLayout",
+        "elements": [
+          {
+            "type": "TextBlock",
+            "text": "Términos y Condiciones de Nuestros Productos y Servicios",
+            "style": {
+              "text-align": "center",
+              "font-weight": "bold",
+              "font-size": "18px",
+              "margin-bottom": "15px"
+            }
+          },
+          {
+            "type": "MarkdownBlock",
+            "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque facilisis turpis ipsum, nec egestas tortor feugiat non. Sed mollis lacus eget erat tempus gravida. Donec ac quam libero. Nullam at magna facilisis, semper dui ut, congue enim. Suspendisse sodales et enim in laoreet. Sed sed ligula eget urna venenatis lacinia sed semper felis. Maecenas at consequat lorem. Etiam non euismod nisl, id malesuada libero. In commodo id purus id facilisis. Praesent sollicitudin vulputate sodales.\n\nOrci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Ut rhoncus ligula ut leo accumsan, ac interdum est feugiat. Vestibulum pulvinar mauris id sapien malesuada lobortis. Nunc ac nibh ex. Nullam ut blandit felis. Aliquam erat volutpat. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Aenean quis lacus odio. Aenean vitae malesuada purus, eu rutrum eros. Donec eu purus sollicitudin, lacinia velit ut, iaculis urna. Aenean ut dictum risus. Vivamus euismod dolor bibendum, molestie ex in, tristique tellus. Mauris maximus nibh nec dignissim consectetur. Nunc ultrices, libero vitae consequat rutrum, ligula enim hendrerit tellus, in laoreet sem elit non dui.\n\nPellentesque porttitor ipsum eu hendrerit pulvinar. Etiam blandit non tellus et fringilla. In hac habitasse platea dictumst. Duis in eros augue. Vestibulum lobortis, magna et fringilla fringilla, arcu justo molestie dolor, at placerat enim lectus vitae metus. Nunc facilisis sapien ut elit scelerisque tristique. Nulla at auctor tellus. Phasellus pharetra tortor ac augue finibus tincidunt. Nam vestibulum enim fringilla ex rhoncus, id placerat metus aliquet. Aenean viverra suscipit purus et dapibus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Fusce quis hendrerit diam, vitae iaculis ex.\n\nOrci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Curabitur elementum interdum posuere. Aenean id semper mi. Nulla feugiat aliquam tellus a mattis. Morbi ultricies, risus ut feugiat rhoncus, mauris dolor dignissim odio, quis egestas mauris libero nec mauris. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Nam pretium ultricies lorem quis posuere. Sed ultricies ipsum nec lorem rutrum, in posuere metus convallis. Morbi quam dui, eleifend vel volutpat nec, convallis ac enim. Fusce ut pretium urna, elementum fermentum odio. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Phasellus cursus nunc nisl, sed tempor lectus rhoncus non. Praesent metus elit, molestie vel ornare quis, egestas et risus. Ut tempus elit ac consequat malesuada.\n\nMorbi justo nisl, rhoncus mollis ultricies nec, fermentum ac nisl. In eu molestie felis. Pellentesque eu eros eros. Maecenas a nulla nec sem blandit vulputate. Mauris sem metus, condimentum ac arcu eu, fringilla sollicitudin odio. In sit amet dolor aliquet, luctus augue eu, imperdiet nibh. Mauris tincidunt arcu sed mauris volutpat, pretium eleifend eros ornare. Nunc mattis facilisis tortor eu convallis. Fusce posuere commodo egestas. Maecenas quam neque, efficitur sit amet arcu non, varius dictum ipsum. Donec finibus feugiat posuere. Duis convallis enim purus, ut facilisis nunc sagittis at. Mauris cursus odio ligula, cursus congue leo porttitor ut. Donec lectus velit, vulputate eu urna laoreet, porta tincidunt est. Nulla facilisi. Sed congue ullamcorper ipsum, feugiat laoreet urna commodo ac."
+          }
+        ]
+      }
+    ]
+  }
+}

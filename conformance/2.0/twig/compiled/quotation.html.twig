@@ -1,0 +1,116 @@
+<style>.jt,.jt *{box-sizing:border-box;margin:0;padding:0}.jt{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;font-size:13px}.jt table{width:100%;border-collapse:collapse}.jt th,.jt td{text-align:left;vertical-align:top}.jt img{display:block}.jt a{color:inherit}.jt ul,.jt ol{padding-left:1.5em}.jt .jt-inline p{display:inline}@page{size:letter;margin:12mm 14mm}@media screen{.jt{max-width:215.9mm;padding:12mm 14mm 12mm 14mm;margin-left:auto;margin-right:auto}}</style>
+<div class="jt" lang="es-CL">
+  <div>
+    <div style="display:flex;margin-bottom:12px;">
+      <div style="width:60%;">{% apply jt_markdown %}
+**{{ company.name }}**
+
+RUT {{ company.rut | format_as('jt.l10n.cl.rut') }}
+
+{{ company.address }}
+
+{{ company.phone }} · {{ company.email }}
+{% endapply %}</div>
+      <div style="width:40%;text-align:center;padding:8px;border:2px solid #4A7CF5;">
+        <div style="font-weight:bold;font-size:18px;color:#4A7CF5;">COTIZACIÓN</div>
+        <div style="font-weight:bold;font-size:16px;">N° {{ quote.number }}</div>
+        <div>Emitida el {{ quote.date | format_as('jt.l10n.es.date.long') }}</div>
+        {% if (not ((quote.valid_until) is null) and not ((quote.status) in ['expired', 'rejected'])) %}
+        <div>Válida hasta el {{ quote.valid_until | format_as('jt.l10n.es.date.long') }}</div>
+        {% endif %}
+      </div>
+    </div>
+    {% if (quote.status) in ['expired', 'rejected'] %}
+    <div style="text-align:center;font-weight:bold;color:#ffffff;background-color:#dc2626;padding:6px;margin-bottom:10px;">COTIZACIÓN VENCIDA: los precios ya no están vigentes.</div>
+    {% endif %}
+    {% if (quote.status) == 'accepted' %}
+    <div style="text-align:center;font-weight:bold;color:#ffffff;background-color:#16a34a;padding:6px;margin-bottom:10px;">COTIZACIÓN ACEPTADA el {{ quote.accepted_on | format_as('jt.date.short') }}</div>
+    {% endif %}
+    <div style="margin-bottom:12px;padding:6px 8px;background-color:#f8fafc;">
+      {% set __jt1 %}<span class="jt-inline">{{ client.name }}</span>{% endset %}{% if __jt1|striptags|trim is not empty %}<div><span class="jt-inline" style="font-weight:bold;">Cliente:</span> {{ __jt1 }}</div>{% endif %}
+      {% set __jt2 %}<span class="jt-inline">{{ client.rut | format_as('jt.l10n.cl.rut') }}</span>{% endset %}{% if __jt2|striptags|trim is not empty %}<div><span class="jt-inline" style="font-weight:bold;">RUT:</span> {{ __jt2 }}</div>{% endif %}
+      {% set __jt3 %}<span class="jt-inline">{{ client.contact }}</span>{% endset %}{% if __jt3|striptags|trim is not empty %}<div><span class="jt-inline" style="font-weight:bold;">Contacto:</span> {{ __jt3 }}</div>{% endif %}
+      {% set __jt4 %}<span class="jt-inline">{{ client.email }}</span>{% endset %}{% if __jt4|striptags|trim is not empty %}<div><span class="jt-inline" style="font-weight:bold;">Correo:</span> {{ __jt4 }}</div>{% endif %}
+      {% set __jt5 %}<span class="jt-inline">{{ quote.payment_terms | default('Contado') }}</span>{% endset %}{% if __jt5|striptags|trim is not empty %}<div><span class="jt-inline" style="font-weight:bold;">Condición de pago:</span> {{ __jt5 }}</div>{% endif %}
+    </div>
+    {% set __jt6 = false %}{% set __jt7 = false %}{% set __jt8 = false %}{% set __jt9 = false %}{% set __jt10 = false %}
+    {% for i in items %}
+        {% set __jt11 %}<span class="jt-inline" style="color:#64748b;">{{ i.sku }}</span>{% endset %}{% if __jt11|striptags|trim is not empty %}{% set __jt6 = true %}{% endif %}
+        {% set __jt12 %}<span class="jt-inline">{{ i.description }}</span>{% endset %}{% if __jt12|striptags|trim is not empty %}{% set __jt7 = true %}{% endif %}
+        {% set __jt13 %}<span class="jt-inline" style="text-align:right;">{{ i.quantity }}</span>{% endset %}{% if __jt13|striptags|trim is not empty %}{% set __jt8 = true %}{% endif %}
+        {% set __jt14 %}<span class="jt-inline" style="text-align:right;">{{ i.unit_price | format_as('jt.int') }}</span>{% endset %}{% if __jt14|striptags|trim is not empty %}{% set __jt9 = true %}{% endif %}
+        {% set __jt15 %}<span class="jt-inline" style="text-align:right;">{{ i.total | format_as('jt.int') }}</span>{% endset %}{% if __jt15|striptags|trim is not empty %}{% set __jt10 = true %}{% endif %}
+    {% endfor %}
+    <table style="border:1px solid #e2e8f0;margin-bottom:10px;">
+      <colgroup>
+        {% if __jt6 %}<col style="width:14%;">{% endif %}
+        {% if __jt7 %}<col>{% endif %}
+        {% if __jt8 %}<col style="width:9%;">{% endif %}
+        {% if __jt9 %}<col style="width:15%;">{% endif %}
+        {% if __jt10 %}<col style="width:15%;">{% endif %}
+      </colgroup>
+      <thead style="background-color:#4A7CF5;color:#ffffff;">
+        <tr>
+          {% if __jt6 %}<th>
+            <div style="font-weight:bold;">Código</div>
+          </th>{% endif %}
+          {% if __jt7 %}<th>
+            <div style="font-weight:bold;">Descripción</div>
+          </th>{% endif %}
+          {% if __jt8 %}<th>
+            <div style="font-weight:bold;text-align:right;">Cant.</div>
+          </th>{% endif %}
+          {% if __jt9 %}<th>
+            <div style="font-weight:bold;text-align:right;">Precio unit.</div>
+          </th>{% endif %}
+          {% if __jt10 %}<th>
+            <div style="font-weight:bold;text-align:right;">Total</div>
+          </th>{% endif %}
+        </tr>
+      </thead>
+      <tbody>
+        {% for i in items %}
+        <tr>
+          {% if __jt6 %}<td>
+            <div style="color:#64748b;">{{ i.sku }}</div>
+          </td>{% endif %}
+          {% if __jt7 %}<td>
+            <div>{{ i.description }}</div>
+          </td>{% endif %}
+          {% if __jt8 %}<td>
+            <div style="text-align:right;">{{ i.quantity }}</div>
+          </td>{% endif %}
+          {% if __jt9 %}<td>
+            <div style="text-align:right;">{{ i.unit_price | format_as('jt.int') }}</div>
+          </td>{% endif %}
+          {% if __jt10 %}<td>
+            <div style="text-align:right;">{{ i.total | format_as('jt.int') }}</div>
+          </td>{% endif %}
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <div style="display:flex;margin-bottom:12px;">
+      <div style="width:60%;padding-right:12px;">{% apply jt_markdown %}
+**Observaciones**
+
+{{ quote.notes | default('Sin observaciones.') }}
+{% endapply %}</div>
+      <div style="width:40%;">
+        {% set __jt16 %}<span class="jt-inline" style="text-align:right;">$ {{ totals.net | format_as('jt.int') }}</span>{% endset %}{% if __jt16|striptags|trim is not empty %}<div><span class="jt-inline">Neto:</span> {{ __jt16 }}</div>{% endif %}
+        {% set __jt17 %}{% if not (not ((totals.discount) > 0)) %}<span class="jt-inline" style="text-align:right;color:#dc2626;">- $ {{ totals.discount | format_as('jt.int') }}</span>{% endif %}{% endset %}{% if __jt17|striptags|trim is not empty %}<div><span class="jt-inline">Descuento ({{ quote.discount_percent }}%):</span> {{ __jt17 }}</div>{% endif %}
+        {% set __jt18 %}<span class="jt-inline" style="text-align:right;">$ {{ totals.tax | format_as('jt.int') }}</span>{% endset %}{% if __jt18|striptags|trim is not empty %}<div><span class="jt-inline">IVA (19%):</span> {{ __jt18 }}</div>{% endif %}
+        {% set __jt19 %}<span class="jt-inline" style="text-align:right;font-weight:bold;font-size:15px;">$ {{ totals.total | format_as('jt.int') }}</span>{% endset %}{% if __jt19|striptags|trim is not empty %}<div><span class="jt-inline" style="font-weight:bold;font-size:15px;">Total:</span> {{ __jt19 }}</div>{% endif %}
+      </div>
+    </div>
+    <div style="font-style:italic;color:#64748b;margin-bottom:16px;">Son: {{ totals.total | format_as('jt.l10n.es.num2text') }} pesos.</div>
+    {% if (quote.status) == 'sent' %}
+    <div style="padding:8px;border:1px dashed #4A7CF5;text-align:center;">Para aceptar esta cotización responda este correo o escriba a {{ company.email }} indicando el número {{ quote.number }}.</div>
+    {% endif %}
+    {% if (quote.status) == 'accepted' %}
+    <div style="margin-top:36px;">
+      <div style="text-align:center;color:#64748b;border-top:1px solid #94a3b8;padding-top:4px;width:40%;margin-left:auto;">Firma de aceptación</div>
+    </div>
+    {% endif %}
+  </div>
+</div>

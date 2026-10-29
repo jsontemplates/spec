@@ -1,0 +1,272 @@
+{
+  "format": "jt.l10n.es.num2text",
+  "cases": [
+    {
+      "value": 0,
+      "text": "cero"
+    },
+    {
+      "value": 1,
+      "text": "uno"
+    },
+    {
+      "value": 2,
+      "text": "dos"
+    },
+    {
+      "value": 9,
+      "text": "nueve"
+    },
+    {
+      "value": 10,
+      "text": "diez"
+    },
+    {
+      "value": 11,
+      "text": "once"
+    },
+    {
+      "value": 15,
+      "text": "quince"
+    },
+    {
+      "value": 16,
+      "text": "dieciséis"
+    },
+    {
+      "value": 17,
+      "text": "diecisiete"
+    },
+    {
+      "value": 19,
+      "text": "diecinueve"
+    },
+    {
+      "value": 20,
+      "text": "veinte"
+    },
+    {
+      "value": 21,
+      "text": "veintiuno"
+    },
+    {
+      "value": 22,
+      "text": "veintidós"
+    },
+    {
+      "value": 23,
+      "text": "veintitrés"
+    },
+    {
+      "value": 26,
+      "text": "veintiséis"
+    },
+    {
+      "value": 29,
+      "text": "veintinueve"
+    },
+    {
+      "value": 30,
+      "text": "treinta"
+    },
+    {
+      "value": 31,
+      "text": "treinta y uno"
+    },
+    {
+      "value": 42,
+      "text": "cuarenta y dos"
+    },
+    {
+      "value": 55,
+      "text": "cincuenta y cinco"
+    },
+    {
+      "value": 99,
+      "text": "noventa y nueve"
+    },
+    {
+      "value": 100,
+      "text": "cien"
+    },
+    {
+      "value": 101,
+      "text": "ciento uno"
+    },
+    {
+      "value": 115,
+      "text": "ciento quince"
+    },
+    {
+      "value": 121,
+      "text": "ciento veintiuno"
+    },
+    {
+      "value": 200,
+      "text": "doscientos"
+    },
+    {
+      "value": 345,
+      "text": "trescientos cuarenta y cinco"
+    },
+    {
+      "value": 500,
+      "text": "quinientos"
+    },
+    {
+      "value": 700,
+      "text": "setecientos"
+    },
+    {
+      "value": 900,
+      "text": "novecientos"
+    },
+    {
+      "value": 999,
+      "text": "novecientos noventa y nueve"
+    },
+    {
+      "value": 1000,
+      "text": "mil"
+    },
+    {
+      "value": 1001,
+      "text": "mil uno"
+    },
+    {
+      "value": 1021,
+      "text": "mil veintiuno"
+    },
+    {
+      "value": 1100,
+      "text": "mil cien"
+    },
+    {
+      "value": 2000,
+      "text": "dos mil"
+    },
+    {
+      "value": 11000,
+      "text": "once mil"
+    },
+    {
+      "value": 21000,
+      "text": "veintiún mil"
+    },
+    {
+      "value": 21001,
+      "text": "veintiún mil uno"
+    },
+    {
+      "value": 31000,
+      "text": "treinta y un mil"
+    },
+    {
+      "value": 100000,
+      "text": "cien mil"
+    },
+    {
+      "value": 101000,
+      "text": "ciento un mil"
+    },
+    {
+      "value": 119000,
+      "text": "ciento diecinueve mil"
+    },
+    {
+      "value": 200000,
+      "text": "doscientos mil"
+    },
+    {
+      "value": 999999,
+      "text": "novecientos noventa y nueve mil novecientos noventa y nueve"
+    },
+    {
+      "value": 1000000,
+      "text": "un millón"
+    },
+    {
+      "value": 1000001,
+      "text": "un millón uno"
+    },
+    {
+      "value": 1500000,
+      "text": "un millón quinientos mil"
+    },
+    {
+      "value": 2000000,
+      "text": "dos millones"
+    },
+    {
+      "value": 21000000,
+      "text": "veintiún millones"
+    },
+    {
+      "value": 101000000,
+      "text": "ciento un millones"
+    },
+    {
+      "value": 1000000000,
+      "text": "mil millones"
+    },
+    {
+      "value": 1001000000,
+      "text": "mil un millones"
+    },
+    {
+      "value": 2000000000,
+      "text": "dos mil millones"
+    },
+    {
+      "value": 21000000000,
+      "text": "veintiún mil millones"
+    },
+    {
+      "value": 1000000000000,
+      "text": "un billón"
+    },
+    {
+      "value": 2000000000000,
+      "text": "dos billones"
+    },
+    {
+      "value": 1000000001000,
+      "text": "un billón mil"
+    },
+    {
+      "value": 123456789012,
+      "text": "ciento veintitrés mil cuatrocientos cincuenta y seis millones setecientos ochenta y nueve mil doce"
+    },
+    {
+      "value": 999999999999999,
+      "text": "novecientos noventa y nueve billones novecientos noventa y nueve mil novecientos noventa y nueve millones novecientos noventa y nueve mil novecientos noventa y nueve"
+    },
+    {
+      "value": -1,
+      "text": "menos uno"
+    },
+    {
+      "value": -21000,
+      "text": "menos veintiún mil"
+    },
+    {
+      "value": "21000",
+      "text": "veintiún mil"
+    },
+    {
+      "value": 21000.0,
+      "text": "veintiún mil"
+    }
+  ],
+  "invalid": [
+    1.5,
+    "1.5",
+    "abc",
+    1000000000000000,
+    -1000000000000000,
+    [
+      1
+    ],
+    true
+  ]
+}

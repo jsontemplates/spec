@@ -1,0 +1,43 @@
+{
+  "bank": {
+    "phone": "600 123 4000",
+    "web": "bancoaustral.example"
+  },
+  "period": {
+    "from": "2026-09-01",
+    "to": "2026-09-30"
+  },
+  "customer": {
+    "name": "Matías Contreras Soto",
+    "rut": "15234567-8",
+    "account": {
+      "number": "00-987-65432-10",
+      "label": "Cuenta de ahorro",
+      "type": "savings"
+    }
+  },
+  "summary": {
+    "opening": 820000,
+    "credits": 300000,
+    "debits": 0,
+    "closing": 1120000
+  },
+  "movements": [
+    {
+      "date": "2026-09-05",
+      "description": "Abono automático de ahorro",
+      "credit": 150000,
+      "debit": null,
+      "balance": 970000,
+      "posted": true
+    },
+    {
+      "date": "2026-09-20",
+      "description": "Abono automático de ahorro",
+      "credit": 150000,
+      "debit": null,
+      "balance": 1120000,
+      "posted": true
+    }
+  ]
+}

@@ -1,0 +1,107 @@
+{% set holder = customer %}
+{% set account = holder.account %}
+<style>.jt,.jt *{box-sizing:border-box;margin:0;padding:0}.jt{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;font-size:13px}.jt table{width:100%;border-collapse:collapse}.jt th,.jt td{text-align:left;vertical-align:top}.jt img{display:block}.jt a{color:inherit}.jt ul,.jt ol{padding-left:1.5em}.jt .jt-inline p{display:inline}@page{size:letter;margin:14mm}@media screen{.jt{max-width:215.9mm;padding:14mm 14mm 14mm 14mm;margin-left:auto;margin-right:auto}}</style>
+<div class="jt" lang="es-CL">
+  <div>
+    <div style="display:flex;margin-bottom:10px;">
+      <div style="width:50%;font-weight:bold;font-size:20px;color:#0f766e;">Banco Austral</div>
+      <div style="width:50%;">
+        <div style="text-align:right;font-weight:bold;">ESTADO DE CUENTA</div>
+        <div style="text-align:right;color:#64748b;">Del {{ period.from | format_as('jt.date.short') }} al {{ period.to | format_as('jt.date.short') }}</div>
+      </div>
+    </div>
+    <div style="margin-bottom:10px;">
+      {% set __jt1 %}<span class="jt-inline">{{ holder.name }}</span>{% endset %}{% if __jt1|striptags|trim is not empty %}<div><span class="jt-inline" style="font-weight:bold;">Titular:</span> {{ __jt1 }}</div>{% endif %}
+      {% set __jt2 %}<span class="jt-inline">{{ holder.rut | format_as('jt.l10n.cl.rut') }}</span>{% endset %}{% if __jt2|striptags|trim is not empty %}<div><span class="jt-inline" style="font-weight:bold;">RUT:</span> {{ __jt2 }}</div>{% endif %}
+      {% set __jt3 %}<span class="jt-inline">{{ account.number }} ({{ account.label }})</span>{% endset %}{% if __jt3|striptags|trim is not empty %}<div><span class="jt-inline" style="font-weight:bold;">Cuenta:</span> {{ __jt3 }}</div>{% endif %}
+      {% set __jt4 %}<span class="jt-inline">{{ holder.officer | default('Atención por canales digitales') }}</span>{% endset %}{% if __jt4|striptags|trim is not empty %}<div><span class="jt-inline" style="font-weight:bold;">Ejecutivo:</span> {{ __jt4 }}</div>{% endif %}
+    </div>
+    <div style="display:flex;margin-bottom:10px;">
+      <div style="width:25%;padding:6px 8px;background-color:#f8fafc;border:1px solid #e2e8f0;">
+        <div style="font-size:10px;color:#64748b;">Saldo inicial</div>
+        <div style="font-weight:bold;font-size:15px;color:#0f172a;">$ {{ summary.opening | format_as('jt.int') }}</div>
+      </div>
+      <div style="width:25%;padding:6px 8px;background-color:#f8fafc;border:1px solid #e2e8f0;">
+        <div style="font-size:10px;color:#64748b;">Abonos</div>
+        <div style="font-weight:bold;font-size:15px;color:#15803d;">$ {{ summary.credits | format_as('jt.int') }}</div>
+      </div>
+      <div style="width:25%;padding:6px 8px;background-color:#f8fafc;border:1px solid #e2e8f0;">
+        <div style="font-size:10px;color:#64748b;">Cargos</div>
+        <div style="font-weight:bold;font-size:15px;color:#b91c1c;">$ {{ summary.debits | format_as('jt.int') }}</div>
+      </div>
+      <div style="width:25%;padding:6px 8px;background-color:#f8fafc;border:1px solid #e2e8f0;">
+        <div style="font-size:10px;color:#64748b;">Saldo final</div>
+        <div style="font-weight:bold;font-size:15px;color:#0f172a;">$ {{ summary.closing | format_as('jt.int') }}</div>
+      </div>
+    </div>
+    {% if ((account.type) == 'checking' and (summary.closing) < 0) %}
+    <div style="font-weight:bold;color:#ffffff;background-color:#b91c1c;padding:6px 8px;margin-bottom:10px;">Su cuenta corriente cerró el período con saldo negativo. Los sobregiros generan intereses según su contrato.</div>
+    {% endif %}
+    {% set __jt5 = false %}{% set __jt6 = false %}{% set __jt7 = false %}{% set __jt8 = false %}{% set __jt9 = false %}
+    {% for m in movements %}
+      {% if not ((m.posted) == false) %}
+        {% set __jt10 %}<span class="jt-inline">{{ m.date | format_as('jt.date.short') }}</span>{% endset %}{% if __jt10|striptags|trim is not empty %}{% set __jt5 = true %}{% endif %}
+        {% set __jt11 %}<span class="jt-inline">{{ m.description }}</span>{% endset %}{% if __jt11|striptags|trim is not empty %}{% set __jt6 = true %}{% endif %}
+        {% set __jt12 %}<span class="jt-inline" style="text-align:right;color:#b91c1c;">{{ m.debit | format_as('jt.int') }}</span>{% endset %}{% if __jt12|striptags|trim is not empty %}{% set __jt7 = true %}{% endif %}
+        {% set __jt13 %}<span class="jt-inline" style="text-align:right;color:#15803d;">{{ m.credit | format_as('jt.int') }}</span>{% endset %}{% if __jt13|striptags|trim is not empty %}{% set __jt8 = true %}{% endif %}
+        {% set __jt14 %}<span class="jt-inline" style="text-align:right;">{{ m.balance | format_as('jt.int') }}</span>{% endset %}{% if __jt14|striptags|trim is not empty %}{% set __jt9 = true %}{% endif %}
+      {% endif %}
+    {% endfor %}
+    <table style="border:1px solid #e2e8f0;margin-bottom:10px;">
+      <colgroup>
+        {% if __jt5 %}<col style="width:13%;">{% endif %}
+        {% if __jt6 %}<col>{% endif %}
+        {% if __jt7 %}<col style="width:16%;">{% endif %}
+        {% if __jt8 %}<col style="width:16%;">{% endif %}
+        {% if __jt9 %}<col style="width:16%;">{% endif %}
+      </colgroup>
+      <thead style="background-color:#0f766e;color:#ffffff;">
+        <tr>
+          {% if __jt5 %}<th>
+            <div style="font-weight:bold;">Fecha</div>
+          </th>{% endif %}
+          {% if __jt6 %}<th>
+            <div style="font-weight:bold;">Detalle</div>
+          </th>{% endif %}
+          {% if __jt7 %}<th>
+            <div style="text-align:right;font-weight:bold;">Cargos</div>
+          </th>{% endif %}
+          {% if __jt8 %}<th>
+            <div style="text-align:right;font-weight:bold;">Abonos</div>
+          </th>{% endif %}
+          {% if __jt9 %}<th>
+            <div style="text-align:right;font-weight:bold;">Saldo</div>
+          </th>{% endif %}
+        </tr>
+      </thead>
+      <tbody style="font-size:11px;">
+        {% for m in movements %}
+        {% if not ((m.posted) == false) %}
+        <tr>
+          {% if __jt5 %}<td>
+            <div>{{ m.date | format_as('jt.date.short') }}</div>
+          </td>{% endif %}
+          {% if __jt6 %}<td>
+            <div>{{ m.description }}</div>
+          </td>{% endif %}
+          {% if __jt7 %}<td>
+            <div style="text-align:right;color:#b91c1c;">{{ m.debit | format_as('jt.int') }}</div>
+          </td>{% endif %}
+          {% if __jt8 %}<td>
+            <div style="text-align:right;color:#15803d;">{{ m.credit | format_as('jt.int') }}</div>
+          </td>{% endif %}
+          {% if __jt9 %}<td>
+            <div style="text-align:right;">{{ m.balance | format_as('jt.int') }}</div>
+          </td>{% endif %}
+        </tr>
+        {% endif %}
+        {% endfor %}
+      </tbody>
+    </table>
+    <div style="font-size:10px;color:#64748b;">{% apply jt_markdown %}
+Las operaciones pendientes de contabilizar no se incluyen y aparecerán en el próximo estado de cuenta.
+
+Dudas o reclamos: **{{ bank.phone }}** o [{{ bank.web }}](https://{{ bank.web }}).
+{% endapply %}</div>
+  </div>
+</div>

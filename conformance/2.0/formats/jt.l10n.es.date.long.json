@@ -1,0 +1,25 @@
+{
+  "format": "jt.l10n.es.date.long",
+  "cases": [
+    {
+      "value": "2003-10-13",
+      "text": "13 de octubre de 2003"
+    },
+    {
+      "value": "2026-03-16 09:00",
+      "text": "16 de marzo de 2026"
+    },
+    {
+      "value": "2026-01-05",
+      "text": "5 de enero de 2026"
+    },
+    {
+      "value": "2026-12-31",
+      "text": "31 de diciembre de 2026"
+    }
+  ],
+  "invalid": [
+    "not a date",
+    20031013
+  ]
+}

@@ -1,0 +1,752 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "https://spec.jsontemplates.io/schema/1.0/template.json",
+    "title": "JSON Templates v1",
+    "description": "Schema for a JSON Templates document template. Describes the page format, dimensions, margins, variables, and the element tree that defines the document layout and content.",
+    "type": "object",
+    "required": ["format", "width", "elements"],
+    "additionalProperties": false,
+    "properties": {
+        "$schema": {
+            "type": "string",
+            "description": "URI reference to this schema."
+        },
+        "version": {
+            "type": "string",
+            "description": "Optional version string for the template."
+        },
+        "generated_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "ISO 8601 timestamp indicating when the template was exported."
+        },
+        "format": {
+            "type": "string",
+            "description": "Named page format. Use 'custom' to set width and height manually. Formats suffixed with '-H' are landscape. Formats prefixed with 'C' are continuous-feed (height is null).",
+            "enum": ["LETTER", "LETTER-H", "LEGAL", "LEGAL-H", "C110", "C80", "C75", "C57", "custom"]
+        },
+        "width": {
+            "type": "number",
+            "description": "Page width in millimetres.",
+            "minimum": 10,
+            "maximum": 600
+        },
+        "height": {
+            "type": ["number", "null"],
+            "description": "Page height in millimetres. Null for continuous-feed formats (C110, C80, C75, C57).",
+            "minimum": 10,
+            "maximum": 2000
+        },
+        "margins": {
+            "$ref": "#/$defs/boxValues",
+            "description": "Page margins in millimetres."
+        },
+        "variables": {
+            "type": "array",
+            "description": "Default variable values available in template expressions. Each entry defines a variable name and its default value.",
+            "items": {
+                "type": "object",
+                "required": ["name", "value"],
+                "additionalProperties": false,
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "Variable name, used in expressions as {{ name }}."
+                    },
+                    "value": {
+                        "type": "string",
+                        "description": "Default value for the variable."
+                    }
+                }
+            },
+            "default": []
+        },
+        "elements": {
+            "type": "array",
+            "description": "Root element tree. Each entry is a layout or content block.",
+            "items": {
+                "$ref": "#/$defs/element"
+            }
+        }
+    },
+
+    "$defs": {
+
+        "boxValues": {
+            "type": "object",
+            "description": "Top / right / bottom / left values (pixels for padding/margin, millimetres for page margins).",
+            "additionalProperties": false,
+            "properties": {
+                "top":    { "type": "number", "default": 0 },
+                "right":  { "type": "number", "default": 0 },
+                "bottom": { "type": "number", "default": 0 },
+                "left":   { "type": "number", "default": 0 }
+            }
+        },
+
+        "border": {
+            "type": "object",
+            "description": "CSS-style border definition.",
+            "additionalProperties": false,
+            "properties": {
+                "width": {
+                    "type": "number",
+                    "description": "Border width in pixels.",
+                    "minimum": 0,
+                    "default": 0
+                },
+                "style": {
+                    "type": "string",
+                    "description": "CSS border-style value.",
+                    "enum": ["solid", "dashed", "dotted", "double", "groove", "ridge", "inset", "outset"],
+                    "default": "solid"
+                },
+                "color": {
+                    "type": "string",
+                    "description": "Border colour as a hex string.",
+                    "pattern": "^#[0-9a-fA-F]{6}$",
+                    "default": "#000000"
+                }
+            }
+        },
+
+        "commonProperties": {
+            "description": "Properties shared by all layout and content elements.",
+            "properties": {
+                "label": {
+                    "type": ["string", "null"],
+                    "description": "Optional display label shown in the editor navigator. Not rendered in the output.",
+                    "default": null
+                },
+                "padding": {
+                    "$ref": "#/$defs/boxValues",
+                    "description": "Inner spacing in pixels."
+                },
+                "margin": {
+                    "$ref": "#/$defs/boxValues",
+                    "description": "Outer spacing in pixels."
+                },
+                "border": {
+                    "$ref": "#/$defs/border",
+                    "description": "Element border."
+                },
+                "minHeight": {
+                    "type": ["number", "null"],
+                    "description": "Minimum height in pixels. Null means no minimum.",
+                    "minimum": 0,
+                    "default": null
+                },
+                "background": {
+                    "type": ["string", "null"],
+                    "description": "Background colour as a hex string, or null for transparent.",
+                    "pattern": "^#[0-9a-fA-F]{6}$",
+                    "default": null
+                },
+                "colWidth": {
+                    "type": ["number", "null"],
+                    "description": "Column width as a percentage when the element is a direct child of a HorizontalLayout. Null means auto (equal distribution).",
+                    "minimum": 0,
+                    "maximum": 100,
+                    "default": null
+                },
+                "condition": {
+                    "type": ["string", "null"],
+                    "description": "A Twig expression that controls whether this element is rendered. The element is shown when the expression evaluates to true (e.g. \"{{ show_logo == true }}\"). Null means always render.",
+                    "default": null
+                }
+            }
+        },
+
+        "verticalLayout": {
+            "allOf": [
+                { "$ref": "#/$defs/commonProperties" },
+                {
+                    "type": "object",
+                    "required": ["type"],
+                    "additionalProperties": false,
+                    "properties": {
+                        "type": { "type": "string", "const": "VerticalLayout" },
+                        "label": {},
+                        "padding": {},
+                        "margin": {},
+                        "border": {},
+                        "minHeight": {},
+                        "background": {},
+                        "colWidth": {},
+                        "condition": {},
+                        "elements": {
+                            "type": "array",
+                            "description": "Child elements stacked vertically.",
+                            "items": { "$ref": "#/$defs/element" },
+                            "default": []
+                        }
+                    }
+                }
+            ]
+        },
+
+        "horizontalLayout": {
+            "allOf": [
+                { "$ref": "#/$defs/commonProperties" },
+                {
+                    "type": "object",
+                    "required": ["type"],
+                    "additionalProperties": false,
+                    "properties": {
+                        "type": { "type": "string", "const": "HorizontalLayout" },
+                        "label": {},
+                        "padding": {},
+                        "margin": {},
+                        "border": {},
+                        "minHeight": {},
+                        "background": {},
+                        "colWidth": {},
+                        "condition": {},
+                        "elements": {
+                            "type": "array",
+                            "description": "Child elements placed side by side. Each child may declare colWidth (%) to control proportional sizing.",
+                            "items": { "$ref": "#/$defs/element" },
+                            "default": []
+                        }
+                    }
+                }
+            ]
+        },
+
+        "pageBreak": {
+            "type": "object",
+            "description": "Inserts a page break. Only meaningful in fixed-height formats.",
+            "required": ["type"],
+            "additionalProperties": false,
+            "properties": {
+                "type": { "type": "string", "const": "PageBreak" },
+                "label": {
+                    "type": ["string", "null"],
+                    "default": null
+                }
+            }
+        },
+
+        "textBlock": {
+            "allOf": [
+                { "$ref": "#/$defs/commonProperties" },
+                {
+                    "type": "object",
+                    "required": ["type"],
+                    "additionalProperties": false,
+                    "properties": {
+                        "type": { "type": "string", "const": "TextBlock" },
+                        "label": {},
+                        "padding": {},
+                        "margin": {},
+                        "border": {},
+                        "minHeight": {},
+                        "background": {},
+                        "colWidth": {},
+                        "condition": {},
+                        "content": {
+                            "type": "string",
+                            "description": "Plain text content. Whitespace and newlines are preserved.",
+                            "default": ""
+                        }
+                    }
+                }
+            ]
+        },
+
+        "htmlBlock": {
+            "allOf": [
+                { "$ref": "#/$defs/commonProperties" },
+                {
+                    "type": "object",
+                    "required": ["type"],
+                    "additionalProperties": false,
+                    "properties": {
+                        "type": { "type": "string", "const": "HtmlBlock" },
+                        "label": {},
+                        "padding": {},
+                        "margin": {},
+                        "border": {},
+                        "minHeight": {},
+                        "background": {},
+                        "colWidth": {},
+                        "condition": {},
+                        "content": {
+                            "type": "string",
+                            "description": "HTML markup. May contain Twig expressions such as {{ variable }}.",
+                            "default": ""
+                        }
+                    }
+                }
+            ]
+        },
+
+        "imageBlock": {
+            "allOf": [
+                { "$ref": "#/$defs/commonProperties" },
+                {
+                    "type": "object",
+                    "required": ["type"],
+                    "additionalProperties": false,
+                    "properties": {
+                        "type": { "type": "string", "const": "ImageBlock" },
+                        "label": {},
+                        "padding": {},
+                        "margin": {},
+                        "border": {},
+                        "minHeight": {},
+                        "background": {},
+                        "colWidth": {},
+                        "condition": {},
+                        "src": {
+                            "type": "string",
+                            "description": "Image URL or base64 data URI. May contain a Twig expression for dynamic images.",
+                            "default": ""
+                        },
+                        "scale": {
+                            "type": "number",
+                            "description": "Render size as a percentage of the block width.",
+                            "minimum": 5,
+                            "maximum": 200,
+                            "default": 100
+                        },
+                        "align": {
+                            "type": "string",
+                            "description": "Horizontal alignment of the image.",
+                            "enum": ["left", "center", "right"],
+                            "default": "left"
+                        }
+                    }
+                }
+            ]
+        },
+
+        "tableColumn": {
+            "type": "object",
+            "description": "Definition of a single table column.",
+            "required": ["label", "value"],
+            "additionalProperties": false,
+            "properties": {
+                "label": {
+                    "type": "string",
+                    "description": "Column header text."
+                },
+                "value": {
+                    "type": "string",
+                    "description": "HTML template for each cell. Use the row alias variable to access row data, e.g. {{ item.price }}."
+                },
+                "width": {
+                    "type": ["number", "null"],
+                    "description": "Column width as a percentage of the table width. Null means auto.",
+                    "minimum": 0,
+                    "maximum": 100,
+                    "default": null
+                },
+                "align": {
+                    "type": "string",
+                    "description": "Text alignment within the column.",
+                    "enum": ["left", "center", "right"],
+                    "default": "left"
+                }
+            }
+        },
+
+        "tableBlock": {
+            "allOf": [
+                { "$ref": "#/$defs/commonProperties" },
+                {
+                    "type": "object",
+                    "required": ["type"],
+                    "additionalProperties": false,
+                    "properties": {
+                        "type": { "type": "string", "const": "TableBlock" },
+                        "label": {},
+                        "padding": {},
+                        "margin": {},
+                        "border": {},
+                        "minHeight": {},
+                        "background": {},
+                        "colWidth": {},
+                        "condition": {},
+                        "source": {
+                            "type": "string",
+                            "description": "Name of the data context variable that holds the array of rows to iterate over.",
+                            "default": "items"
+                        },
+                        "variable": {
+                            "type": "string",
+                            "description": "Alias for each row within column value templates.",
+                            "default": "item"
+                        },
+                        "showHeader": {
+                            "type": "boolean",
+                            "description": "Whether to render the header row.",
+                            "default": true
+                        },
+                        "headerFontSize": {
+                            "type": "number",
+                            "description": "Font size for the header row in points.",
+                            "enum": [8, 9, 10, 11, 12, 13, 14],
+                            "default": 13
+                        },
+                        "headerColor": {
+                            "type": "string",
+                            "description": "Text colour for the header row.",
+                            "pattern": "^#[0-9a-fA-F]{6}$",
+                            "default": "#000000"
+                        },
+                        "headerBgColor": {
+                            "type": "string",
+                            "description": "Background colour for the header row.",
+                            "pattern": "^#[0-9a-fA-F]{6}$",
+                            "default": "#f3f4f6"
+                        },
+                        "hideEmptyColumns": {
+                            "type": "boolean",
+                            "description": "Automatically hide columns where all data rows have an empty value.",
+                            "default": true
+                        },
+                        "columns": {
+                            "type": "array",
+                            "description": "Column definitions.",
+                            "items": { "$ref": "#/$defs/tableColumn" },
+                            "default": []
+                        }
+                    }
+                }
+            ]
+        },
+
+        "listBlock": {
+            "allOf": [
+                { "$ref": "#/$defs/commonProperties" },
+                {
+                    "type": "object",
+                    "required": ["type"],
+                    "additionalProperties": false,
+                    "properties": {
+                        "type": { "type": "string", "const": "ListBlock" },
+                        "label": {},
+                        "padding": {},
+                        "margin": {},
+                        "border": {},
+                        "minHeight": {},
+                        "background": {},
+                        "colWidth": {},
+                        "condition": {},
+                        "source": {
+                            "type": "string",
+                            "description": "Name of the data context variable that holds the array to iterate over.",
+                            "default": "items"
+                        },
+                        "variable": {
+                            "type": "string",
+                            "description": "Alias for each item within the template.",
+                            "default": "item"
+                        },
+                        "template": {
+                            "type": "string",
+                            "description": "HTML template applied to each item. Use the alias variable to access item fields, e.g. <div>{{ item.name }}</div>.",
+                            "default": ""
+                        }
+                    }
+                }
+            ]
+        },
+
+        "keyValueRow": {
+            "type": "object",
+            "description": "A single key-value pair.",
+            "required": ["label", "value"],
+            "additionalProperties": false,
+            "properties": {
+                "label": {
+                    "type": "string",
+                    "description": "Label (key). HTML and Twig expressions are supported."
+                },
+                "value": {
+                    "type": "string",
+                    "description": "Value. HTML and Twig expressions are supported."
+                }
+            }
+        },
+
+        "keyValueBlock": {
+            "allOf": [
+                { "$ref": "#/$defs/commonProperties" },
+                {
+                    "type": "object",
+                    "required": ["type"],
+                    "additionalProperties": false,
+                    "properties": {
+                        "type": { "type": "string", "const": "KeyValueBlock" },
+                        "label": {},
+                        "padding": {},
+                        "margin": {},
+                        "border": {},
+                        "minHeight": {},
+                        "background": {},
+                        "colWidth": {},
+                        "condition": {},
+                        "renderMode": {
+                            "type": "string",
+                            "description": "Rendering mode: 'table' renders as a two-column HTML table; 'list' renders as a definition list (<dl>).",
+                            "enum": ["table", "list"],
+                            "default": "table"
+                        },
+                        "labelWidth": {
+                            "type": "number",
+                            "description": "Width of the label column as a percentage. Only applies in 'table' renderMode.",
+                            "minimum": 0,
+                            "maximum": 100,
+                            "default": 30
+                        },
+                        "hideEmptyValues": {
+                            "type": "boolean",
+                            "description": "Automatically hide rows where the value is empty.",
+                            "default": true
+                        },
+                        "rows": {
+                            "type": "array",
+                            "description": "Key-value rows to render.",
+                            "items": { "$ref": "#/$defs/keyValueRow" },
+                            "default": []
+                        }
+                    }
+                }
+            ]
+        },
+
+        "barcodeBlock": {
+            "allOf": [
+                { "$ref": "#/$defs/commonProperties" },
+                {
+                    "type": "object",
+                    "required": ["type"],
+                    "additionalProperties": false,
+                    "properties": {
+                        "type": { "type": "string", "const": "BarcodeBlock" },
+                        "label": {},
+                        "padding": {},
+                        "margin": {},
+                        "border": {},
+                        "minHeight": {},
+                        "background": {},
+                        "colWidth": {},
+                        "condition": {},
+                        "content": {
+                            "type": "string",
+                            "description": "Data to encode. May contain a Twig expression.",
+                            "default": ""
+                        },
+                        "format": {
+                            "type": "string",
+                            "description": "Barcode symbology. CODE128: alphanumeric variable-length. CODE39: uppercase letters and digits. EAN13: 13-digit retail standard.",
+                            "enum": ["CODE128", "CODE39", "EAN13"],
+                            "default": "CODE128"
+                        },
+                        "align": {
+                            "type": "string",
+                            "description": "Horizontal alignment of the barcode image.",
+                            "enum": ["left", "center", "right"],
+                            "default": "left"
+                        },
+                        "width": {
+                            "type": "number",
+                            "description": "Barcode render width as a percentage of the block width.",
+                            "minimum": 5,
+                            "maximum": 100,
+                            "default": 100
+                        },
+                        "height": {
+                            "type": "number",
+                            "description": "Barcode render height in pixels.",
+                            "minimum": 10,
+                            "maximum": 400,
+                            "default": 40
+                        }
+                    }
+                }
+            ]
+        },
+
+        "qrBlock": {
+            "allOf": [
+                { "$ref": "#/$defs/commonProperties" },
+                {
+                    "type": "object",
+                    "required": ["type"],
+                    "additionalProperties": false,
+                    "properties": {
+                        "type": { "type": "string", "const": "QrBlock" },
+                        "label": {},
+                        "padding": {},
+                        "margin": {},
+                        "border": {},
+                        "minHeight": {},
+                        "background": {},
+                        "colWidth": {},
+                        "condition": {},
+                        "content": {
+                            "type": "string",
+                            "description": "Data to encode. May contain a Twig expression.",
+                            "default": ""
+                        },
+                        "errorCorrection": {
+                            "type": "string",
+                            "description": "QR error correction level. L: ~7% recovery. M: ~15% (default). Q: ~25%. H: ~30%.",
+                            "enum": ["L", "M", "Q", "H"],
+                            "default": "M"
+                        },
+                        "align": {
+                            "type": "string",
+                            "description": "Horizontal alignment of the QR code image.",
+                            "enum": ["left", "center", "right"],
+                            "default": "left"
+                        },
+                        "size": {
+                            "type": "number",
+                            "description": "QR code render size in pixels (width = height).",
+                            "minimum": 20,
+                            "maximum": 600,
+                            "default": 80
+                        }
+                    }
+                }
+            ]
+        },
+
+        "pdf417Block": {
+            "allOf": [
+                { "$ref": "#/$defs/commonProperties" },
+                {
+                    "type": "object",
+                    "required": ["type"],
+                    "additionalProperties": false,
+                    "properties": {
+                        "type": { "type": "string", "const": "Pdf417Block" },
+                        "label": {},
+                        "padding": {},
+                        "margin": {},
+                        "border": {},
+                        "minHeight": {},
+                        "background": {},
+                        "colWidth": {},
+                        "condition": {},
+                        "content": {
+                            "type": "string",
+                            "description": "Data to encode. May contain a Twig expression.",
+                            "default": ""
+                        },
+                        "errorCorrection": {
+                            "type": "number",
+                            "description": "Error correction level. 0 = minimal redundancy, 8 = maximum redundancy. Default: 3.",
+                            "minimum": 0,
+                            "maximum": 8,
+                            "default": 3
+                        },
+                        "columns": {
+                            "type": "number",
+                            "description": "Number of data columns in the barcode (1–30).",
+                            "minimum": 1,
+                            "maximum": 30,
+                            "default": 6
+                        },
+                        "align": {
+                            "type": "string",
+                            "description": "Horizontal alignment of the barcode image.",
+                            "enum": ["left", "center", "right"],
+                            "default": "left"
+                        },
+                        "width": {
+                            "type": "number",
+                            "description": "Barcode render width as a percentage of the block width.",
+                            "minimum": 5,
+                            "maximum": 100,
+                            "default": 100
+                        },
+                        "height": {
+                            "type": "number",
+                            "description": "Barcode render height in pixels.",
+                            "minimum": 10,
+                            "maximum": 400,
+                            "default": 60
+                        }
+                    }
+                }
+            ]
+        },
+
+        "spacerBlock": {
+            "allOf": [
+                { "$ref": "#/$defs/commonProperties" },
+                {
+                    "type": "object",
+                    "required": ["type"],
+                    "additionalProperties": false,
+                    "properties": {
+                        "type": { "type": "string", "const": "SpacerBlock" },
+                        "label": {},
+                        "padding": {},
+                        "margin": {},
+                        "border": {},
+                        "minHeight": {},
+                        "background": {},
+                        "colWidth": {},
+                        "condition": {},
+                        "height": {
+                            "type": "number",
+                            "description": "Vertical space to insert, in pixels.",
+                            "minimum": 4,
+                            "maximum": 400,
+                            "default": 24
+                        }
+                    }
+                }
+            ]
+        },
+
+        "dividerBlock": {
+            "allOf": [
+                { "$ref": "#/$defs/commonProperties" },
+                {
+                    "type": "object",
+                    "required": ["type"],
+                    "additionalProperties": false,
+                    "properties": {
+                        "type": { "type": "string", "const": "DividerBlock" },
+                        "label": {},
+                        "padding": {},
+                        "margin": {},
+                        "border": {},
+                        "minHeight": {},
+                        "background": {},
+                        "colWidth": {},
+                        "condition": {}
+                    }
+                }
+            ]
+        },
+
+        "element": {
+            "description": "Any valid layout or content block.",
+            "oneOf": [
+                { "$ref": "#/$defs/verticalLayout" },
+                { "$ref": "#/$defs/horizontalLayout" },
+                { "$ref": "#/$defs/pageBreak" },
+                { "$ref": "#/$defs/textBlock" },
+                { "$ref": "#/$defs/htmlBlock" },
+                { "$ref": "#/$defs/imageBlock" },
+                { "$ref": "#/$defs/tableBlock" },
+                { "$ref": "#/$defs/listBlock" },
+                { "$ref": "#/$defs/keyValueBlock" },
+                { "$ref": "#/$defs/barcodeBlock" },
+                { "$ref": "#/$defs/qrBlock" },
+                { "$ref": "#/$defs/pdf417Block" },
+                { "$ref": "#/$defs/spacerBlock" },
+                { "$ref": "#/$defs/dividerBlock" }
+            ]
+        }
+
+    }
+}

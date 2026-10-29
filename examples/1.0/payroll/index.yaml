@@ -1,0 +1,11 @@
+title: Payroll & HR Documents
+description: Payslip template with earnings, deductions, and net pay summary.
+order: 3
+
+examples:
+  - title: Payslip
+    description: Monthly payslip with earnings breakdown, deductions, and net pay.
+    template: payslip.json
+    data:
+      - title: Sample payslip (May 2026)
+        file: payslip.json

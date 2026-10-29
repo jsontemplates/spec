@@ -1,0 +1,10 @@
+{
+  "product": {
+    "name": "Organic Espresso Beans 500 g",
+    "sku": "ESP-0500-ORG",
+    "ean": "5901234123457",
+    "price": 12.9,
+    "currency": "EUR",
+    "url": "https://shop.example/p/esp-0500-org"
+  }
+}

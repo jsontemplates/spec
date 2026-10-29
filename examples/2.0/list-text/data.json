@@ -1,0 +1,20 @@
+{
+  "list_title": "Open tasks",
+  "tasks": [
+    {
+      "title": "Review the invoice template",
+      "owner": "Marge",
+      "due": "2026-04-02"
+    },
+    {
+      "title": "Publish the packing slip example",
+      "owner": "Homer",
+      "due": "2026-04-05"
+    },
+    {
+      "title": "Check the DTE continuous layout",
+      "owner": "Lisa",
+      "due": "2026-04-09"
+    }
+  ]
+}

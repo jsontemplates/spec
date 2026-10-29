@@ -1,0 +1,11 @@
+title: Invoices & Receipts
+description: Commercial invoice template with line items, totals, and QR verification.
+order: 2
+
+examples:
+  - title: Commercial Invoice
+    description: Standard invoice with company header, itemized table, and tax breakdown.
+    template: invoice.json
+    data:
+      - title: Sample invoice (3 items)
+        file: invoice.json

@@ -1,0 +1,11 @@
+title: Delivery & Packing Slips
+description: Packing slip with sender/recipient addresses, item list, and tracking barcode.
+order: 4
+
+examples:
+  - title: Packing Slip
+    description: Shipping document with item manifest and CODE128 tracking barcode.
+    template: packing-slip.json
+    data:
+      - title: Sample shipment (2 items)
+        file: packing-slip.json

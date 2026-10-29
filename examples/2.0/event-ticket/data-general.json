@@ -1,0 +1,20 @@
+{
+  "event": {
+    "name": "Festival Rock del Sur 2026",
+    "date": "2026-12-05",
+    "time": "18:00",
+    "venue": "Estadio Municipal, Concepción",
+    "logo": "https://tickets.example.com/logos/festival-rock.png"
+  },
+  "terms": [
+    "Entrada válida para una persona. No se aceptan devoluciones.",
+    "Presente este documento impreso o en su teléfono con el código visible.",
+    "Apertura de puertas una hora antes del inicio."
+  ],
+  "ticket": {
+    "tier": "GENERAL",
+    "price": 45000,
+    "code": "FRS-GEN-019254",
+    "serial": "GEN019254"
+  }
+}

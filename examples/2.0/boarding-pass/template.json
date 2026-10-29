@@ -1,0 +1,386 @@
+{
+  "$schema": "https://spec.jsontemplates.io/schema/2.0/template.json",
+  "meta": {
+    "name": "Boarding Pass",
+    "description": "Boarding pass with a stub and PDF417 codes, a priority banner and a default gate.",
+    "lang": "en"
+  },
+  "options": {
+    "page": {
+      "style": {
+        "size": "200mm 75mm",
+        "margin": "4mm"
+      }
+    }
+  },
+  "body": {
+    "type": "HorizontalLayout",
+    "style": {
+      "border": "1px solid #1d4ed8"
+    },
+    "elements": [
+      {
+        "type": "VerticalLayout",
+        "name": "Pase",
+        "style": {
+          "width": "72%",
+          "padding-bottom": "6px"
+        },
+        "elements": [
+          {
+            "type": "HorizontalLayout",
+            "style": {
+              "background-color": "#1d4ed8",
+              "padding": "4px 8px"
+            },
+            "elements": [
+              {
+                "type": "TextBlock",
+                "text": "LATAM-STYLE AIRLINES",
+                "style": {
+                  "width": "60%",
+                  "font-weight": "bold",
+                  "color": "#ffffff"
+                }
+              },
+              {
+                "type": "TextBlock",
+                "text": "BOARDING PASS",
+                "style": {
+                  "width": "40%",
+                  "text-align": "right",
+                  "font-weight": "bold",
+                  "color": "#ffffff"
+                }
+              }
+            ]
+          },
+          {
+            "type": "VerticalLayout",
+            "name": "Priority",
+            "rule": {
+              "effect": "SHOW",
+              "condition": {
+                "value": "pass.priority",
+                "schema": {
+                  "const": true
+                }
+              }
+            },
+            "elements": [
+              {
+                "type": "TextBlock",
+                "text": "PRIORITY BOARDING · Group 1",
+                "style": {
+                  "font-weight": "bold",
+                  "color": "#92400e",
+                  "background-color": "#fef3c7",
+                  "padding": "2px 8px",
+                  "font-size": "10px"
+                }
+              }
+            ]
+          },
+          {
+            "type": "VerticalLayout",
+            "style": {
+              "padding": "6px 8px 0"
+            },
+            "elements": [
+              {
+                "type": "TextBlock",
+                "text": "PASSENGER",
+                "style": {
+                  "font-size": "8px",
+                  "color": "#64748b"
+                }
+              },
+              {
+                "type": "TextBlock",
+                "text": "{{ pass.passenger }}",
+                "style": {
+                  "font-weight": "bold",
+                  "font-size": "17px"
+                }
+              }
+            ]
+          },
+          {
+            "type": "HorizontalLayout",
+            "style": {
+              "padding": "2px 8px"
+            },
+            "elements": [
+              {
+                "type": "VerticalLayout",
+                "style": {
+                  "width": "38%"
+                },
+                "elements": [
+                  {
+                    "type": "TextBlock",
+                    "text": "FROM",
+                    "style": {
+                      "font-size": "8px",
+                      "color": "#64748b"
+                    }
+                  },
+                  {
+                    "type": "TextBlock",
+                    "text": "{{ pass.origin.code }}",
+                    "style": {
+                      "font-weight": "bold",
+                      "font-size": "28px"
+                    }
+                  },
+                  {
+                    "type": "TextBlock",
+                    "text": "{{ pass.origin.city }}",
+                    "style": {
+                      "font-size": "10px"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "TextBlock",
+                "text": "→",
+                "style": {
+                  "width": "24%",
+                  "font-size": "28px",
+                  "text-align": "center"
+                }
+              },
+              {
+                "type": "VerticalLayout",
+                "style": {
+                  "width": "38%"
+                },
+                "elements": [
+                  {
+                    "type": "TextBlock",
+                    "text": "TO",
+                    "style": {
+                      "font-size": "8px",
+                      "color": "#64748b"
+                    }
+                  },
+                  {
+                    "type": "TextBlock",
+                    "text": "{{ pass.destination.code }}",
+                    "style": {
+                      "font-weight": "bold",
+                      "font-size": "28px"
+                    }
+                  },
+                  {
+                    "type": "TextBlock",
+                    "text": "{{ pass.destination.city }}",
+                    "style": {
+                      "font-size": "10px"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "HorizontalLayout",
+            "style": {
+              "padding": "4px 8px"
+            },
+            "elements": [
+              {
+                "type": "VerticalLayout",
+                "style": {
+                  "width": "20%"
+                },
+                "elements": [
+                  {
+                    "type": "TextBlock",
+                    "text": "FLIGHT",
+                    "style": {
+                      "font-size": "8px",
+                      "color": "#64748b"
+                    }
+                  },
+                  {
+                    "type": "TextBlock",
+                    "text": "{{ pass.flight }}",
+                    "style": {
+                      "font-weight": "bold",
+                      "font-size": "14px"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "VerticalLayout",
+                "style": {
+                  "width": "25%"
+                },
+                "elements": [
+                  {
+                    "type": "TextBlock",
+                    "text": "DATE",
+                    "style": {
+                      "font-size": "8px",
+                      "color": "#64748b"
+                    }
+                  },
+                  {
+                    "type": "TextBlock",
+                    "text": "{{ pass.date | format_as('jt.date.short') }}",
+                    "style": {
+                      "font-weight": "bold",
+                      "font-size": "14px"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "VerticalLayout",
+                "style": {
+                  "width": "15%"
+                },
+                "elements": [
+                  {
+                    "type": "TextBlock",
+                    "text": "GATE",
+                    "style": {
+                      "font-size": "8px",
+                      "color": "#64748b"
+                    }
+                  },
+                  {
+                    "type": "TextBlock",
+                    "text": "{{ pass.gate | default('TBA') }}",
+                    "style": {
+                      "font-weight": "bold",
+                      "font-size": "14px"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "VerticalLayout",
+                "style": {
+                  "width": "20%"
+                },
+                "elements": [
+                  {
+                    "type": "TextBlock",
+                    "text": "BOARDING",
+                    "style": {
+                      "font-size": "8px",
+                      "color": "#64748b"
+                    }
+                  },
+                  {
+                    "type": "TextBlock",
+                    "text": "{{ pass.boarding }}",
+                    "style": {
+                      "font-weight": "bold",
+                      "font-size": "14px"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "VerticalLayout",
+                "style": {
+                  "width": "20%"
+                },
+                "elements": [
+                  {
+                    "type": "TextBlock",
+                    "text": "SEAT",
+                    "style": {
+                      "font-size": "8px",
+                      "color": "#64748b"
+                    }
+                  },
+                  {
+                    "type": "TextBlock",
+                    "text": "{{ pass.seat }}",
+                    "style": {
+                      "font-weight": "bold",
+                      "font-size": "14px"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "Pdf417Block",
+            "name": "BCBP",
+            "text": "{{ pass.bcbp }}",
+            "errorCorrection": 4,
+            "style": {
+              "width": "100mm",
+              "height": "17mm",
+              "margin": "4px 8px"
+            }
+          }
+        ]
+      },
+      {
+        "type": "VerticalLayout",
+        "name": "Talón",
+        "style": {
+          "width": "28%",
+          "padding": "6px 8px",
+          "border-left": "2px dashed #94a3b8",
+          "background-color": "#f8fafc"
+        },
+        "elements": [
+          {
+            "type": "TextBlock",
+            "text": "{{ pass.passenger }}",
+            "style": {
+              "font-weight": "bold",
+              "font-size": "11px"
+            }
+          },
+          {
+            "type": "TextBlock",
+            "text": "{{ pass.flight }} · {{ pass.origin.code }} → {{ pass.destination.code }}",
+            "style": {
+              "font-size": "10px"
+            }
+          },
+          {
+            "type": "TextBlock",
+            "text": "Seat {{ pass.seat }}",
+            "style": {
+              "font-weight": "bold",
+              "font-size": "16px",
+              "margin": "4px 0"
+            }
+          },
+          {
+            "type": "Pdf417Block",
+            "name": "BCBP compacto",
+            "text": "{{ pass.bcbp }}",
+            "errorCorrection": 2,
+            "compact": true,
+            "style": {
+              "width": "100%",
+              "height": "20mm"
+            }
+          },
+          {
+            "type": "TextBlock",
+            "text": "Keep this stub",
+            "style": {
+              "font-size": "8px",
+              "color": "#64748b",
+              "margin-top": "4px"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

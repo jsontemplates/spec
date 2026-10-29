@@ -1,0 +1,14 @@
+{
+  "company": {
+    "name": "Andes Servicios Digitales"
+  },
+  "person": {
+    "id": "E-004217",
+    "name": "Rodrigo Valenzuela",
+    "position": "Ingeniero de Soporte",
+    "area": "Operaciones",
+    "access": "Oficinas y Data Center",
+    "email": "rvalenzuela@andes.example",
+    "photo": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI5NiIgaGVpZ2h0PSIxMjAiIHZpZXdCb3g9IjAgMCA5NiAxMjAiPjxyZWN0IHdpZHRoPSI5NiIgaGVpZ2h0PSIxMjAiIGZpbGw9IiNjYmQ1ZTEiLz48Y2lyY2xlIGN4PSI0OCIgY3k9IjQ1IiByPSIyMiIgZmlsbD0iIzY0NzQ4YiIvPjxwYXRoIGQ9Ik04IDEyMGMwLTI2IDE4LTQyIDQwLTQyczQwIDE2IDQwIDQyeiIgZmlsbD0iIzY0NzQ4YiIvPjwvc3ZnPg=="
+  }
+}

@@ -1,0 +1,404 @@
+{
+  "account-statement": {
+    "data-checking.json": {
+      "contains": [
+        "Banco Austral",
+        "Del 01/09/2026 al 30/09/2026",
+        "Inversiones Villarroel y Cía. Ltda.",
+        "76.321.654-9",
+        "00-123-45678-09 (Cuenta corriente)",
+        "Carolina Bravo",
+        "$ -120.000",
+        "saldo negativo",
+        "Transferencia recibida - Cliente Los Aromos",
+        "1.820.000",
+        "Pago de remuneraciones",
+        "bancoaustral.example"
+      ],
+      "absent": [
+        "Compra con tarjeta"
+      ]
+    },
+    "data-savings.json": {
+      "contains": [
+        "Matías Contreras Soto",
+        "15.234.567-8",
+        "Atención por canales digitales",
+        "Abono automático de ahorro",
+        "$ 1.120.000"
+      ],
+      "absent": [
+        "saldo negativo",
+        "Carolina Bravo"
+      ]
+    }
+  },
+  "boarding-pass": {
+    "data-priority.json": {
+      "contains": [
+        "BOARDING PASS",
+        "PRIORITY BOARDING",
+        "DOE/JANE",
+        "LA 2603",
+        "30/10/2026",
+        "B12",
+        "02A",
+        "10:25",
+        "Santiago",
+        "Lima",
+        "data:image/svg+xml;base64,"
+      ],
+      "absent": [
+        "TBA"
+      ]
+    },
+    "data-economy.json": {
+      "contains": [
+        "DOE/JOHN",
+        "LA 2603",
+        "27C",
+        "TBA",
+        "10:25",
+        "data:image/svg+xml;base64,"
+      ],
+      "absent": [
+        "PRIORITY BOARDING"
+      ]
+    }
+  },
+  "divider-and-spacer": {
+    "data.json": {
+      "contains": [
+        "Quarterly Notes",
+        "border-top:1px solid #000;",
+        "border-top:2px solid #4A7CF5;"
+      ]
+    }
+  },
+  "dte-continuo": {
+    "data.xml": {
+      "contains": [
+        "RUT: 97.975.000-5",
+        "Tipo de Documento 33",
+        "# 60",
+        "119.000",
+        "ciento diecinueve mil pesos.",
+        "T33F60"
+      ]
+    }
+  },
+  "dte-general": {
+    "data.xml": {
+      "contains": [
+        "RUT: 97.975.000-5",
+        "RUT DE PRUEBA",
+        "13 de octubre de 2003",
+        "Parlantes Multimedia 180W.",
+        "119.000",
+        "ciento diecinueve mil pesos.",
+        "T33F60",
+        "Términos y Condiciones"
+      ]
+    }
+  },
+  "email-welcome": {
+    "data-pro.json": {
+      "contains": [
+        "Welcome, <strong>Lisa Simpson</strong>",
+        "Unlimited",
+        "href=\"https://acme.example/dashboard\"",
+        "Priority (24 h)"
+      ]
+    },
+    "data-standard.json": {
+      "contains": [
+        "Welcome, <strong>",
+        "href=\"https://acme.example/unsubscribe\""
+      ]
+    }
+  },
+  "employee-badge": {
+    "data-employee.json": {
+      "contains": [
+        "Andes Servicios Digitales",
+        "Rodrigo Valenzuela",
+        "Ingeniero de Soporte",
+        "Operaciones",
+        "Acceso: Oficinas y Data Center",
+        "E-004217",
+        "Fotografía de Rodrigo Valenzuela",
+        "data:image/svg+xml;base64,"
+      ],
+      "absent": [
+        "VISITA",
+        "Visita externa"
+      ]
+    },
+    "data-visitor.json": {
+      "contains": [
+        "VISITA · Andes Servicios Digitales",
+        "Patricia Lagos",
+        "Proveedora - Mantención",
+        "Visita externa",
+        "Acceso: General",
+        "V-120934",
+        "data:image/svg+xml;base64,"
+      ],
+      "absent": [
+        "Oficinas y Data Center"
+      ]
+    }
+  },
+  "event-ticket": {
+    "data-vip.json": {
+      "contains": [
+        "Festival Rock del Sur 2026",
+        "5 de diciembre de 2026 · 18:00 h",
+        "ACCESO VIP",
+        "Platea Alta",
+        "C / 14",
+        "Daniela Fuentes",
+        "Invitación",
+        "FRS-VIP-004711",
+        "Serie VIP004711",
+        "Apertura de puertas una hora antes del inicio.",
+        "data:image/svg+xml;base64,"
+      ],
+      "absent": [
+        "Al portador"
+      ]
+    },
+    "data-general.json": {
+      "contains": [
+        "Festival Rock del Sur 2026",
+        "Al portador",
+        "45.000",
+        "FRS-GEN-019254",
+        "Serie GEN019254",
+        "Entrada válida para una persona.",
+        "data:image/svg+xml;base64,"
+      ],
+      "absent": [
+        "ACCESO VIP",
+        "Sector:",
+        "Fila / Asiento:",
+        "Invitación"
+      ]
+    }
+  },
+  "hello-world": {
+    "data-en.json": {
+      "contains": [
+        "Hello, World! Goodbye, World!"
+      ]
+    },
+    "data-es.json": {
+      "contains": [
+        "¡Hola, Mundo! ¡Adiós, Mundo!"
+      ]
+    }
+  },
+  "hello-world-multiline": {
+    "data-en.json": {
+      "contains": [
+        "<div>Hello, World!</div>",
+        "<div>Goodbye, World!</div>"
+      ]
+    },
+    "data-es.json": {
+      "contains": [
+        "<div>¡Hola, Mundo!</div>",
+        "<div>¡Adiós, Mundo!</div>"
+      ]
+    }
+  },
+  "html-terms": {
+    "data.json": {
+      "contains": [
+        "<h1>Terms and Conditions</h1>",
+        "Acme Corp",
+        "href=\"https://acme.example/terms\"",
+        "href=\"mailto:legal@acme.example\""
+      ]
+    }
+  },
+  "invoice": {
+    "data.json": {
+      "contains": [
+        "INV-2026-0042",
+        "Web Application Development",
+        "1,800.00",
+        "USD 3,740.00",
+        "Tax (10%):",
+        "USD 4,114.00"
+      ]
+    }
+  },
+  "lab-report": {
+    "data.json": {
+      "contains": [
+        "RPT-2026-00314",
+        "Marge Simpson",
+        "ALT (SGPT)",
+        "52 U/L",
+        "Comprehensive Metabolic Panel (CMP)"
+      ]
+    }
+  },
+  "list-markdown": {
+    "data.json": {
+      "contains": [
+        "<li><strong>Review the invoice template</strong> — Marge (due 2026-04-02)</li>",
+        "<li><strong>Publish the packing slip example</strong>"
+      ]
+    }
+  },
+  "list-text": {
+    "data.json": {
+      "contains": [
+        "Review the invoice template — Marge (due 2026-04-02)",
+        "Check the DTE continuous layout — Lisa"
+      ]
+    }
+  },
+  "packing-slip": {
+    "data.json": {
+      "contains": [
+        "ORD-2026-0099",
+        "Acme Warehouse",
+        "ACM-WDG-001",
+        "3.8 kg",
+        "data:image/svg+xml;base64,"
+      ]
+    }
+  },
+  "payslip": {
+    "data.json": {
+      "contains": [
+        "Globex Corporation",
+        "Base Salary",
+        "3,500.00",
+        "Gross: USD 4,082.50",
+        "USD 2,923.13"
+      ]
+    }
+  },
+  "quotation": {
+    "data-sent.json": {
+      "contains": [
+        "COT-2026-0187",
+        "Válida hasta el 19 de noviembre de 2026",
+        "77.888.999-K",
+        "30 días desde la factura",
+        "Descuento (10%)",
+        "$ 1.537.880",
+        "$ 1.647.089",
+        "Para aceptar esta cotización"
+      ],
+      "absent": [
+        "COTIZACIÓN VENCIDA",
+        "COTIZACIÓN ACEPTADA",
+        "Firma de aceptación"
+      ]
+    },
+    "data-accepted.json": {
+      "contains": [
+        "COT-2026-0179",
+        "COTIZACIÓN ACEPTADA el 09/10/2026",
+        "Sin observaciones.",
+        "Contado",
+        "$ 481.950",
+        "Firma de aceptación"
+      ],
+      "absent": [
+        "COTIZACIÓN VENCIDA",
+        "Descuento (",
+        "Para aceptar esta cotización"
+      ]
+    },
+    "data-expired.json": {
+      "contains": [
+        "COT-2026-0121",
+        "COTIZACIÓN VENCIDA",
+        "Descuento (5%)",
+        "Precios en pesos chilenos",
+        "$ 723.520"
+      ],
+      "absent": [
+        "COTIZACIÓN ACEPTADA",
+        "Válida hasta",
+        "Para aceptar esta cotización",
+        "Firma de aceptación"
+      ]
+    }
+  },
+  "retail-label": {
+    "data.json": {
+      "contains": [
+        "Organic Espresso Beans 500 g",
+        "EUR 12.90",
+        "data:image/svg+xml;base64,"
+      ]
+    }
+  },
+  "sales-report": {
+    "data.json": {
+      "contains": [
+        "Monthly Sales Report",
+        "September 2026",
+        "02/10/2026",
+        "USD 2.41 M",
+        "3 of 5",
+        "Revenue by region is listed in the table below.",
+        "Elena Ruiz",
+        "642.000",
+        "+7.0%",
+        "-15.7%",
+        "-2.4%",
+        "Total revenue: USD 2.410.000 against a target of USD 2.460.000.",
+        "Notes by region",
+        "Port strike delayed 1,200 units to October."
+      ],
+      "absent": [
+        "West (closed)",
+        "Sofía Araya"
+      ]
+    }
+  },
+  "shipping-label": {
+    "data-express.json": {
+      "contains": [
+        "EXPRESS 48H",
+        "27.5 kg",
+        "1 of 2",
+        "PRIORITY DELIVERY",
+        "FRAGILE - HANDLE WITH CARE",
+        "HEAVY - TWO-PERSON LIFT",
+        "SIGNATURE REQUIRED",
+        "Camila Rojas",
+        "Las Condes, RM 7550000",
+        "NW2026102800417",
+        "Ref: ORD-88213",
+        "data:image/svg+xml;base64,"
+      ]
+    },
+    "data-ground.json": {
+      "contains": [
+        "GROUND",
+        "1.8 kg",
+        "1 of 1",
+        "Liam Carter",
+        "Portland, OR 97205",
+        "NW2026102800532",
+        "Ref: none",
+        "data:image/svg+xml;base64,"
+      ],
+      "absent": [
+        "PRIORITY DELIVERY",
+        "FRAGILE",
+        "HEAVY",
+        "SIGNATURE REQUIRED"
+      ]
+    }
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "lab": {
+    "name": "ClearPath Clinical Laboratory",
+    "address": "200 Health Blvd, Suite 4B, Chicago, IL 60601",
+    "phone": "+1 312 555 0100",
+    "email": "reports@clearpathlab.example",
+    "license": "CLIA-14D0987654"
+  },
+  "report": {
+    "id": "RPT-2026-00314",
+    "panel_name": "Comprehensive Metabolic Panel (CMP)",
+    "sample_type": "Serum",
+    "collected_at": "2026-03-15 08:30",
+    "received_at":  "2026-03-15 10:05",
+    "reported_at":  "2026-03-16 09:00",
+    "physician": "Dr. Nick Riviera",
+    "analyst": "M. Bouvier, MT(ASCP)",
+    "authorized_by": "Dr. Julius Hibbert, MD",
+    "notes": "All values within normal limits. Mild elevation in ALT; recommend follow-up in 3 months if patient maintains current diet."
+  },
+  "patient": {
+    "name": "Marge Simpson",
+    "dob": "1956-10-01",
+    "age": 69,
+    "sex": "F",
+    "id": "PT-0000742"
+  },
+  "results": [
+    { "test": "Glucose",              "result": "94",   "unit": "mg/dL",  "reference": "70 – 100",   "flag": "" },
+    { "test": "BUN (Blood Urea Nitrogen)", "result": "16", "unit": "mg/dL", "reference": "7 – 25",  "flag": "" },
+    { "test": "Creatinine",           "result": "0.82", "unit": "mg/dL",  "reference": "0.5 – 1.1", "flag": "" },
+    { "test": "Sodium (Na)",          "result": "141",  "unit": "mEq/L",  "reference": "136 – 145", "flag": "" },
+    { "test": "Potassium (K)",        "result": "3.9",  "unit": "mEq/L",  "reference": "3.5 – 5.1", "flag": "" },
+    { "test": "Calcium",              "result": "9.4",  "unit": "mg/dL",  "reference": "8.5 – 10.5","flag": "" },
+    { "test": "ALT (SGPT)",           "result": "52",   "unit": "U/L",    "reference": "7 – 40",    "flag": "H" },
+    { "test": "AST (SGOT)",           "result": "31",   "unit": "U/L",    "reference": "10 – 40",   "flag": "" },
+    { "test": "Total Protein",        "result": "7.2",  "unit": "g/dL",   "reference": "6.3 – 8.2", "flag": "" },
+    { "test": "Albumin",              "result": "4.1",  "unit": "g/dL",   "reference": "3.5 – 5.0", "flag": "" }
+  ]
+}

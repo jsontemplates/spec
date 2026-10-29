@@ -1,0 +1,13 @@
+{
+  "$schema": "https://spec.jsontemplates.io/schema/2.0/template.json",
+  "variables": [
+    {
+      "name": "1a",
+      "value": "a.b"
+    }
+  ],
+  "body": {
+    "type": "TextBlock",
+    "text": "x"
+  }
+}

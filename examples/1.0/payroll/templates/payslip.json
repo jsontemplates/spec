@@ -1,0 +1,271 @@
+{
+  "$schema": "https://spec.jsontemplates.io/schema/1.0/template.json",
+  "generated_at": "2026-03-23T20:02:55.185Z",
+  "format": "LETTER",
+  "width": 216,
+  "height": 279,
+  "margins": {
+    "left": 12,
+    "top": 10,
+    "right": 12,
+    "bottom": 10
+  },
+  "elements": [
+    {
+      "type": "VerticalLayout",
+      "label": "Payslip",
+      "elements": [
+        {
+          "type": "HtmlBlock",
+          "label": "Company Header",
+          "content": "<p><b><span style=\"font-size:20px; color:#4A7CF5;\">{{ company.name }}</span></b></p><p style=\"color:#64748b;\">{{ company.address }} · {{ company.email }}</p>",
+          "padding": {
+            "top": 8,
+            "right": 10,
+            "bottom": 8,
+            "left": 10
+          },
+          "margin": {
+            "top": 0,
+            "right": 0,
+            "bottom": 8,
+            "left": 0
+          },
+          "border": {
+            "width": 0,
+            "style": "solid",
+            "color": "#e2e8f0"
+          },
+          "background": "#f8fafc"
+        },
+        {
+          "type": "HtmlBlock",
+          "label": "Payslip Title",
+          "content": "<p style=\"text-align:center;\"><b><span style=\"font-size:16px;\">PAYSLIP — {{ period.month }} {{ period.year }}</span></b></p>",
+          "margin": {
+            "top": 0,
+            "right": 0,
+            "bottom": 8,
+            "left": 0
+          }
+        },
+        {
+          "type": "HorizontalLayout",
+          "label": "Employee & Period Info",
+          "margin": {
+            "top": 0,
+            "right": 0,
+            "bottom": 10,
+            "left": 0
+          },
+          "elements": [
+            {
+              "type": "HtmlBlock",
+              "label": "Employee Info",
+              "content": "<p><b>Employee:</b> {{ employee.name }}</p><p><b>ID:</b> {{ employee.id }}</p><p><b>Position:</b> {{ employee.position }}</p><p><b>Department:</b> {{ employee.department }}</p>",
+              "colWidth": 60
+            },
+            {
+              "type": "KeyValueBlock",
+              "label": "Pay Details",
+              "renderMode": "list",
+              "labelWidth": 55,
+              "hideEmptyValues": true,
+              "colWidth": 40,
+              "rows": [
+                {
+                  "label": "<p><b>Pay Date:</b></p>",
+                  "value": "<p>{{ period.pay_date }}</p>"
+                },
+                {
+                  "label": "<p><b>Pay Period:</b></p>",
+                  "value": "<p>{{ period.start }} – {{ period.end }}</p>"
+                },
+                {
+                  "label": "<p><b>Currency:</b></p>",
+                  "value": "<p>{{ company.currency }}</p>"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "HorizontalLayout",
+          "label": "Earnings & Deductions",
+          "margin": {
+            "top": 0,
+            "right": 0,
+            "bottom": 10,
+            "left": 0
+          },
+          "elements": [
+            {
+              "type": "VerticalLayout",
+              "label": "Earnings",
+              "colWidth": 50,
+              "elements": [
+                {
+                  "type": "HtmlBlock",
+                  "content": "<p><b><font color=\"#ffffff\">Earnings</font></b></p>",
+                  "padding": {
+                    "top": 4,
+                    "right": 6,
+                    "bottom": 4,
+                    "left": 6
+                  },
+                  "background": "#4A7CF5"
+                },
+                {
+                  "type": "TableBlock",
+                  "source": "earnings",
+                  "variable": "e",
+                  "showHeader": false,
+                  "headerFontSize": 13,
+                  "headerColor": "#000000",
+                  "headerBgColor": "#f3f4f6",
+                  "hideEmptyColumns": true,
+                  "padding": {
+                    "top": 0,
+                    "right": 5,
+                    "bottom": 0,
+                    "left": 5
+                  },
+                  "border": {
+                    "width": 1,
+                    "style": "solid",
+                    "color": "#d1d5db"
+                  },
+                  "columns": [
+                    {
+                      "label": "Concept",
+                      "value": "{{ e.concept }}",
+                      "width": null,
+                      "align": "left"
+                    },
+                    {
+                      "label": "Amount",
+                      "value": "<div style=\"text-align:right;\">{{ e.amount | number_format(2, '.', ',') }}</div>",
+                      "width": 35,
+                      "align": "left"
+                    }
+                  ]
+                },
+                {
+                  "type": "HtmlBlock",
+                  "content": "<p style=\"text-align:right;\"><b>Gross: {{ company.currency }} {{ totals.gross | number_format(2, '.', ',') }}</b></p>",
+                  "padding": {
+                    "top": 4,
+                    "right": 6,
+                    "bottom": 4,
+                    "left": 6
+                  },
+                  "border": {
+                    "width": 1,
+                    "style": "solid",
+                    "color": "#d1d5db"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "VerticalLayout",
+              "label": "Deductions",
+              "colWidth": 50,
+              "elements": [
+                {
+                  "type": "HtmlBlock",
+                  "content": "<p><b><font color=\"#ffffff\">Deductions</font></b></p>",
+                  "padding": {
+                    "top": 4,
+                    "right": 6,
+                    "bottom": 4,
+                    "left": 6
+                  },
+                  "background": "#64748b"
+                },
+                {
+                  "type": "TableBlock",
+                  "source": "deductions",
+                  "variable": "d",
+                  "showHeader": false,
+                  "headerFontSize": 13,
+                  "headerColor": "#000000",
+                  "headerBgColor": "#f3f4f6",
+                  "hideEmptyColumns": true,
+                  "padding": {
+                    "top": 0,
+                    "right": 5,
+                    "bottom": 0,
+                    "left": 5
+                  },
+                  "border": {
+                    "width": 1,
+                    "style": "solid",
+                    "color": "#d1d5db"
+                  },
+                  "columns": [
+                    {
+                      "label": "Concept",
+                      "value": "{{ d.concept }}",
+                      "width": null,
+                      "align": "left"
+                    },
+                    {
+                      "label": "Amount",
+                      "value": "<div style=\"text-align:right;\">{{ d.amount | number_format(2, '.', ',') }}</div>",
+                      "width": 35,
+                      "align": "left"
+                    }
+                  ]
+                },
+                {
+                  "type": "HtmlBlock",
+                  "content": "<p style=\"text-align:right;\"><b>Total deductions: {{ company.currency }} {{ totals.deductions | number_format(2, '.', ',') }}</b></p>",
+                  "padding": {
+                    "top": 4,
+                    "right": 6,
+                    "bottom": 4,
+                    "left": 6
+                  },
+                  "border": {
+                    "width": 1,
+                    "style": "solid",
+                    "color": "#d1d5db"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "HorizontalLayout",
+          "label": "Net Pay",
+          "elements": [
+            {
+              "type": "HtmlBlock",
+              "content": "<p style=\"color:#64748b;\"><span style=\"font-size:10px;\">This payslip is generated automatically. For questions contact HR at {{ company.hr_email }}.</span></p>",
+              "colWidth": 55
+            },
+            {
+              "type": "HtmlBlock",
+              "label": "Net Pay Box",
+              "content": "<p style=\"text-align:center;\"><b><span style=\"font-size:14px; color:#4A7CF5;\">NET PAY</span></b></p><p style=\"text-align:center;\"><b><span style=\"font-size:18px;\">{{ company.currency }} {{ totals.net | number_format(2, '.', ',') }}</span></b></p>",
+              "padding": {
+                "top": 8,
+                "right": 10,
+                "bottom": 8,
+                "left": 10
+              },
+              "border": {
+                "width": 2,
+                "style": "solid",
+                "color": "#4A7CF5"
+              },
+              "colWidth": 45
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

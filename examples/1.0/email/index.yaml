@@ -1,0 +1,13 @@
+title: Email Messages
+description: HTML email templates for transactional and marketing messages.
+order: 1
+
+examples:
+  - title: Welcome Email
+    description: Onboarding message sent after a new user registers.
+    template: welcome.json
+    data:
+      - title: New user (standard plan)
+        file: user-standard.json
+      - title: New user (pro plan)
+        file: user-pro.json

@@ -1,0 +1,23 @@
+{
+  "company": {
+    "name": "Acme Corp",
+    "address": "742 Evergreen Terrace, Springfield, IL 62701",
+    "website": "acme.example"
+  },
+  "user": {
+    "name": "Lisa Simpson",
+    "email": "lisa@simpson.example",
+    "plan": "Pro"
+  },
+  "features": [
+    { "name": "Templates",       "value": "Unlimited" },
+    { "name": "Renders / month", "value": "Unlimited" },
+    { "name": "File formats",    "value": "PDF, HTML, PNG" },
+    { "name": "Support",         "value": "Priority (24 h)" }
+  ],
+  "links": {
+    "dashboard":   "https://acme.example/dashboard",
+    "docs":        "https://acme.example/docs",
+    "unsubscribe": "https://acme.example/unsubscribe"
+  }
+}

@@ -1,0 +1,56 @@
+<style>.jt,.jt *{box-sizing:border-box;margin:0;padding:0}.jt{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;font-size:13px}.jt table{width:100%;border-collapse:collapse}.jt th,.jt td{text-align:left;vertical-align:top}.jt img{display:block}.jt a{color:inherit}.jt ul,.jt ol{padding-left:1.5em}.jt .jt-inline p{display:inline}</style>
+<div class="jt">
+  <div>
+    <div style="background-color:#4A7CF5;padding:24px 20px;">
+      <div style="text-align:center;font-weight:bold;font-size:22px;color:#ffffff;">{{ company.name }}</div>
+    </div>
+    <div style="padding:24px 30px;">
+      <div style="font-size:18px;margin-bottom:12px;">{% apply jt_markdown %}
+Welcome, **{{ user.name }}**! 👋
+{% endapply %}</div>
+      <div style="margin-bottom:16px;">{% apply jt_markdown %}
+Thank you for joining **{{ company.name }}**. Your account is ready — here's a quick summary of what you get on the **{{ user.plan }}** plan:
+{% endapply %}</div>
+      {% set __jt1 = false %}{% set __jt2 = false %}
+      {% for f in features %}
+          {% set __jt3 %}<span class="jt-inline" style="font-weight:bold;">{{ f.name }}</span>{% endset %}{% if __jt3|striptags|trim is not empty %}{% set __jt1 = true %}{% endif %}
+          {% set __jt4 %}<span class="jt-inline" style="text-align:right;color:#4A7CF5;font-weight:bold;">{{ f.value }}</span>{% endset %}{% if __jt4|striptags|trim is not empty %}{% set __jt2 = true %}{% endif %}
+      {% endfor %}
+      <table style="border:1px solid #e2e8f0;margin-bottom:20px;">
+        <colgroup>
+          {% if __jt1 %}<col>{% endif %}
+          {% if __jt2 %}<col style="width:35%;">{% endif %}
+        </colgroup>
+        <tbody>
+          {% for f in features %}
+          <tr>
+            {% if __jt1 %}<td>
+              <div style="font-weight:bold;">{{ f.name }}</div>
+            </td>{% endif %}
+            {% if __jt2 %}<td>
+              <div style="text-align:right;color:#4A7CF5;font-weight:bold;">{{ f.value }}</div>
+            </td>{% endif %}
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <div style="text-align:center;margin-bottom:20px;">
+        <div style="display:inline-block;background-color:#4A7CF5;color:#ffffff;padding:10px 28px;border-radius:4px;font-size:14px;font-weight:bold;">{% apply jt_markdown %}
+[Go to your Dashboard →]({{ links.dashboard }})
+{% endapply %}</div>
+      </div>
+      <div>{% apply jt_markdown %}
+Need help getting started? Check out our [documentation]({{ links.docs }}) or reply to this email — we're happy to help.
+
+— The {{ company.name }} Team
+{% endapply %}</div>
+    </div>
+    <div style="background-color:#f8fafc;padding:16px 20px;text-align:center;color:#94a3b8;font-size:10px;">
+      <div>{{ company.name }} · {{ company.address }}</div>
+      <div>You received this email because you signed up at {{ company.website }}.</div>
+      <div>{% apply jt_markdown %}
+[Unsubscribe]({{ links.unsubscribe }})
+{% endapply %}</div>
+    </div>
+  </div>
+</div>
